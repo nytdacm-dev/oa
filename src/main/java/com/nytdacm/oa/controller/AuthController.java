@@ -3,6 +3,8 @@ package com.nytdacm.oa.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import com.nytdacm.oa.model.entity.User;
+import com.nytdacm.oa.model.response.HttpResponse;
+import com.nytdacm.oa.model.response.user.UserDto;
 import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
@@ -10,6 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,22 +33,24 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public User signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
+    public ResponseEntity<HttpResponse<UserDto>> signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
         var user = new User();
         user.setUsername(userSignupRequest.username());
         user.setPassword(PasswordUtil.hashPassword(userSignupRequest.password()));
-        return userService.newUser(user);
+        var newUser = userService.newUser(user);
+        return HttpResponse.success(200, "注册成功", UserDto.fromEntity(newUser));
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        return authService.login(username, password);
+    public ResponseEntity<HttpResponse<String>> login(@RequestParam String username, @RequestParam String password) {
+        return HttpResponse.success(200, "登录成功", authService.login(username, password));
     }
 
     @GetMapping("/current")
     @SaCheckLogin
-    public User current() {
-        return userService.getUserById(StpUtil.getLoginIdAsLong());
+    public ResponseEntity<HttpResponse<UserDto>> current() {
+        var user = userService.getUserById(StpUtil.getLoginIdAsLong());
+        return HttpResponse.success(200, "获取成功", UserDto.fromEntity(user));
     }
 }
 
