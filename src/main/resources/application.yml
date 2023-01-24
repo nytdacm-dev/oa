@@ -12,3 +12,12 @@ spring:
     jpa:
         hibernate:
             ddl-auto: update
+
+sa-token:
+    token-name: Authorization
+    # token前缀
+    token-prefix: Bearer
+    # jwt 密钥
+    jwt-secret-key: ${JWT_SECRET_KEY:JzNuZP2nGuBnTQKe3A0rxuYhExezSghw}
+    # token有效期
+    token-expire-timeout: ${TOKEN_EXPIRE_TIMEOUT:604800}
