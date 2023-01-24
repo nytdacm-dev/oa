@@ -1,2 +1,14 @@
 server:
     port: 8080
+
+spring:
+    jackson:
+        default-property-inclusion: NON_NULL
+    datasource:
+        url: jdbc:postgresql://${PG_HOST:localhost}:${PG_PORT:5432}/${PG_DATABASE:nytdacm_oa_dev}
+        username: ${PG_USER:nytdacm_oa}
+        password: ${PG_PASSWORD:123456}
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
