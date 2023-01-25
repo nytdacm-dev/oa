@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         return userDao.findById(id).orElseThrow(() -> new RuntimeException("用户不存在"));
     }
+
+    @Override
+    public User updateUser(User user) {
+        return userDao.save(user);
+    }
 }
