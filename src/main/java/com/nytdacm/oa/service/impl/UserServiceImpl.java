@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         return userDao.save(user);
     }
+
+    @Override
+    public long count() {
+        return userDao.count();
+    }
 }

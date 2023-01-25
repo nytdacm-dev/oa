@@ -10,4 +10,6 @@ public interface UserService {
     User getUserById(Long id);
 
     User updateUser(User user);
+
+    long count();
 }

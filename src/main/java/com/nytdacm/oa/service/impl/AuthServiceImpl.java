@@ -25,6 +25,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(String username, String password) {
         var user = userService.getUserByUsername(username);
+        if (!user.isActive()) {
+            throw new RuntimeException("用户未激活");
+        }
         if (!PasswordUtil.checkPassword(password, user.getPassword())) {
             throw new RuntimeException("密码错误");
         }

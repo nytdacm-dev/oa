@@ -37,6 +37,10 @@ public class AuthController {
         var user = new User();
         user.setUsername(userSignupRequest.username());
         user.setPassword(PasswordUtil.hashPassword(userSignupRequest.password()));
+        if (userService.count() == 0L) {
+            user.setSuperAdmin(true);
+            user.setActive(true);
+        }
         var newUser = userService.newUser(user);
         return HttpResponse.success(200, "注册成功", UserDto.fromEntity(newUser));
     }

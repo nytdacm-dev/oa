@@ -33,6 +33,15 @@ public class User extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "super_admin")
+    private boolean superAdmin;
+
+    @Column(name = "admin")
+    private boolean admin;
+
+    @Column(name = "active")
+    private boolean active;
+
     public Long getUserId() {
         return userId;
     }
@@ -65,18 +74,48 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
+    public boolean isSuperAdmin() {
+        return superAdmin;
+    }
+
+    public void setSuperAdmin(boolean superAdmin) {
+        this.superAdmin = superAdmin;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(name, user.name);
+        return superAdmin == user.superAdmin &&
+            admin == user.admin &&
+            active == user.active &&
+            Objects.equals(userId, user.userId) &&
+            Objects.equals(username, user.username) &&
+            Objects.equals(password, user.password) &&
+            Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, name);
+        return Objects.hash(super.hashCode(), userId, username, password, name, superAdmin, admin, active);
     }
 
     @Override
@@ -86,6 +125,9 @@ public class User extends BaseEntity {
             ", username='" + username + '\'' +
             ", password='" + password + '\'' +
             ", name='" + name + '\'' +
+            ", superAdmin=" + superAdmin +
+            ", admin=" + admin +
+            ", active=" + active +
             "} " + super.toString();
     }
 }
