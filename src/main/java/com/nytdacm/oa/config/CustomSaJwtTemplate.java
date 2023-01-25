@@ -4,6 +4,7 @@ import cn.dev33.satoken.jwt.SaJwtTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.hutool.jwt.JWT;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,17 +19,17 @@ public class CustomSaJwtTemplate extends SaJwtTemplate {
         }
 
         JWT jwt = JWT.create()
+            .setIssuer("https://oa.nytdacm.com")
+            .setIssuedAt(new Date(currentTimestamp))
+            .setNotBefore(new Date(currentTimestamp))
+            .setExpiresAt(new Date(expTime))
+            .setJWTId(UUID.randomUUID().toString())
+            .setSubject(loginId.toString())
             .setPayload(LOGIN_TYPE, loginType)
             .setPayload(LOGIN_ID, loginId)
             .setPayload(DEVICE, device)
             .setPayload(EFF, expTime)
             .setPayload(RN_STR, SaFoxUtil.getRandomString(32))
-            .setPayload("iss", "https://oa.nytdacm.com")
-            .setPayload("iat", currentTimestamp)
-            .setPayload("exp", expTime)
-            .setPayload("nbf", currentTimestamp)
-            .setPayload("jti", UUID.randomUUID().toString())
-            .setPayload("sub", loginId)
             .addPayloads(extraData);
 
         return generateToken(jwt, keyt);
