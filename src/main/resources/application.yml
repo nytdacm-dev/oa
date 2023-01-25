@@ -21,3 +21,6 @@ sa-token:
     jwt-secret-key: ${JWT_SECRET_KEY:JzNuZP2nGuBnTQKe3A0rxuYhExezSghw}
     # token有效期
     token-expire-timeout: ${TOKEN_EXPIRE_TIMEOUT:604800}
+    # 关闭 Cookie 功能
+    is-read-cookie: false
+    is-write-header: false
