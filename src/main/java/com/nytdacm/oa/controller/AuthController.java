@@ -10,15 +10,11 @@ import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -59,7 +55,7 @@ public class AuthController {
 }
 
 record UserSignupRequest(
-    @NotNull(message = "用户名不能为空") String username,
+    @NotNull(message = "用户名不能为空") @NotBlank(message = "用户名不能为空") String username,
     @NotNull(message = "密码不能为空") @Size(min = 6, message = "密码长度至少为6位") String password
 ) {
 }

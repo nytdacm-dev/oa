@@ -3,6 +3,7 @@ package com.nytdacm.oa.service.impl;
 import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import com.nytdacm.oa.config.SecurityConfig;
+import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
@@ -26,10 +27,10 @@ public class AuthServiceImpl implements AuthService {
     public String login(String username, String password) {
         var user = userService.getUserByUsername(username);
         if (!user.isActive()) {
-            throw new RuntimeException("用户未激活");
+            throw new OaBaseException("用户未激活", 401);
         }
         if (!PasswordUtil.checkPassword(password, user.getPassword())) {
-            throw new RuntimeException("密码错误");
+            throw new OaBaseException("密码错误", 401);
         }
 
         StpUtil.login(

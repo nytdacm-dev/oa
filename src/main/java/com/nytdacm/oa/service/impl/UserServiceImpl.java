@@ -1,6 +1,7 @@
 package com.nytdacm.oa.service.impl;
 
 import com.nytdacm.oa.dao.UserDao;
+import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.UserService;
 import jakarta.inject.Inject;
@@ -19,17 +20,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User newUser(User newUser) {
+        if (userDao.existsByUsername(newUser.getUsername())) {
+            throw new OaBaseException("用户已存在", 409);
+        }
         return userDao.save(newUser);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userDao.findByUsername(username).orElseThrow(() -> new RuntimeException("用户不存在"));
+        return userDao.findByUsername(username).orElseThrow(() -> new OaBaseException("用户不存在", 404));
     }
 
     @Override
     public User getUserById(Long id) {
-        return userDao.findById(id).orElseThrow(() -> new RuntimeException("用户不存在"));
+        return userDao.findById(id).orElseThrow(() -> new OaBaseException("用户不存在", 404));
     }
 
     @Override
