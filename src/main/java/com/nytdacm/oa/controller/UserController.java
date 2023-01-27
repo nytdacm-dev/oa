@@ -31,7 +31,9 @@ public class UserController {
     public ResponseEntity<HttpResponse<UserDto>> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest) {
         var user = userService.getUserById(StpUtil.getLoginIdAsLong());
         if (StringUtils.isNotEmpty(userUpdateRequest.password())) {
-            user.setPassword(PasswordUtil.hashPassword(userUpdateRequest.password()));
+            var salt = PasswordUtil.getSalt();
+            user.setPasswordSalt(salt);
+            user.setPassword(PasswordUtil.hashPassword(userUpdateRequest.password(), salt));
         }
         if (StringUtils.isNotEmpty(userUpdateRequest.name())) {
             user.setName(userUpdateRequest.name());

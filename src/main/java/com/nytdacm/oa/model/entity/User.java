@@ -29,6 +29,8 @@ public class User extends BaseEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "password_salt", nullable = false)
+    private String passwordSalt;
 
     @Column(name = "name")
     private String name;
@@ -64,6 +66,14 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
     }
 
     public String getName() {
@@ -104,18 +114,12 @@ public class User extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return superAdmin == user.superAdmin &&
-            admin == user.admin &&
-            active == user.active &&
-            Objects.equals(userId, user.userId) &&
-            Objects.equals(username, user.username) &&
-            Objects.equals(password, user.password) &&
-            Objects.equals(name, user.name);
+        return superAdmin == user.superAdmin && admin == user.admin && active == user.active && Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, name, superAdmin, admin, active);
+        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active);
     }
 
     @Override
@@ -124,6 +128,7 @@ public class User extends BaseEntity {
             "userId=" + userId +
             ", username='" + username + '\'' +
             ", password='" + password + '\'' +
+            ", passwordSalt='" + passwordSalt + '\'' +
             ", name='" + name + '\'' +
             ", superAdmin=" + superAdmin +
             ", admin=" + admin +

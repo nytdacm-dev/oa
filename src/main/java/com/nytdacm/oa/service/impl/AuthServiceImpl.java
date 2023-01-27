@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
 //        if (!user.isActive()) {
 //            throw new OaBaseException("用户未激活", 401);
 //        }
-        if (!PasswordUtil.checkPassword(password, user.getPassword())) {
+        if (!PasswordUtil.checkPassword(password, user.getPasswordSalt(), user.getPassword())) {
             throw new OaBaseException("密码错误", 401);
         }
 

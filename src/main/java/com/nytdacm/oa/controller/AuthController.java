@@ -32,7 +32,10 @@ public class AuthController {
     public ResponseEntity<HttpResponse<UserDto>> signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
         var user = new User();
         user.setUsername(userSignupRequest.username());
-        user.setPassword(PasswordUtil.hashPassword(userSignupRequest.password()));
+        var salt = PasswordUtil.getSalt();
+        user.setPasswordSalt(salt);
+        user.setPassword(PasswordUtil.hashPassword(userSignupRequest.password(), salt));
+        user.setName(userSignupRequest.name());
         if (userService.count() == 0L) {
             user.setSuperAdmin(true);
             user.setActive(true);
@@ -56,6 +59,7 @@ public class AuthController {
 
 record UserSignupRequest(
     @NotNull(message = "用户名不能为空") @NotBlank(message = "用户名不能为空") String username,
-    @NotNull(message = "密码不能为空") @Size(min = 6, message = "密码长度至少为6位") String password
+    @NotNull(message = "密码不能为空") @Size(min = 6, message = "密码长度至少为6位") String password,
+    @NotNull(message = "姓名不能为空") @Size(max = 6, message = "姓名长度最多6位") String name
 ) {
 }
