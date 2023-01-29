@@ -8,8 +8,6 @@ public record UserDto(
     Long userId,
     String username,
     String name,
-    boolean superAdmin,
-    boolean admin,
     Instant registerTime,
     SocialAccount socialAccount
 ) {
@@ -18,8 +16,6 @@ public record UserDto(
             user.getUserId(),
             user.getUsername(),
             user.getName(),
-            user.isSuperAdmin(),
-            user.isAdmin(),
             user.getCreatedAt(),
             user.getSocialAccount()
         );

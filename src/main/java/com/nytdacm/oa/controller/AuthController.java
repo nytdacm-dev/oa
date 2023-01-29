@@ -56,9 +56,9 @@ public class AuthController {
 
     @GetMapping("/current")
     @SaCheckLogin
-    public ResponseEntity<HttpResponse<UserDto>> current() {
+    public ResponseEntity<HttpResponse<UserState>> current() {
         var user = userService.getUserById(StpUtil.getLoginIdAsLong());
-        return HttpResponse.success(200, "获取成功", UserDto.fromEntity(user));
+        return HttpResponse.success(200, "获取成功", UserState.fromEntity(user));
     }
 }
 
@@ -67,4 +67,22 @@ record UserSignupRequest(
     @NotNull(message = "密码不能为空") @Size(min = 6, message = "密码长度至少为6位") String password,
     @NotNull(message = "姓名不能为空") @Size(max = 6, message = "姓名长度最多6位") String name
 ) {
+}
+
+record UserState(
+    Long userId,
+    String username,
+    String name,
+    boolean superAdmin,
+    boolean admin
+) {
+    public static UserState fromEntity(com.nytdacm.oa.model.entity.User user) {
+        return new UserState(
+            user.getUserId(),
+            user.getUsername(),
+            user.getName(),
+            user.isSuperAdmin(),
+            user.isAdmin()
+        );
+    }
 }
