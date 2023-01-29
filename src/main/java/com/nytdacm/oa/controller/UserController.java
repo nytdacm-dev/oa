@@ -46,6 +46,9 @@ public class UserController {
         if (StringUtils.isNotEmpty(userUpdateRequest.name())) {
             user.setName(userUpdateRequest.name());
         }
+        if (StringUtils.isNotEmpty(userUpdateRequest.codeforces()) && !userUpdateRequest.codeforces().contains(";")) {
+            user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
+        }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));
     }
@@ -53,6 +56,7 @@ public class UserController {
 
 record UserUpdateRequest(
     @Size(min = 6, message = "密码长度至少为6位") String password,
-    @Size(max = 6, message = "姓名长度不能超过6位") String name
+    @Size(max = 6, message = "姓名长度不能超过6位") String name,
+    String codeforces
 ) {
 }
