@@ -1,5 +1,7 @@
 package com.nytdacm.oa.model.response.user;
 
+import com.nytdacm.oa.model.entity.SocialAccount;
+
 import java.time.Instant;
 
 public record UserDto(
@@ -8,7 +10,8 @@ public record UserDto(
     String name,
     boolean superAdmin,
     boolean admin,
-    Instant registerTime
+    Instant registerTime,
+    SocialAccount socialAccount
 ) {
     public static UserDto fromEntity(com.nytdacm.oa.model.entity.User user) {
         return new UserDto(
@@ -17,7 +20,8 @@ public record UserDto(
             user.getName(),
             user.isSuperAdmin(),
             user.isAdmin(),
-            user.getCreatedAt()
+            user.getCreatedAt(),
+            user.getSocialAccount()
         );
     }
 }

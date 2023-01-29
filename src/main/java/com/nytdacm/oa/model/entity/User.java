@@ -8,8 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Objects;
 
@@ -43,6 +45,10 @@ public class User extends BaseEntity {
 
     @Column(name = "active")
     private boolean active;
+
+    @Column(name = "social_account")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private SocialAccount socialAccount = new SocialAccount();
 
     public Long getUserId() {
         return userId;
@@ -108,31 +114,21 @@ public class User extends BaseEntity {
         this.active = active;
     }
 
+    public SocialAccount getSocialAccount() {
+        return socialAccount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return superAdmin == user.superAdmin && admin == user.admin && active == user.active && Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name);
+        return superAdmin == user.superAdmin && admin == user.admin && active == user.active && Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(socialAccount, user.socialAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-            "userId=" + userId +
-            ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", passwordSalt='" + passwordSalt + '\'' +
-            ", name='" + name + '\'' +
-            ", superAdmin=" + superAdmin +
-            ", admin=" + admin +
-            ", active=" + active +
-            "} " + super.toString();
+        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount);
     }
 }
