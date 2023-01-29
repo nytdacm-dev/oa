@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
-    private final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
     @ExceptionHandler(NotLoginException.class)
     public ResponseEntity<HttpResponse<Void>> handleSaTokenNotLoginException(NotLoginException e) {
@@ -51,7 +51,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<HttpResponse<Void>> handleAllException(Exception e) {
-        logger.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return HttpResponse.fail(500, "服务器内部错误");
     }
 }
