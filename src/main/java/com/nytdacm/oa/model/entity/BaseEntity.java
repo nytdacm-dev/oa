@@ -20,6 +20,10 @@ public abstract class BaseEntity {
     @Column(name = "deleted")
     private boolean deleted = false;
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

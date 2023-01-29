@@ -11,7 +11,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,12 @@ public class UserController {
     @Inject
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<HttpResponse<UserDto>> getUser(@PathVariable("username") String username) {
+        var user = userService.getUserByUsername(username);
+        return HttpResponse.success(200, "获取成功", UserDto.fromEntity(user));
     }
 
     @PatchMapping
