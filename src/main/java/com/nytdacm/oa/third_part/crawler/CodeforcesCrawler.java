@@ -4,14 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nytdacm.oa.dao.UserDao;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @Transactional
 public class CodeforcesCrawler {
     private final UserDao userDao;
@@ -20,6 +22,7 @@ public class CodeforcesCrawler {
         this.userDao = userDao;
     }
 
+    @Scheduled(cron = "0 0 */12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()))
