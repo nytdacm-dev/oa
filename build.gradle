@@ -5,6 +5,8 @@ plugins {
     id 'org.hibernate.orm' version '6.1.6.Final'
 
     id 'checkstyle'
+
+    id 'com.github.node-gradle.node' version '3.5.1'
 }
 
 group = 'com.nytdacm'
@@ -58,3 +60,12 @@ hibernate {
     }
 }
 
+node {
+    download = true
+    version = '18.13.0'
+    pnpmVersion = '7.26.2'
+    nodeProjectDir = nodeProjectDir.dir("$projectDir/web").get()
+    if (System.getenv("CI") == null) {
+        distBaseUrl = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
+    }
+}
