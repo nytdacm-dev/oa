@@ -4,18 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nytdacm.oa.dao.UserDao;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @Transactional
 public class CodeforcesCrawler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CodeforcesCrawler.class);
+
     private final UserDao userDao;
 
     public CodeforcesCrawler(UserDao userDao) {
@@ -24,6 +27,7 @@ public class CodeforcesCrawler {
 
     @Scheduled(cron = "0 0 */12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
+        LOGGER.info("开始爬取 Codeforces 数据");
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()))
             .toList();
@@ -42,6 +46,7 @@ public class CodeforcesCrawler {
             }
         }
         userDao.saveAll(users);
+        LOGGER.info("Codeforces 数据爬取成功");
     }
 }
 
