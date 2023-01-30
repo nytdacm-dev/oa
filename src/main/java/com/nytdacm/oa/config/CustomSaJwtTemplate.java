@@ -18,6 +18,7 @@ public class CustomSaJwtTemplate extends SaJwtTemplate {
             expTime = timeout * 1000 + currentTimestamp;
         }
 
+        // TODO: 去除 SaToken 相关的payload（需要重写验证逻辑）
         JWT jwt = JWT.create()
             .setIssuer("https://oa.nytdacm.com")
             .setIssuedAt(new Date(currentTimestamp))

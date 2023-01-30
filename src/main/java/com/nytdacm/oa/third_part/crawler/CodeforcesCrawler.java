@@ -27,6 +27,7 @@ public class CodeforcesCrawler {
 
     @Scheduled(cron = "0 0 */12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
+        // TODO: 添加 cf 账号验证
         LOGGER.info("开始爬取 Codeforces 数据");
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()))
