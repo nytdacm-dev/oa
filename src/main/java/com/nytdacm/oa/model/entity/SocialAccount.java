@@ -39,4 +39,24 @@ public class SocialAccount implements Serializable {
     public void setCodeforcesRank(String codeforcesRank) {
         this.codeforcesRank = codeforcesRank;
     }
+
+    private String github;
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    private String website;
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 }
