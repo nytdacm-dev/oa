@@ -18,7 +18,7 @@ public abstract class BaseEntity {
     private Instant updatedAt;
 
     @Column(name = "deleted")
-    private boolean deleted = false;
+    private Boolean deleted = false;
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -29,20 +29,11 @@ public abstract class BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseEntity that = (BaseEntity) o;
-        return deleted == that.deleted && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+        return Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(deleted, that.deleted);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(createdAt, updatedAt, deleted);
-    }
-
-    @Override
-    public String toString() {
-        return "BaseEntity{" +
-            "createdAt=" + createdAt +
-            ", updatedAt=" + updatedAt +
-            ", deleted=" + deleted +
-            '}';
     }
 }

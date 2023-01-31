@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class SocialAccount implements Serializable {
     private String codeforces;
-    private boolean codeforcesCrawlerEnabled;
-    private int codeforcesRating;
-    private int codeforcesMaxRating;
+    private Boolean codeforcesCrawlerEnabled;
+    private Integer codeforcesRating;
+    private Integer codeforcesMaxRating;
     private String codeforcesRank;
 
     public String getCodeforces() {
@@ -17,27 +17,27 @@ public class SocialAccount implements Serializable {
         this.codeforces = codeforces;
     }
 
-    public boolean isCodeforcesCrawlerEnabled() {
+    public Boolean getCodeforcesCrawlerEnabled() {
         return codeforcesCrawlerEnabled;
     }
 
-    public void setCodeforcesCrawlerEnabled(boolean codeforcesCrawlerEnabled) {
+    public void setCodeforcesCrawlerEnabled(Boolean codeforcesCrawlerEnabled) {
         this.codeforcesCrawlerEnabled = codeforcesCrawlerEnabled;
     }
 
-    public int getCodeforcesRating() {
+    public Integer getCodeforcesRating() {
         return codeforcesRating;
     }
 
-    public void setCodeforcesRating(int codeforcesRating) {
+    public void setCodeforcesRating(Integer codeforcesRating) {
         this.codeforcesRating = codeforcesRating;
     }
 
-    public int getCodeforcesMaxRating() {
+    public Integer getCodeforcesMaxRating() {
         return codeforcesMaxRating;
     }
 
-    public void setCodeforcesMaxRating(int codeforcesMaxRating) {
+    public void setCodeforcesMaxRating(Integer codeforcesMaxRating) {
         this.codeforcesMaxRating = codeforcesMaxRating;
     }
 

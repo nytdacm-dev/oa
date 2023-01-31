@@ -30,7 +30,7 @@ public class CodeforcesCrawler {
         LOGGER.info("开始爬取 Codeforces 数据");
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
-                user.getSocialAccount().isCodeforcesCrawlerEnabled())
+                Boolean.TRUE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
             .toList();
         var accounts = users.stream().map(user -> user.getSocialAccount().getCodeforces()).collect(Collectors.joining(";"));
         var mapper = new ObjectMapper();
@@ -56,7 +56,7 @@ public class CodeforcesCrawler {
         LOGGER.info("开始验证用户 Codeforces 账号正确性并更新值");
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
-                !user.getSocialAccount().isCodeforcesCrawlerEnabled())
+                Boolean.FALSE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
             .toList();
         users.forEach(user -> {
             var mapper = new ObjectMapper();

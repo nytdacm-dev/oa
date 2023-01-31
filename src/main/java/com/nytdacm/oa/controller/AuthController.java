@@ -81,8 +81,8 @@ record UserState(
             user.getUserId(),
             user.getUsername(),
             user.getName(),
-            user.isSuperAdmin(),
-            user.isAdmin()
+            user.getSuperAdmin(),
+            user.getAdmin()
         );
     }
 }

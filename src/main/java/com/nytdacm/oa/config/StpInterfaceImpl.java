@@ -33,10 +33,10 @@ public class StpInterfaceImpl implements StpInterface {
         List<String> list = new ArrayList<>();
         var userId = Long.parseLong(loginId.toString());
         var user = userService.getUserById(userId);
-        if (user.isAdmin()) {
+        if (user.getAdmin()) {
             list.add("admin");
         }
-        if (user.isSuperAdmin()) {
+        if (user.getSuperAdmin()) {
             list.add("super-admin");
             list.add("admin");
         }

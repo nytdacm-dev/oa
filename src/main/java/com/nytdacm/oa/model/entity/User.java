@@ -38,13 +38,13 @@ public class User extends BaseEntity {
     private String name;
 
     @Column(name = "super_admin")
-    private boolean superAdmin;
+    private Boolean superAdmin;
 
     @Column(name = "admin")
-    private boolean admin;
+    private Boolean admin;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
 
     @Column(name = "social_account")
     @JdbcTypeCode(SqlTypes.JSON)
@@ -90,27 +90,27 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
-    public boolean isSuperAdmin() {
+    public Boolean getSuperAdmin() {
         return superAdmin;
     }
 
-    public void setSuperAdmin(boolean superAdmin) {
+    public void setSuperAdmin(Boolean superAdmin) {
         this.superAdmin = superAdmin;
     }
 
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -124,7 +124,7 @@ public class User extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return superAdmin == user.superAdmin && admin == user.admin && active == user.active && Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(socialAccount, user.socialAccount);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount);
     }
 
     @Override

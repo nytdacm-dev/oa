@@ -2,6 +2,8 @@ package com.nytdacm.oa.service;
 
 import com.nytdacm.oa.model.entity.User;
 
+import java.util.List;
+
 public interface UserService {
     User newUser(User newUser);
 
@@ -11,5 +13,9 @@ public interface UserService {
 
     User updateUser(User user);
 
+    long count(String username, String name, Boolean active, Boolean admin, Boolean superAdmin);
+
     long count();
+
+    List<User> getAllUsers(String username, String name, Boolean active, Boolean admin, Boolean superAdmin, int page, int size);
 }

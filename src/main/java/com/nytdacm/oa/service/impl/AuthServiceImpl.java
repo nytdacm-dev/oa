@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(String username, String password) {
         var user = userService.getUserByUsername(username);
-        if (!user.isActive()) {
+        if (!user.getActive()) {
             throw new OaBaseException("用户未激活，请耐心等待管理员激活", 401);
         }
         if (!PasswordUtil.checkPassword(password, user.getPasswordSalt(), user.getPassword())) {

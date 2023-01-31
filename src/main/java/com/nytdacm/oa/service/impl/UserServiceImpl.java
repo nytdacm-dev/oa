@@ -6,7 +6,12 @@ import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,6 +21,21 @@ public class UserServiceImpl implements UserService {
     @Inject
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    private Example<User> paramsToExample(String username, String name, Boolean active, Boolean admin, Boolean superAdmin) {
+        var probe = new User();
+        probe.setUsername(username);
+        probe.setName(name);
+        probe.setActive(active);
+        probe.setAdmin(admin);
+        probe.setSuperAdmin(superAdmin);
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+            .withIgnoreNullValues()
+            .withIgnorePaths("socialAccount")
+            .withIgnoreCase();
+        return Example.of(probe, matcher);
     }
 
     @Override
@@ -42,7 +62,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public long count(String username, String name, Boolean active, Boolean admin, Boolean superAdmin) {
+        var example = paramsToExample(username, name, active, admin, superAdmin);
+        return userDao.count(example);
+    }
+
+    @Override
     public long count() {
-        return userDao.count();
+        return count(null, null, null, null, null);
+    }
+
+    @Override
+    public List<User> getAllUsers(String username, String name, Boolean active, Boolean admin, Boolean superAdmin, int page, int size) {
+        var example = paramsToExample(username, name, active, admin, superAdmin);
+        return userDao.findAll(example, PageRequest.of(page, size)).getContent();
     }
 }
