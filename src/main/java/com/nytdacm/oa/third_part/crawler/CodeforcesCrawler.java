@@ -50,10 +50,10 @@ public class CodeforcesCrawler {
         LOGGER.info("Codeforces 数据爬取成功");
     }
 
-    @Scheduled(fixedDelay = 3600000) // 1小时
+    @Scheduled(fixedDelay = 600000) // 10分钟
     public void checkCodeforcesAccount() {
-        // TODO: 重写请求逻辑
-        LOGGER.info("开始验证用户 Codeforces 账号正确性");
+        // TODO: 改用 HTTP 请求库
+        LOGGER.info("开始验证用户 Codeforces 账号正确性并更新值");
         var users = userDao.findAll().stream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
                 !user.getSocialAccount().isCodeforcesCrawlerEnabled())
@@ -67,6 +67,9 @@ public class CodeforcesCrawler {
                     CodeforcesUserInfoResult.class);
                 if ("OK".equals(result.status())) {
                     user.getSocialAccount().setCodeforcesCrawlerEnabled(true);
+                    user.getSocialAccount().setCodeforcesRank(result.result().get(0).rank());
+                    user.getSocialAccount().setCodeforcesMaxRating(result.result().get(0).maxRating());
+                    user.getSocialAccount().setCodeforcesRating(result.result().get(0).rating());
                 }
             } catch (Exception e) {
                 LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
