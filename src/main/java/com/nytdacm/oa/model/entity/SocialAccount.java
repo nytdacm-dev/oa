@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class SocialAccount implements Serializable {
     private String codeforces;
+    private boolean codeforcesCrawlerEnabled;
     private int codeforcesRating;
     private int codeforcesMaxRating;
     private String codeforcesRank;
@@ -14,6 +15,14 @@ public class SocialAccount implements Serializable {
 
     public void setCodeforces(String codeforces) {
         this.codeforces = codeforces;
+    }
+
+    public boolean isCodeforcesCrawlerEnabled() {
+        return codeforcesCrawlerEnabled;
+    }
+
+    public void setCodeforcesCrawlerEnabled(boolean codeforcesCrawlerEnabled) {
+        this.codeforcesCrawlerEnabled = codeforcesCrawlerEnabled;
     }
 
     public int getCodeforcesRating() {

@@ -27,10 +27,10 @@ public class CodeforcesCrawler {
 
     @Scheduled(cron = "0 0 */12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
-        // TODO: 添加 cf 账号验证
         LOGGER.info("开始爬取 Codeforces 数据");
         var users = userDao.findAll().stream()
-            .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()))
+            .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
+                user.getSocialAccount().isCodeforcesCrawlerEnabled())
             .toList();
         var accounts = users.stream().map(user -> user.getSocialAccount().getCodeforces()).collect(Collectors.joining(";"));
         var mapper = new ObjectMapper();
@@ -48,6 +48,31 @@ public class CodeforcesCrawler {
         }
         userDao.saveAll(users);
         LOGGER.info("Codeforces 数据爬取成功");
+    }
+
+    @Scheduled(fixedDelay = 3600000) // 1小时
+    public void checkCodeforcesAccount() {
+        // TODO: 重写请求逻辑
+        LOGGER.info("开始验证用户 Codeforces 账号正确性");
+        var users = userDao.findAll().stream()
+            .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
+                !user.getSocialAccount().isCodeforcesCrawlerEnabled())
+            .toList();
+        users.forEach(user -> {
+            var mapper = new ObjectMapper();
+            var account = user.getSocialAccount().getCodeforces();
+            try {
+                var result = mapper.readValue(
+                    new URL("https://codeforces.com/api/user.info?handles=" + account),
+                    CodeforcesUserInfoResult.class);
+                if ("OK".equals(result.status())) {
+                    user.getSocialAccount().setCodeforcesCrawlerEnabled(true);
+                }
+            } catch (Exception e) {
+                LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
+            }
+        });
+        LOGGER.info("验证用户 Codeforces 账号正确性完成，本次验证了 %d 个账号".formatted(users.size()));
     }
 }
 

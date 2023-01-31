@@ -48,6 +48,7 @@ public class UserController {
         }
         if (StringUtils.isNotEmpty(userUpdateRequest.codeforces()) && !userUpdateRequest.codeforces().contains(";")) {
             user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
+            user.getSocialAccount().setCodeforcesCrawlerEnabled(false);
         }
         if (StringUtils.isNotEmpty(userUpdateRequest.github())) {
             user.getSocialAccount().setGithub(userUpdateRequest.github());
