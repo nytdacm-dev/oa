@@ -5,7 +5,9 @@ spring:
     jackson:
         default-property-inclusion: NON_NULL
         serialization:
-          write-dates-as-timestamps: true
+            write-dates-as-timestamps: true
+        deserialization:
+            fail-on-unknown-properties: false
     datasource:
         url: jdbc:postgresql://${PG_HOST:localhost}:${PG_PORT:5432}/${PG_DATABASE:nytdacm_oa_dev}
         username: ${PG_USER:nytdacm_oa}
