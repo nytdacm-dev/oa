@@ -28,5 +28,6 @@
     </root>
     <logger name="com.nytdacm.oa" level="debug" additivity="false">
         <appender-ref ref="stdout"/>
+        <appender-ref ref="FILE"/>
     </logger>
 </configuration>
