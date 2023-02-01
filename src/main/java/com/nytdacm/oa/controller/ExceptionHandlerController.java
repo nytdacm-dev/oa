@@ -1,6 +1,8 @@
 package com.nytdacm.oa.controller;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.exception.SaTokenException;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.response.HttpResponse;
 import org.slf4j.Logger;
@@ -19,14 +21,19 @@ import java.util.UUID;
 public class ExceptionHandlerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-    @ExceptionHandler(NotLoginException.class)
-    public ResponseEntity<HttpResponse<Void>> handleSaTokenNotLoginException(NotLoginException e) {
-        String message = switch (e.getType()) {
-            case NotLoginException.TOKEN_TIMEOUT -> "token 已过期，请重新登录";
-            case NotLoginException.INVALID_TOKEN_MESSAGE -> "token 错误";
-            default -> "未登录";
-        };
-        return HttpResponse.fail(401, message, null);
+    @ExceptionHandler(SaTokenException.class)
+    public ResponseEntity<HttpResponse<Void>> handleSaTokenException(SaTokenException e) {
+        if (e instanceof NotLoginException nle) {
+            String message = switch (nle.getType()) {
+                case NotLoginException.TOKEN_TIMEOUT -> "token 已过期，请重新登录";
+                case NotLoginException.INVALID_TOKEN_MESSAGE -> "token 错误";
+                default -> "未登录";
+            };
+            return HttpResponse.fail(401, message, null);
+        } else if (e instanceof NotRoleException) {
+            return HttpResponse.fail(403, "无权限", null);
+        }
+        return handleAllException(e);
     }
 
     @ExceptionHandler(OaBaseException.class)
