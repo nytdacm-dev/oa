@@ -72,6 +72,8 @@ public class CodeforcesCrawler {
                     user.getSocialAccount().setCodeforcesRating(result.result().get(0).rating());
                 }
             } catch (Exception e) {
+                user.getSocialAccount().setCodeforces(null);
+                // TODO: 添加提示
                 LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
             }
         });
