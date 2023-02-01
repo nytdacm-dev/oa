@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
+            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
             .withIgnoreCase();
         return Example.of(probe, matcher);
     }
