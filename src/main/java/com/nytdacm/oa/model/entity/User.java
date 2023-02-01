@@ -38,13 +38,13 @@ public class User extends BaseEntity {
     private String name;
 
     @Column(name = "super_admin")
-    private Boolean superAdmin;
+    private Boolean superAdmin = false;
 
     @Column(name = "admin")
-    private Boolean admin;
+    private Boolean admin = false;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = false;
 
     @Column(name = "social_account")
     @JdbcTypeCode(SqlTypes.JSON)
@@ -52,10 +52,6 @@ public class User extends BaseEntity {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -116,6 +112,10 @@ public class User extends BaseEntity {
 
     public SocialAccount getSocialAccount() {
         return socialAccount;
+    }
+
+    public void setSocialAccount(SocialAccount socialAccount) {
+        this.socialAccount = socialAccount;
     }
 
     @Override

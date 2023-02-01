@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
         probe.setActive(active);
         probe.setAdmin(admin);
         probe.setSuperAdmin(superAdmin);
+        probe.setSocialAccount(null);
 
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
-            .withIgnorePaths("socialAccount")
             .withIgnoreCase();
         return Example.of(probe, matcher);
     }
