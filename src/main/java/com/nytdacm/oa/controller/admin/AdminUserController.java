@@ -68,6 +68,12 @@ public class AdminUserController {
         }
         return HttpResponse.success(200, "修改成功", AdminUserDto.fromEntity(userService.updateUser(user)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpResponse<Void>> deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+        return HttpResponse.success(200, "删除成功", null);
+    }
 }
 
 record AdminUserDto(

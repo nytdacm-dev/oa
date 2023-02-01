@@ -18,4 +18,6 @@ public interface UserService {
     long count();
 
     List<User> getAllUsers(String username, String name, Boolean active, Boolean admin, Boolean superAdmin, int page, int size);
+
+    void delete(Long id);
 }

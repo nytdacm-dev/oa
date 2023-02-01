@@ -79,4 +79,9 @@ public class UserServiceImpl implements UserService {
         var sort = Sort.by(Sort.Direction.ASC, "userId");
         return userDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
     }
+
+    @Override
+    public void delete(Long id) {
+        userDao.deleteById(id);
+    }
 }
