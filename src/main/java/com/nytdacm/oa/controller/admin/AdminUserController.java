@@ -3,6 +3,7 @@ package com.nytdacm.oa.controller.admin;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
+import cn.dev33.satoken.stp.StpUtil;
 import com.nytdacm.oa.model.entity.SocialAccount;
 import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.model.response.HttpResponse;
@@ -71,6 +72,9 @@ public class AdminUserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpResponse<Void>> deleteUser(@PathVariable Long id) {
+        if (id.equals(StpUtil.getLoginIdAsLong())) {
+            return HttpResponse.fail(400, "不能删除自己", null);
+        }
         userService.delete(id);
         return HttpResponse.success(200, "删除成功", null);
     }
