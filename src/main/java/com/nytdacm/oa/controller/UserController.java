@@ -56,6 +56,9 @@ public class UserController {
         if (StringUtils.isNotEmpty(userUpdateRequest.website())) {
             user.getSocialAccount().setWebsite(userUpdateRequest.website());
         }
+        if (StringUtils.isNotEmpty(userUpdateRequest.atCoder())) {
+            user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
+        }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));
     }
@@ -66,6 +69,7 @@ record UserUpdateRequest(
     @Size(max = 6, message = "姓名长度不能超过6位") String name,
     String codeforces,
     String github,
-    String website
+    String website,
+    String atCoder
 ) {
 }

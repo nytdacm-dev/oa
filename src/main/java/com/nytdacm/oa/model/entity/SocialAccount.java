@@ -68,4 +68,14 @@ public class SocialAccount implements Serializable {
     public void setWebsite(String website) {
         this.website = website;
     }
+
+    private String atCoder;
+
+    public String getAtCoder() {
+        return atCoder;
+    }
+
+    public void setAtCoder(String atCoder) {
+        this.atCoder = atCoder;
+    }
 }
