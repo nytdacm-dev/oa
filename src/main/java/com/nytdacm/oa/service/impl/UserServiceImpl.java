@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers(String username, String name, Boolean active, Boolean admin, Boolean superAdmin, int page, int size) {
         var example = paramsToExample(username, name, active, admin, superAdmin);
-        return userDao.findAll(example, PageRequest.of(page, size)).getContent();
+        var sort = Sort.by(Sort.Direction.ASC, "userId");
+        return userDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
     }
 }
