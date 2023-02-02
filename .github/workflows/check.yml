@@ -7,6 +7,10 @@ on:
     pull_request:
         paths-ignore:
             - '**/*.md'
+
+env:
+  TZ: Asia/Shanghai
+
 jobs:
     runner-job:
         # Containers must run in Linux based operating systems
