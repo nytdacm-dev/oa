@@ -34,5 +34,5 @@ jobs:
       - name: Deploy
         run: bash ./bin/deploy.sh
         env:
-          - DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          - DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
