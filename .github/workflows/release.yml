@@ -1,0 +1,38 @@
+name: release
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment:
+      - name: production
+      - url: https://nytdacm.com
+    if: github.repository == 'gtn1024/oa'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ secrets.WEB_REPO_KEY }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+      - name: Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: thinJar
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Deploy
+        run: bash ./bin/deploy.sh
+        env:
+          - DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          - DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
