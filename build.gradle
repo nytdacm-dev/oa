@@ -99,22 +99,14 @@ def cleanupOldWebBuild = tasks.register('cleanupOldWebBuild', Delete) {
 
 def buildWeb = tasks.register('buildWeb', PnpmTask) {
     dependsOn cleanupOldWebBuild
-    dependsOn 'nodeSetup'
-    dependsOn 'pnpmSetup'
     dependsOn 'pnpmInstall'
     args = ['run', 'build']
 }
 
-def copyWebBuild = tasks.register('copyWebBuild', Copy) {
-    dependsOn buildWeb
-    from "$projectDir/web/dist"
-    into "$projectDir/src/main/resources/static"
-}
-
 tasks.named('build').configure {
-    dependsOn copyWebBuild
+    dependsOn buildWeb
 }
 
 tasks.named('bootJar').configure {
-    dependsOn copyWebBuild
+    dependsOn buildWeb
 }
