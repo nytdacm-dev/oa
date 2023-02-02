@@ -89,14 +89,10 @@ node {
     }
 }
 
-def copyWebBuild = tasks.register('copyWebBuild', Copy) {
-    from "$projectDir/web/dist"
-    into "$projectDir/src/main/resources/static"
-}
 
 def cleanupOldWebBuild = tasks.register('cleanupOldWebBuild', Delete) {
     doLast {
-        println "清空旧的构建"
+        println '清空旧的构建'
         delete "$projectDir/src/main/resources/static"
     }
 }
@@ -109,15 +105,16 @@ def buildWeb = tasks.register('buildWeb', PnpmTask) {
     args = ['run', 'build']
 }
 
-def webBuild = tasks.register('webBuild') {
+def copyWebBuild = tasks.register('copyWebBuild', Copy) {
     dependsOn buildWeb
-    dependsOn copyWebBuild
+    from "$projectDir/web/dist"
+    into "$projectDir/src/main/resources/static"
 }
 
 tasks.named('build').configure {
-    dependsOn webBuild
+    dependsOn copyWebBuild
 }
 
 tasks.named('bootJar').configure {
-    dependsOn webBuild
+    dependsOn copyWebBuild
 }
