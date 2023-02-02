@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
