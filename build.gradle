@@ -82,9 +82,7 @@ hibernate {
 }
 
 node {
-    download = true
-    version = '18.13.0'
-    pnpmVersion = '7.26.2'
+    download = false
     nodeProjectDir = nodeProjectDir.dir("$projectDir/web").get()
     if (System.getenv("CI") == null) {
         distBaseUrl = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
