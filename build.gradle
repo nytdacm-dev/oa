@@ -1,3 +1,5 @@
+import com.github.gradle.node.pnpm.task.PnpmTask
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.2'
@@ -87,4 +89,37 @@ node {
     if (System.getenv("CI") == null) {
         distBaseUrl = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
     }
+}
+
+def copyWebBuild = tasks.register('copyWebBuild', Copy) {
+    from "$projectDir/web/dist"
+    into "$projectDir/src/main/resources/static"
+}
+
+def cleanupOldWebBuild = tasks.register('cleanupOldWebBuild', Delete) {
+    doLast {
+        println "清空旧的构建"
+        delete "$projectDir/src/main/resources/static"
+    }
+}
+
+def buildWeb = tasks.register('buildWeb', PnpmTask) {
+    dependsOn cleanupOldWebBuild
+    dependsOn 'nodeSetup'
+    dependsOn 'pnpmSetup'
+    dependsOn 'pnpmInstall'
+    args = ['run', 'build']
+}
+
+def webBuild = tasks.register('webBuild') {
+    dependsOn buildWeb
+    dependsOn copyWebBuild
+}
+
+tasks.named('build').configure {
+    dependsOn webBuild
+}
+
+tasks.named('bootJar').configure {
+    dependsOn webBuild
 }
