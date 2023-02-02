@@ -1,4 +1,4 @@
-name: release
+name: deploy
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - release
 
 jobs:
-  release:
+  deploy:
     runs-on: ubuntu-latest
     environment:
-      - name: production
-      - url: https://nytdacm.com
+      name: production
+      url: https://nytdacm.com
     if: github.repository == 'gtn1024/oa'
     steps:
       - uses: actions/checkout@v3
