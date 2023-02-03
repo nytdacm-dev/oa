@@ -9,6 +9,7 @@ import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
 import com.nytdacm.oa.service.UserService;
+import com.nytdacm.oa.util.PasswordUtil;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
@@ -63,7 +64,9 @@ public class AdminUserController {
             user.setName(adminUserUpdateRequest.name());
         }
         if (StringUtils.isNotEmpty(adminUserUpdateRequest.password())) {
-            user.setPassword(adminUserUpdateRequest.password());
+            var salt = PasswordUtil.getSalt();
+            user.setPasswordSalt(salt);
+            user.setPassword(PasswordUtil.hashPassword(adminUserUpdateRequest.password(), salt));
         }
         if (Objects.nonNull(adminUserUpdateRequest.admin())) {
             user.setAdmin(adminUserUpdateRequest.admin());
