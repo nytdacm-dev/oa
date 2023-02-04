@@ -2,6 +2,7 @@ import com.github.gradle.node.pnpm.task.PnpmTask
 
 plugins {
     id 'java'
+    id 'groovy'
     id 'org.springframework.boot' version '3.0.2'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'maven-publish'
@@ -9,7 +10,7 @@ plugins {
     id 'org.hibernate.orm' version '6.1.6.Final'
 
     id 'checkstyle'
-
+    id 'jacoco'
     id 'com.github.node-gradle.node' version '3.5.1'
 }
 
@@ -42,10 +43,19 @@ publishing {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
 def satokenVersion = '1.34.0'
 def hutoolVersion = '5.8.11'
+def groovyVersion = '4.0.8'
 
 dependencies {
+    implementation "org.apache.groovy:groovy"
     implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
     implementation "cn.dev33:sa-token-spring-boot3-starter:$satokenVersion"
     implementation("cn.dev33:sa-token-jwt:$satokenVersion") {
@@ -54,7 +64,6 @@ dependencies {
     }
     implementation "cn.hutool:hutool-core:$hutoolVersion"
     implementation "cn.hutool:hutool-json:$hutoolVersion"
-
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -67,6 +76,8 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.apache.groovy:groovy-test:$groovyVersion"
+    testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
 }
 
 tasks.named('test') {
@@ -109,4 +120,8 @@ tasks.named('build').configure {
 
 tasks.named('bootJar').configure {
     dependsOn buildWeb
+}
+
+tasks.named('check').configure {
+    dependsOn jacocoTestReport
 }
