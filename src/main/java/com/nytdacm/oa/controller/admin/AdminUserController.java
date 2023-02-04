@@ -41,7 +41,6 @@ public class AdminUserController {
 
     @GetMapping
     public ResponseEntity<HttpResponse<ListWrapper<AdminUserDto>>> users(
-        // TODO: 存在未登录时可以访问的 bug
         @RequestParam(required = false) String username,
         @RequestParam(required = false) String name,
         @RequestParam(required = false) Boolean active,
@@ -54,6 +53,12 @@ public class AdminUserController {
             .stream().map(AdminUserDto::fromEntity).toList();
         var count = userService.count(username, name, active, admin, superAdmin);
         return HttpResponse.success(200, "获取成功", new ListWrapper<>(count, users));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HttpResponse<AdminUserDto>> getUser(@PathVariable Long id) {
+        var user = userService.getUserById(id);
+        return HttpResponse.success(200, "获取成功", AdminUserDto.fromEntity(user));
     }
 
     @PatchMapping("/{id}")
