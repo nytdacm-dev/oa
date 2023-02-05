@@ -1,10 +1,15 @@
 package com.nytdacm.oa.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
@@ -13,7 +18,9 @@ import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.type.SqlTypes;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_users")
@@ -49,6 +56,19 @@ public class User extends BaseEntity {
     @Column(name = "social_account")
     @JdbcTypeCode(SqlTypes.JSON)
     private SocialAccount socialAccount = new SocialAccount();
+
+    @ManyToMany(
+        fetch = FetchType.EAGER,
+        cascade = {CascadeType.MERGE})
+    @JoinTable(
+        name = "user_group",
+        joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "group_id", referencedColumnName = "group_id")
+        })
+    private Set<Group> groups = new HashSet<>();
 
     public Long getUserId() {
         return userId;
@@ -118,17 +138,25 @@ public class User extends BaseEntity {
         this.socialAccount = socialAccount;
     }
 
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount) && Objects.equals(groups, user.groups);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount);
+        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups);
     }
 }
