@@ -10,4 +10,6 @@ public interface GroupService {
     long count(String name);
 
     Group newGroup(Group group);
+
+    void delete(Long id);
 }

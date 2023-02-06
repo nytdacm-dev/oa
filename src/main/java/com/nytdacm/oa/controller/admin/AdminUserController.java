@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
+import com.nytdacm.oa.model.entity.Group;
 import com.nytdacm.oa.model.entity.SocialAccount;
 import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.model.response.HttpResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -103,6 +105,7 @@ record AdminUserDto(
     Boolean admin,
     Boolean active,
     SocialAccount socialAccount,
+    List<GroupDto> groups,
     Instant registerTime
 ) {
     public static AdminUserDto fromEntity(User user) {
@@ -114,8 +117,23 @@ record AdminUserDto(
             user.getAdmin(),
             user.getActive(),
             user.getSocialAccount(),
+            user.getGroups().stream().map(GroupDto::fromEntity).toList(),
             user.getCreatedAt()
         );
+    }
+
+    private record GroupDto(
+        Long groupId,
+        String name,
+        Instant createdAt
+    ) {
+        public static GroupDto fromEntity(Group group) {
+            return new GroupDto(
+                group.getGroupId(),
+                group.getName(),
+                group.getCreatedAt()
+            );
+        }
     }
 }
 

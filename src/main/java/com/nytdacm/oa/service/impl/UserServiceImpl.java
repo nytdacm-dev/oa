@@ -1,5 +1,6 @@
 package com.nytdacm.oa.service.impl;
 
+import com.nytdacm.oa.dao.GroupDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.User;
@@ -18,10 +19,12 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final GroupDao groupDao;
 
     @Inject
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, GroupDao groupDao) {
         this.userDao = userDao;
+        this.groupDao = groupDao;
     }
 
     private Example<User> paramsToExample(String username, String name, Boolean active, Boolean admin, Boolean superAdmin) {
@@ -83,6 +86,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
+        var user = userDao.findById(id).orElseThrow(() -> new OaBaseException("用户不存在", 404));
+        var groups = user.getGroups();
+        groups.forEach(group -> group.getUsers().remove(user));
+        groupDao.saveAll(groups);
         userDao.deleteById(id);
     }
 }

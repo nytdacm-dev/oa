@@ -1,6 +1,8 @@
 package com.nytdacm.oa.service.impl;
 
 import com.nytdacm.oa.dao.GroupDao;
+import com.nytdacm.oa.dao.UserDao;
+import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.Group;
 import com.nytdacm.oa.service.GroupService;
 import jakarta.inject.Inject;
@@ -15,10 +17,12 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService {
     private final GroupDao groupDao;
+    private final UserDao userDao;
 
     @Inject
-    public GroupServiceImpl(GroupDao groupDao) {
+    public GroupServiceImpl(GroupDao groupDao, UserDao userDao) {
         this.groupDao = groupDao;
+        this.userDao = userDao;
     }
 
     private Example<Group> paramsToExample(String name) {
@@ -48,5 +52,14 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group newGroup(Group group) {
         return groupDao.save(group);
+    }
+
+    @Override
+    public void delete(Long id) {
+        var group = groupDao.findById(id).orElseThrow(() -> new OaBaseException("群组不存在", 404));
+        var users = group.getUsers();
+        users.forEach(user -> user.getGroups().remove(group));
+        userDao.saveAll(users);
+        groupDao.deleteById(id);
     }
 }
