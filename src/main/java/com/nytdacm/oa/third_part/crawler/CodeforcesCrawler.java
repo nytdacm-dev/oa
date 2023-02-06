@@ -1,7 +1,10 @@
 package com.nytdacm.oa.third_part.crawler;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
+import com.nytdacm.oa.model.entity.Submission;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +24,11 @@ public class CodeforcesCrawler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CodeforcesCrawler.class);
 
     private final UserDao userDao;
+    private final SubmissionDao submissionDao;
 
-    public CodeforcesCrawler(UserDao userDao) {
+    public CodeforcesCrawler(UserDao userDao, SubmissionDao submissionDao) {
         this.userDao = userDao;
+        this.submissionDao = submissionDao;
     }
 
     @Scheduled(cron = "0 0 5/12 * * *", zone = "Asia/Shanghai")
@@ -79,6 +85,49 @@ public class CodeforcesCrawler {
         });
         LOGGER.info("验证用户 Codeforces 账号正确性完成，本次验证了 %d 个账号".formatted(users.size()));
     }
+
+    @Scheduled(cron = "0 0 9/24 * * *", zone = "Asia/Shanghai")
+    public void getCodeforcesSubmissions() {
+        // TODO: 重写逻辑
+        LOGGER.info("开始爬取 Codeforces 提交记录");
+        var users = userDao.findAll().stream()
+            .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
+                Boolean.TRUE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
+            .toList();
+        users.forEach(user -> {
+            var account = user.getSocialAccount().getCodeforces();
+            try {
+                var mapper = new ObjectMapper();
+                var result = mapper.readValue(
+                    new URL("https://codeforces.com/api/user.status?handle=" + account + "&from=1&count=200"),
+                    CodeforcesSubmissionResult.class);
+                if ("OK".equals(result.status())) {
+                    var submissions = result.result();
+                    submissions
+                        .forEach(submission -> {
+                            if (submissionDao.existsByRemoteSubmissionIdAndOj(String.valueOf(submission.id()), "Codeforces")) {
+                                return;
+                            }
+                            var s = new Submission();
+                            s.setUser(user);
+                            s.setLanguage(submission.programmingLanguage());
+                            s.setContestId(String.valueOf(submission.contestId()));
+                            s.setOj("Codeforces");
+                            s.setStatus(submission.verdict());
+                            s.setName(submission.problem().name());
+                            s.setRemoteSubmissionId(String.valueOf(submission.id()));
+                            s.setRemoteProblemId(submission.problem().contestId() + submission.problem().index());
+                            s.setSubmitTime(Instant.ofEpochSecond(submission.creationTimeSeconds()));
+                            s.setRelativeTime(submission.relativeTimeSeconds());
+                            submissionDao.save(s);
+                        });
+                }
+            } catch (Exception e) {
+                LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
+            }
+        });
+        LOGGER.info("Codeforces 提交记录爬取成功");
+    }
 }
 
 record CodeforcesUserInfoResult(
@@ -98,5 +147,30 @@ record CodeforcesUserInfoResult(
         long registrationTimeSeconds,
         String maxRank
     ) {
+    }
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+record CodeforcesSubmissionResult(
+    String status,
+    List<CodeforcesSubmission> result
+) {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record CodeforcesSubmission(
+        Long id,
+        Long contestId,
+        Long creationTimeSeconds,
+        Long relativeTimeSeconds,
+        CodeforcesProblem problem,
+        String programmingLanguage,
+        String verdict
+    ) {
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public record CodeforcesProblem(
+            String index,
+            Long contestId,
+            String name
+        ) {
+        }
     }
 }
