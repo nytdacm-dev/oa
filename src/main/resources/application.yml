@@ -1,30 +1,30 @@
 server:
-    port: 8080
+  port: 8080
 
 spring:
-    jackson:
-        default-property-inclusion: NON_NULL
-        serialization:
-            write-dates-as-timestamps: true
-        deserialization:
-            fail-on-unknown-properties: false
-    datasource:
-        url: jdbc:postgresql://${PG_HOST:localhost}:${PG_PORT:5432}/${PG_DATABASE:nytdacm_oa_dev}
-        username: ${PG_USER:nytdacm_oa}
-        password: ${PG_PASSWORD:123456}
-        driver-class-name: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: update
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: true
+    deserialization:
+      fail-on-unknown-properties: false
+  datasource:
+    url: jdbc:postgresql://${PG_HOST:localhost}:${PG_PORT:5432}/${PG_DATABASE:nytdacm_oa_dev}
+    username: ${PG_USER:nytdacm_oa}
+    password: ${PG_PASSWORD:123456}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 sa-token:
-    token-name: Authorization
-    # token前缀
-    token-prefix: Bearer
-    # jwt 密钥
-    jwt-secret-key: ${JWT_SECRET_KEY:JzNuZP2nGuBnTQKe3A0rxuYhExezSghw}
-    # token有效期
-    token-expire-timeout: ${TOKEN_EXPIRE_TIMEOUT:604800}
-    # 关闭 Cookie 功能
-    is-read-cookie: false
-    is-write-header: false
+  token-name: Authorization
+  # token前缀
+  token-prefix: Bearer
+  # jwt 密钥
+  jwt-secret-key: ${JWT_SECRET_KEY:JzNuZP2nGuBnTQKe3A0rxuYhExezSghw}
+  # token有效期
+  token-expire-timeout: ${TOKEN_EXPIRE_TIMEOUT:604800}
+  # 关闭 Cookie 功能
+  is-read-cookie: false
+  is-write-header: false
