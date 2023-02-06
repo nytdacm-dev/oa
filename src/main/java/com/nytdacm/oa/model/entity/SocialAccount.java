@@ -78,4 +78,14 @@ public class SocialAccount implements Serializable {
     public void setAtCoder(String atCoder) {
         this.atCoder = atCoder;
     }
+
+    private String luogu;
+
+    public String getLuogu() {
+        return luogu;
+    }
+
+    public void setLuogu(String luogu) {
+        this.luogu = luogu;
+    }
 }

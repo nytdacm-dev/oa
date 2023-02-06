@@ -46,18 +46,21 @@ public class UserController {
         if (StringUtils.isNotEmpty(userUpdateRequest.name())) {
             user.setName(userUpdateRequest.name());
         }
-        if (StringUtils.isNotEmpty(userUpdateRequest.codeforces()) && !userUpdateRequest.codeforces().contains(";")) {
+        if (userUpdateRequest.codeforces() != null) {
             user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
             user.getSocialAccount().setCodeforcesCrawlerEnabled(false);
         }
-        if (StringUtils.isNotEmpty(userUpdateRequest.github())) {
+        if (userUpdateRequest.github() != null) {
             user.getSocialAccount().setGithub(userUpdateRequest.github());
         }
-        if (StringUtils.isNotEmpty(userUpdateRequest.website())) {
+        if (userUpdateRequest.website() != null) {
             user.getSocialAccount().setWebsite(userUpdateRequest.website());
         }
-        if (StringUtils.isNotEmpty(userUpdateRequest.atCoder())) {
+        if (userUpdateRequest.atCoder() != null) {
             user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
+        }
+        if (userUpdateRequest.luogu() != null) {
+            user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
         }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));
@@ -70,6 +73,7 @@ record UserUpdateRequest(
     String codeforces,
     String github,
     String website,
-    String atCoder
+    String atCoder,
+    String luogu
 ) {
 }
