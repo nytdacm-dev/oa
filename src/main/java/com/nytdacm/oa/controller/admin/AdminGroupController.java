@@ -49,6 +49,8 @@ public class AdminGroupController {
     public ResponseEntity<HttpResponse<GroupDto>> newGroup(@Valid @RequestBody NewGroupRequest newGroupRequest) {
         var group = new Group();
         group.setName(newGroupRequest.name());
+        group.setDisplayName(newGroupRequest.displayName());
+        group.setShowInHomepage(newGroupRequest.showInHomepage());
         group = groupService.newGroup(group);
         return HttpResponse.success(200, "创建成功", GroupDto.fromEntity(group));
     }
@@ -80,7 +82,9 @@ public class AdminGroupController {
 }
 
 record NewGroupRequest(
-    @NotNull(message = "名称不能为空") String name
+    @NotNull(message = "名称不能为空") String name,
+    String displayName,
+    Boolean showInHomepage
 ) {
 }
 
