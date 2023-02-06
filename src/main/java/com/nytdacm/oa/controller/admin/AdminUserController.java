@@ -9,6 +9,7 @@ import com.nytdacm.oa.model.entity.SocialAccount;
 import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
+import com.nytdacm.oa.service.GroupService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
 import jakarta.inject.Inject;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -35,10 +38,12 @@ import java.util.Objects;
 @SaCheckRole(value = {"admin", "super-admin"}, mode = SaMode.OR)
 public class AdminUserController {
     private final UserService userService;
+    private final GroupService groupService;
 
     @Inject
-    public AdminUserController(UserService userService) {
+    public AdminUserController(UserService userService, GroupService groupService) {
         this.userService = userService;
+        this.groupService = groupService;
     }
 
     @GetMapping
@@ -61,6 +66,24 @@ public class AdminUserController {
     public ResponseEntity<HttpResponse<AdminUserDto>> getUser(@PathVariable Long id) {
         var user = userService.getUserById(id);
         return HttpResponse.success(200, "获取成功", AdminUserDto.fromEntity(user));
+    }
+
+    @GetMapping("/{id}/groups")
+    public ResponseEntity<HttpResponse<List<Long>>> getUserGroups(@PathVariable Long id) {
+        var groups = userService.getUserById(id).getGroups().stream().map(Group::getGroupId).toList();
+        return HttpResponse.success(200, "获取成功", groups);
+    }
+
+    @PostMapping("/{id}/groups")
+    public ResponseEntity<HttpResponse<Void>> setUserGroups(
+        @PathVariable Long id,
+        @RequestBody UserGroupRequest userGroupRequest
+    ) {
+        var user = userService.getUserById(id);
+        var groups = userGroupRequest.groups().stream().map(groupService::getGroupById).collect(Collectors.toSet());
+        user.setGroups(groups);
+        userService.updateUser(user);
+        return HttpResponse.success(200, "修改成功", null);
     }
 
     @PatchMapping("/{id}")
@@ -97,6 +120,11 @@ public class AdminUserController {
     }
 }
 
+record UserGroupRequest(
+    List<Long> groups
+) {
+}
+
 record AdminUserDto(
     Long userId,
     String username,
@@ -122,7 +150,7 @@ record AdminUserDto(
         );
     }
 
-    private record GroupDto(
+    record GroupDto(
         Long groupId,
         String name,
         Boolean showInHomepage,
