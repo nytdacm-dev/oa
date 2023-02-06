@@ -25,7 +25,7 @@ public class CodeforcesCrawler {
         this.userDao = userDao;
     }
 
-    @Scheduled(cron = "0 0 */12 * * *", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 0 5/12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
         LOGGER.info("开始爬取 Codeforces 数据");
         var users = userDao.findAll().stream()
@@ -50,7 +50,7 @@ public class CodeforcesCrawler {
         LOGGER.info("Codeforces 数据爬取成功");
     }
 
-    @Scheduled(fixedDelay = 600000) // 10分钟
+    @Scheduled(fixedDelay = 1800000) // 30分钟
     public void checkCodeforcesAccount() {
         // TODO: 改用 HTTP 请求库
         LOGGER.info("开始验证用户 Codeforces 账号正确性并更新值");
