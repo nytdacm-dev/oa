@@ -7,6 +7,8 @@ import java.util.List;
 public interface GroupService {
     List<Group> getAllGroups(String name, Boolean showInHomepage, int page, int size);
 
+    List<Group> getAllGroups(Boolean showInHomepage);
+
     long count(String name, Boolean showInHomepage);
 
     Group newGroup(Group group);

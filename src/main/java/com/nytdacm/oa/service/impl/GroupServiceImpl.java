@@ -45,6 +45,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public List<Group> getAllGroups(Boolean showInHomepage) {
+        return getAllGroups(null, showInHomepage, 0, Integer.MAX_VALUE);
+    }
+
+    @Override
     public long count(String name, Boolean showInHomepage) {
         var example = paramsToExample(name, showInHomepage);
         return groupDao.count(example);
