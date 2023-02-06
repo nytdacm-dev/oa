@@ -12,14 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/group")
@@ -46,12 +39,37 @@ public class AdminGroupController {
             new ListWrapper<>(groupService.count(name, showInHomePage), groups));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<HttpResponse<GroupDto>> group(@PathVariable Long id) {
+        var group = groupService.getGroupById(id);
+        return HttpResponse.success(200, "获取成功", GroupDto.fromEntity(group));
+    }
+
     @PostMapping
     public ResponseEntity<HttpResponse<GroupDto>> newGroup(@Valid @RequestBody NewGroupRequest newGroupRequest) {
         var group = new Group();
         group.setName(newGroupRequest.name());
         group = groupService.newGroup(group);
         return HttpResponse.success(200, "创建成功", GroupDto.fromEntity(group));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<HttpResponse<Void>> updateGroup(
+        @RequestBody @Valid GroupUpdateRequest groupUpdateRequest,
+        @PathVariable Long id
+    ) {
+        var group = groupService.getGroupById(id);
+        if (groupUpdateRequest.name() != null) {
+            group.setName(groupUpdateRequest.name());
+        }
+        if (groupUpdateRequest.displayName() != null) {
+            group.setDisplayName(groupUpdateRequest.displayName());
+        }
+        if (groupUpdateRequest.showInHomepage() != null) {
+            group.setShowInHomepage(groupUpdateRequest.showInHomepage());
+        }
+        groupService.newGroup(group);
+        return HttpResponse.success(200, "更新成功", null);
     }
 
     @DeleteMapping("/{id}")
@@ -66,3 +84,9 @@ record NewGroupRequest(
 ) {
 }
 
+record GroupUpdateRequest(
+    String name,
+    String displayName,
+    Boolean showInHomepage
+) {
+}

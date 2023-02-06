@@ -38,6 +38,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Group getGroupById(Long id) {
+        return groupDao.findById(id).orElseThrow(() -> new OaBaseException("群组不存在", 404));
+    }
+
+    @Override
     public List<Group> getAllGroups(String name, Boolean showInHomepage, int page, int size) {
         var example = paramsToExample(name, showInHomepage);
         var sort = Sort.by(Sort.Direction.ASC, "groupId");

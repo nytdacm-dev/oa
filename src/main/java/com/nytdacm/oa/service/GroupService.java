@@ -5,6 +5,8 @@ import com.nytdacm.oa.model.entity.Group;
 import java.util.List;
 
 public interface GroupService {
+    Group getGroupById(Long id);
+
     List<Group> getAllGroups(String name, Boolean showInHomepage, int page, int size);
 
     List<Group> getAllGroups(Boolean showInHomepage);
