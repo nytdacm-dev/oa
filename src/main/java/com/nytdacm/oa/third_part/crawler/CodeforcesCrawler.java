@@ -65,7 +65,7 @@ public class CodeforcesCrawler {
                 var result = mapper.readValue(
                     new URL("https://codeforces.com/api/user.info?handles=" + account),
                     CodeforcesUserInfoResult.class);
-                if ("OK".equals(result.status())) {
+                if ("OK".equals(result.status()) && result.result().size() == 1 && account.equals(result.result().get(0).handle())) {
                     user.getSocialAccount().setCodeforcesCrawlerEnabled(true);
                     user.getSocialAccount().setCodeforcesRank(result.result().get(0).rank());
                     user.getSocialAccount().setCodeforcesMaxRating(result.result().get(0).maxRating());
