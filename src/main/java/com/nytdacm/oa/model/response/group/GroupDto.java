@@ -9,6 +9,7 @@ import java.util.List;
 public record GroupDto(
     Long groupId,
     String name,
+    String displayName,
     List<UserDto> users,
     Boolean showInHomepage,
     Instant createdAt
@@ -17,6 +18,7 @@ public record GroupDto(
         return new GroupDto(
             group.getGroupId(),
             group.getName(),
+            group.getDisplayName(),
             group.getUsers().stream().map(UserDto::fromEntity).toList(),
             group.getShowInHomepage(),
             group.getCreatedAt()

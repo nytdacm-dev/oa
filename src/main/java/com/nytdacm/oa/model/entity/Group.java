@@ -32,6 +32,9 @@ public class Group extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     @Column(name = "show_in_home_page")
     private Boolean showInHomepage = false;
 
@@ -62,6 +65,14 @@ public class Group extends BaseEntity {
         this.name = name;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public Set<User> getUsers() {
         return users;
     }
@@ -76,11 +87,11 @@ public class Group extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Group group = (Group) o;
-        return Objects.equals(groupId, group.groupId) && Objects.equals(name, group.name) && Objects.equals(showInHomepage, group.showInHomepage) && Objects.equals(users, group.users);
+        return Objects.equals(groupId, group.groupId) && Objects.equals(name, group.name) && Objects.equals(displayName, group.displayName) && Objects.equals(showInHomepage, group.showInHomepage) && Objects.equals(users, group.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), groupId, name, showInHomepage);
+        return Objects.hash(super.hashCode(), groupId, name, displayName, showInHomepage);
     }
 }
