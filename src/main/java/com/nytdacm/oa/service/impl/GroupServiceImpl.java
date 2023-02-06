@@ -25,9 +25,10 @@ public class GroupServiceImpl implements GroupService {
         this.userDao = userDao;
     }
 
-    private Example<Group> paramsToExample(String name) {
+    private Example<Group> paramsToExample(String name, Boolean showInHomepage) {
         var probe = new Group();
         probe.setName(name);
+        probe.setShowInHomepage(showInHomepage);
         probe.setUsers(null);
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
@@ -37,15 +38,15 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> getAllGroups(String name, int page, int size) {
-        var example = paramsToExample(name);
+    public List<Group> getAllGroups(String name, Boolean showInHomepage, int page, int size) {
+        var example = paramsToExample(name, showInHomepage);
         var sort = Sort.by(Sort.Direction.ASC, "groupId");
         return groupDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
     }
 
     @Override
-    public long count(String name) {
-        var example = paramsToExample(name);
+    public long count(String name, Boolean showInHomepage) {
+        var example = paramsToExample(name, showInHomepage);
         return groupDao.count(example);
     }
 

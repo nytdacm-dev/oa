@@ -39,13 +39,14 @@ public class AdminGroupController {
     @GetMapping
     public ResponseEntity<HttpResponse<ListWrapper<AdminGroupDto>>> groups(
         @RequestParam(required = false) String name,
+        @RequestParam(required = false) Boolean showInHomePage,
         @RequestParam(required = false, defaultValue = "0") Integer page,
         @RequestParam(required = false, defaultValue = "2147483647") Integer size
     ) {
-        var groups = groupService.getAllGroups(name, page, size).stream()
+        var groups = groupService.getAllGroups(name, showInHomePage, page, size).stream()
             .map(AdminGroupDto::fromEntity).toList();
         return HttpResponse.success(200, "获取成功",
-            new ListWrapper<>(groupService.count(name), groups));
+            new ListWrapper<>(groupService.count(name, showInHomePage), groups));
     }
 
     @PostMapping
@@ -72,6 +73,7 @@ record AdminGroupDto(
     Long groupId,
     String name,
     List<UserDto> users,
+    Boolean showInHomepage,
     Instant createdAt
 ) {
     public static AdminGroupDto fromEntity(Group group) {
@@ -79,6 +81,7 @@ record AdminGroupDto(
             group.getGroupId(),
             group.getName(),
             group.getUsers().stream().map(UserDto::fromEntity).toList(),
+            group.getShowInHomepage(),
             group.getCreatedAt()
         );
     }

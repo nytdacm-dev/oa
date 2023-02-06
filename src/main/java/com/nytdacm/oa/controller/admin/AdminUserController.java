@@ -125,12 +125,14 @@ record AdminUserDto(
     private record GroupDto(
         Long groupId,
         String name,
+        Boolean showInHomepage,
         Instant createdAt
     ) {
         public static GroupDto fromEntity(Group group) {
             return new GroupDto(
                 group.getGroupId(),
                 group.getName(),
+                group.getShowInHomepage(),
                 group.getCreatedAt()
             );
         }
