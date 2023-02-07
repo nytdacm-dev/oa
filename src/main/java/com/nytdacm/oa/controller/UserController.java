@@ -63,6 +63,10 @@ public class UserController {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
             user.getSocialAccount().setLuoguCrawlerEnabled(false);
         }
+        if (userUpdateRequest.nowcoder() != null) {
+            user.getSocialAccount().setNowcoder(userUpdateRequest.nowcoder());
+            user.getSocialAccount().setNowcoderCrawlerEnabled(false);
+        }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));
     }
@@ -75,6 +79,7 @@ record UserUpdateRequest(
     String github,
     String website,
     String atCoder,
-    String luogu
+    String luogu,
+    String nowcoder
 ) {
 }

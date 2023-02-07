@@ -22,4 +22,7 @@ public class SocialAccount implements Serializable {
 
     private String luogu;
     private Boolean luoguCrawlerEnabled;
+
+    private String nowcoder;
+    private Boolean nowcoderCrawlerEnabled;
 }
