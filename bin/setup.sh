@@ -44,7 +44,7 @@ docker run -d \
     -e PG_HOST=$db_container_name \
     -e PG_USER=nytdacm_oa \
     -e PG_PASSWORD=$db_password \
-    -e PG_DB=nytdacm_oa_production \
+    -e PG_DATABASE=nytdacm_oa_production \
     -v /home/root/.m2:/mvn \
     $container_name:$version
 
