@@ -44,13 +44,15 @@ public class LuoguCrawler {
                     httpclient.execute(request, response -> {
                         var mapper = new ObjectMapper();
                         var res = mapper.readValue(response.getEntity().getContent(), LuoguResponse.class);
-                        if (res.code() >= 200 && res.code() < 300 &&
-                            ((LuoguResponse.UserShowData) res.currentData()).user().uid().toString().equals(account)) {
-                            user.getSocialAccount().setLuoguCrawlerEnabled(true);
-                        } else {
-                            user.getSocialAccount().setLuoguCrawlerEnabled(false);
-                            user.getSocialAccount().setLuogu(null);
-                            LOGGER.error(String.format("爬取 %s 用户的洛谷账号（%s）时出错", user.getUsername(), account));
+                        if (res.code() >= 200 && res.code() < 300) {
+                            var data = mapper.convertValue(res.currentData(), LuoguResponse.UserShowData.class);
+                            if (data.user().uid().toString().equals(account)) {
+                                user.getSocialAccount().setLuoguCrawlerEnabled(true);
+                            } else {
+                                user.getSocialAccount().setLuoguCrawlerEnabled(false);
+                                user.getSocialAccount().setLuogu(null);
+                                LOGGER.error(String.format("爬取 %s 用户的洛谷账号（%s）时出错", user.getUsername(), account));
+                            }
                         }
                         return null;
                     });
