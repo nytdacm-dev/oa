@@ -42,8 +42,10 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<HttpResponse<Void>> handleOaException(DataIntegrityViolationException ignored) {
-        return HttpResponse.fail(409, "数据冲突", null);
+    public ResponseEntity<HttpResponse<Void>> handleOaException(DataIntegrityViolationException e) {
+        var uuid = UUID.randomUUID().toString();
+        LOGGER.error(String.format("[%s] %s", uuid, e.getMessage()), e);
+        return HttpResponse.fail(409, "数据冲突", uuid);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
