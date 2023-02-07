@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -66,6 +67,18 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Submission> submissions = new HashSet<>();
+
+    @Column(name = "user_internal")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private UserInternal userInternal = new UserInternal();
+
+    public UserInternal getUserInternal() {
+        return userInternal;
+    }
+
+    public void setUserInternal(UserInternal userInternal) {
+        this.userInternal = userInternal;
+    }
 
     public Long getUserId() {
         return userId;
@@ -163,5 +176,17 @@ public class User extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups, submissions);
+    }
+
+    public static class UserInternal implements Serializable {
+        private Long lastCodeforcesSubmissionId = 0L;
+
+        public Long getLastCodeforcesSubmissionId() {
+            return lastCodeforcesSubmissionId;
+        }
+
+        public void setLastCodeforcesSubmissionId(Long lastCodeforcesSubmissionId) {
+            this.lastCodeforcesSubmissionId = lastCodeforcesSubmissionId;
+        }
     }
 }

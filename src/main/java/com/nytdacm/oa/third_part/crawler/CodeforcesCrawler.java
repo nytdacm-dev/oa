@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.model.entity.Submission;
+import com.nytdacm.oa.model.entity.User;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
@@ -103,13 +104,13 @@ public class CodeforcesCrawler {
                 var result = mapper.readValue(
                     new URL("https://codeforces.com/api/user.status?handle=" + account + "&from=1&count=200"),
                     CodeforcesSubmissionResult.class);
-                if ("OK".equals(result.status())) {
-                    var submissions = result.result();
-                    submissions
-                        .forEach(submission -> {
-                            if (submissionDao.existsByRemoteSubmissionIdAndOjAndUser(String.valueOf(submission.id()), "Codeforces", user)) {
-                                return;
-                            }
+                if ("OK".equals(result.status()) && result.result().size() > 0) {
+                    if (user.getUserInternal() == null) {
+                        user.setUserInternal(new User.UserInternal());
+                    }
+                    var submissions = result.result().stream()
+                        .filter(submission -> submission.id() > user.getUserInternal().getLastCodeforcesSubmissionId())
+                        .map(submission -> {
                             var s = new Submission();
                             s.setUser(user);
                             s.setLanguage(submission.programmingLanguage());
@@ -121,8 +122,12 @@ public class CodeforcesCrawler {
                             s.setRemoteProblemId(submission.problem().contestId() + submission.problem().index());
                             s.setSubmitTime(Instant.ofEpochSecond(submission.creationTimeSeconds()));
                             s.setRelativeTime(submission.relativeTimeSeconds());
-                            submissionDao.save(s);
-                        });
+                            return s;
+                        })
+                        .toList();
+                    user.getSubmissions().addAll(submissions);
+                    user.getUserInternal().setLastCodeforcesSubmissionId(result.result().get(0).id());
+                    userDao.save(user);
                 }
             } catch (Exception e) {
                 LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
