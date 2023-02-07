@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.model.entity.Submission;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class CodeforcesCrawler {
     private final UserDao userDao;
     private final SubmissionDao submissionDao;
 
+    @Inject
     public CodeforcesCrawler(UserDao userDao, SubmissionDao submissionDao) {
         this.userDao = userDao;
         this.submissionDao = submissionDao;
@@ -105,7 +107,7 @@ public class CodeforcesCrawler {
                     var submissions = result.result();
                     submissions
                         .forEach(submission -> {
-                            if (submissionDao.existsByRemoteSubmissionIdAndOj(String.valueOf(submission.id()), "Codeforces")) {
+                            if (submissionDao.existsByRemoteSubmissionIdAndOjAndUser(String.valueOf(submission.id()), "Codeforces", user)) {
                                 return;
                             }
                             var s = new Submission();

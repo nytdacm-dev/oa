@@ -1,6 +1,7 @@
 package com.nytdacm.oa.service.impl;
 
 import com.nytdacm.oa.dao.GroupDao;
+import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.User;
@@ -20,11 +21,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final GroupDao groupDao;
+    private final SubmissionDao submissionDao;
 
     @Inject
-    public UserServiceImpl(UserDao userDao, GroupDao groupDao) {
+    public UserServiceImpl(UserDao userDao, GroupDao groupDao, SubmissionDao submissionDao) {
         this.userDao = userDao;
         this.groupDao = groupDao;
+        this.submissionDao = submissionDao;
     }
 
     private Example<User> paramsToExample(String username, String name, Boolean active, Boolean admin, Boolean superAdmin) {
@@ -90,6 +93,8 @@ public class UserServiceImpl implements UserService {
         var groups = user.getGroups();
         groups.forEach(group -> group.getUsers().remove(user));
         groupDao.saveAll(groups);
+        var submissions = submissionDao.findAllByUser(user);
+        submissionDao.deleteAll(submissions);
         userDao.deleteById(id);
     }
 }

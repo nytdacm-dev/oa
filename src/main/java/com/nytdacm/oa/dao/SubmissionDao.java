@@ -1,8 +1,13 @@
 package com.nytdacm.oa.dao;
 
 import com.nytdacm.oa.model.entity.Submission;
+import com.nytdacm.oa.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface SubmissionDao extends JpaRepository<Submission, Long> {
-    boolean existsByRemoteSubmissionIdAndOj(String remoteSubmissionId, String oj);
+    boolean existsByRemoteSubmissionIdAndOjAndUser(String remoteSubmissionId, String oj, User user);
+
+    List<Submission> findAllByUser(User user);
 }
