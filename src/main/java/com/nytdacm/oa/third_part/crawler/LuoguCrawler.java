@@ -50,14 +50,14 @@ public class LuoguCrawler {
                         } else {
                             user.getSocialAccount().setLuoguCrawlerEnabled(false);
                             user.getSocialAccount().setLuogu(null);
-                            LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account));
+                            LOGGER.error(String.format("爬取 %s 用户的洛谷账号（%s）时出错", user.getUsername(), account));
                         }
                         return null;
                     });
                 } catch (Exception e) {
                     user.getSocialAccount().setLuoguCrawlerEnabled(false);
                     user.getSocialAccount().setLuogu(null);
-                    LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
+                    LOGGER.error(String.format("爬取 %s 用户的洛谷账号（%s）时出错", user.getUsername(), account), e);
                 }
             })
             .toList();
