@@ -80,6 +80,7 @@ public class SocialAccount implements Serializable {
     }
 
     private String luogu;
+    private Boolean luoguCrawlerEnabled;
 
     public String getLuogu() {
         return luogu;
@@ -87,5 +88,13 @@ public class SocialAccount implements Serializable {
 
     public void setLuogu(String luogu) {
         this.luogu = luogu;
+    }
+
+    public Boolean getLuoguCrawlerEnabled() {
+        return luoguCrawlerEnabled;
+    }
+
+    public void setLuoguCrawlerEnabled(Boolean luoguCrawlerEnabled) {
+        this.luoguCrawlerEnabled = luoguCrawlerEnabled;
     }
 }

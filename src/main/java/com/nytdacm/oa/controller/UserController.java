@@ -61,6 +61,7 @@ public class UserController {
         }
         if (userUpdateRequest.luogu() != null) {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
+            user.getSocialAccount().setLuoguCrawlerEnabled(false);
         }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));

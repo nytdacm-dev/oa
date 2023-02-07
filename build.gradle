@@ -64,6 +64,7 @@ dependencies {
     }
     implementation "cn.hutool:hutool-core:$hutoolVersion"
     implementation "cn.hutool:hutool-json:$hutoolVersion"
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
