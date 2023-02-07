@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         probe.setAdmin(admin);
         probe.setSuperAdmin(superAdmin);
         probe.setSocialAccount(null);
+        probe.setUserInternal(null);
 
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
