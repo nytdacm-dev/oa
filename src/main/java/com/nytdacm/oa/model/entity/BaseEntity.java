@@ -17,9 +17,6 @@ public abstract class BaseEntity {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    @Column(name = "deleted")
-    private Boolean deleted = false;
-
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -29,11 +26,11 @@ public abstract class BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseEntity that = (BaseEntity) o;
-        return Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(deleted, that.deleted);
+        return Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(createdAt, updatedAt, deleted);
+        return Objects.hash(createdAt, updatedAt);
     }
 }

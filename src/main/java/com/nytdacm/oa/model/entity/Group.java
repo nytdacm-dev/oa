@@ -9,10 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.SQLDelete;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,9 +16,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_groups")
-@SQLDelete(sql = "UPDATE t_groups SET deleted = true WHERE group_id = ?")
-@FilterDef(name = "deletedProductFilter", parameters = @ParamDef(name = "deleted", type = boolean.class))
-@Filter(name = "deletedProductFilter", condition = "deleted = :deleted")
 public class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

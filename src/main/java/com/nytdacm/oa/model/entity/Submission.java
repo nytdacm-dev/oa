@@ -1,19 +1,20 @@
 package com.nytdacm.oa.model.entity;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.SQLDelete;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.time.Instant;
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_submissions")
-@SQLDelete(sql = "UPDATE t_submissions SET deleted = true WHERE submission_id = ?")
-@FilterDef(name = "deletedProductFilter", parameters = @ParamDef(name = "deleted", type = boolean.class))
-@Filter(name = "deletedProductFilter", condition = "deleted = :deleted")
 public class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
     public static final String STATUS_SUCCESS = "SUCCESS";

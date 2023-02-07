@@ -12,11 +12,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.type.SqlTypes;
 
 import java.util.HashSet;
@@ -25,9 +21,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_users")
-@SQLDelete(sql = "UPDATE t_users SET deleted = true WHERE user_id = ?")
-@FilterDef(name = "deletedProductFilter", parameters = @ParamDef(name = "deleted", type = boolean.class))
-@Filter(name = "deletedProductFilter", condition = "deleted = :deleted")
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
