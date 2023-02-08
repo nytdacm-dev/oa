@@ -10,4 +10,8 @@ public interface SubmissionDao extends JpaRepository<Submission, Long> {
     boolean existsByRemoteSubmissionIdAndOjAndUser(String remoteSubmissionId, String oj, User user);
 
     List<Submission> findAllByUser(User user);
+
+    List<Submission> findAllByUserInAndOjContaining(List<User> users, String oj);
+
+    long countByUserInAndOjContaining(List<User> users, String oj);
 }
