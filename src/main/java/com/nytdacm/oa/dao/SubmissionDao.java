@@ -2,6 +2,8 @@ package com.nytdacm.oa.dao;
 
 import com.nytdacm.oa.model.entity.Submission;
 import com.nytdacm.oa.model.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface SubmissionDao extends JpaRepository<Submission, Long> {
 
     List<Submission> findAllByUser(User user);
 
-    List<Submission> findAllByUserInAndOjContaining(List<User> users, String oj);
+    Page<Submission> findAllByUserInAndOjContaining(List<User> users, String oj, Pageable pageable);
 
     long countByUserInAndOjContaining(List<User> users, String oj);
 }

@@ -45,16 +45,17 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public List<Submission> getAllSubmissions(Long user, Long group, String oj, Integer page, Integer size) {
+        var sort = Sort.by(Sort.Direction.DESC, "submitTime");
         if (group != null) {
             var g = groupDao.findById(group).orElseThrow(() -> new OaBaseException("群组不存在", 404));
             var users = g.getUsers();
             if (oj == null) {
                 oj = "";
             }
-            return submissionDao.findAllByUserInAndOjContaining(users.stream().toList(), oj);
+            return submissionDao
+                .findAllByUserInAndOjContaining(users.stream().toList(), oj, PageRequest.of(page, size, sort)).getContent();
         } else {
             var example = paramsToExample(user, oj);
-            var sort = Sort.by(Sort.Direction.DESC, "submitTime");
             return submissionDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
         }
     }
