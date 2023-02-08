@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 @Component
 @Transactional
@@ -56,6 +57,7 @@ public class LuoguCrawler {
                         }
                         return null;
                     });
+                    Thread.sleep(new Random().nextInt() % 5000);
                 } catch (Exception e) {
                     user.getSocialAccount().setLuoguCrawlerEnabled(false);
                     user.getSocialAccount().setLuogu(null);
