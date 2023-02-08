@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import com.nytdacm.oa.config.SecurityConfig;
 import com.nytdacm.oa.exception.OaBaseException;
+import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
@@ -25,7 +26,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(String username, String password) {
-        var user = userService.getUserByUsername(username);
+        User user;
+        try {
+            user = userService.getUserByUsername(username);
+        } catch (OaBaseException e) {
+            throw new OaBaseException("用户不存在", 401);
+        }
         if (!user.getActive()) {
             throw new OaBaseException("用户未激活，请耐心等待管理员激活", 401);
         }
