@@ -17,10 +17,12 @@ import java.util.Objects;
 @Table(name = "t_submissions")
 public class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
-    public static final String STATUS_SUCCESS = "SUCCESS";
+    public static final String OJ_NOWCODER = "nowcoder";
+    public static final String STATUS_SUCCESS = "OK";
     public static final String STATUS_WRONG_ANSWER = "WRONG_ANSWER";
     public static final String STATUS_TIME_LIMIT_EXCEEDED = "TIME_LIMIT_EXCEEDED";
     public static final String STATUS_MEMORY_LIMIT_EXCEEDED = "MEMORY_LIMIT_EXCEEDED";
+    public static final String STATUS_COMPILATION_ERROR = "COMPILATION_ERROR";
     public static final String STATUS_RUNTIME_ERROR = "RUNTIME_ERROR";
 
     @Id

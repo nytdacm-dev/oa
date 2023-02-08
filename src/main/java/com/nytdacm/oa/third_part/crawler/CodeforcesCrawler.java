@@ -115,7 +115,7 @@ public class CodeforcesCrawler {
                             s.setUser(user);
                             s.setLanguage(submission.programmingLanguage());
                             s.setContestId(String.valueOf(submission.contestId()));
-                            s.setOj("Codeforces");
+                            s.setOj(Submission.OJ_CODEFORCES);
                             s.setStatus(submission.verdict());
                             s.setName(submission.problem().name());
                             s.setRemoteSubmissionId(String.valueOf(submission.id()));
@@ -125,8 +125,10 @@ public class CodeforcesCrawler {
                             return s;
                         })
                         .toList();
-                    user.getSubmissions().addAll(submissions);
-                    user.getUserInternal().setLastCodeforcesSubmissionId(result.result().get(0).id());
+                    if (submissions.size() > 0) {
+                        user.getSubmissions().addAll(submissions);
+                        user.getUserInternal().setLastCodeforcesSubmissionId(result.result().get(0).id());
+                    }
                     userDao.save(user);
                 }
             } catch (Exception e) {

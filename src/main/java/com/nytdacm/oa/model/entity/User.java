@@ -12,6 +12,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -178,15 +180,10 @@ public class User extends BaseEntity {
         return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups, submissions);
     }
 
+    @Getter
+    @Setter
     public static class UserInternal implements Serializable {
         private Long lastCodeforcesSubmissionId = 0L;
-
-        public Long getLastCodeforcesSubmissionId() {
-            return lastCodeforcesSubmissionId;
-        }
-
-        public void setLastCodeforcesSubmissionId(Long lastCodeforcesSubmissionId) {
-            this.lastCodeforcesSubmissionId = lastCodeforcesSubmissionId;
-        }
+        private Long lastNowcoderSubmissionId = 0L;
     }
 }
