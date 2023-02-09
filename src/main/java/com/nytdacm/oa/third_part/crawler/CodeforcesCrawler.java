@@ -115,7 +115,11 @@ public class CodeforcesCrawler {
                             s.setUser(user);
                             s.setLanguage(submission.programmingLanguage());
                             s.setContestId(String.valueOf(submission.contestId()));
-                            s.setOj(Submission.OJ_CODEFORCES);
+                            if (submission.contestId() > 100000) {
+                                s.setOj(Submission.OJ_CODEFORCES_GYM);
+                            } else {
+                                s.setOj(Submission.OJ_CODEFORCES);
+                            }
                             s.setStatus(submission.verdict());
                             s.setName(submission.problem().name());
                             s.setRemoteSubmissionId(String.valueOf(submission.id()));
