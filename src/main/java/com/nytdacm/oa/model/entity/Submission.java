@@ -19,6 +19,7 @@ public class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
     public static final String OJ_CODEFORCES_GYM = "codeforces_gym";
     public static final String OJ_NOWCODER = "nowcoder";
+    public static final String OJ_ATCODER = "atcoder";
     public static final String STATUS_SUCCESS = "OK";
     public static final String STATUS_WRONG_ANSWER = "WRONG_ANSWER";
     public static final String STATUS_TIME_LIMIT_EXCEEDED = "TIME_LIMIT_EXCEEDED";

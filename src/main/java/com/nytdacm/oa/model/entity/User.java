@@ -185,5 +185,7 @@ public class User extends BaseEntity {
     public static class UserInternal implements Serializable {
         private Long lastCodeforcesSubmissionId = 0L;
         private Long lastNowcoderSubmissionId = 0L;
+        private Long lastAtCoderSubmissionId = 0L;
+        private Boolean atcoderCrawlerEnabled = false;
     }
 }

@@ -58,6 +58,7 @@ public class UserController {
         }
         if (userUpdateRequest.atCoder() != null) {
             user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
+            user.getUserInternal().setAtcoderCrawlerEnabled(false);
         }
         if (userUpdateRequest.luogu() != null) {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
