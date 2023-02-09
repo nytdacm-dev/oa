@@ -57,7 +57,6 @@ public class LuoguCrawler {
                         }
                         return null;
                     });
-                    Thread.sleep(new Random().nextInt() % 5000);
                 } catch (Exception e) {
                     user.getSocialAccount().setLuoguCrawlerEnabled(false);
                     user.getSocialAccount().setLuogu(null);

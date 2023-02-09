@@ -61,7 +61,6 @@ public class NowCoderCrawler {
                         }
                         return null;
                     });
-                    Thread.sleep(new Random().nextInt() % 5000);
                 } catch (Exception e) {
                     user.getSocialAccount().setNowcoderCrawlerEnabled(false);
                     user.getSocialAccount().setNowcoder(null);
@@ -123,7 +122,6 @@ public class NowCoderCrawler {
                         user.getSubmissions().addAll(list);
                         userDao.save(user);
                     }
-                    Thread.sleep(new Random().nextInt() % 5000);
                 } catch (Exception e) {
                     LOGGER.error(String.format("爬取 %s 用户的牛客提交记录（%s）时出错", user.getUsername(), account), e);
                 }
