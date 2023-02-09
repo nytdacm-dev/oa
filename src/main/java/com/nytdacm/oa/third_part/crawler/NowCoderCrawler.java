@@ -73,7 +73,7 @@ public class NowCoderCrawler {
         LOGGER.info("牛客账号验证成功，本次共验证了 " + users.size() + " 个账号");
     }
 
-    @Scheduled(cron = "0 0 3/24 * * *", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 0 3/12 * * *", zone = "Asia/Shanghai")
     public void nowcoderSubmissionCrawler() {
         LOGGER.info("开始爬取牛客提交记录");
         var users = userDao.findAll().stream()

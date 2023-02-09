@@ -89,7 +89,7 @@ public class CodeforcesCrawler {
         LOGGER.info("验证用户 Codeforces 账号正确性完成，本次验证了 %d 个账号".formatted(users.size()));
     }
 
-    @Scheduled(cron = "0 0 9/24 * * *", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 0 9/6 * * *", zone = "Asia/Shanghai")
     public void getCodeforcesSubmissions() {
         // TODO: 重写逻辑
         LOGGER.info("开始爬取 Codeforces 提交记录");
