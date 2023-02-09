@@ -18,6 +18,7 @@ if [ "$(docker ps -aq -f name=^${db_container_name}$)" ]; then
   echo '已存在数据库'
 else
   docker run -d --name $db_container_name \
+            --restart=always \
             --network=$network \
             -e POSTGRES_USER=nytdacm_oa \
             -e POSTGRES_DB=nytdacm_oa_production \
@@ -40,6 +41,7 @@ title '运行容器'
 docker run -d \
     -p 80:8080 \
     --name $container_name \
+    --restart=on-failure:5 \
     --network $network \
     -e PG_HOST=$db_container_name \
     -e PG_USER=nytdacm_oa \
