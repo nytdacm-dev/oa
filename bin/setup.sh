@@ -45,7 +45,7 @@ docker run -d \
     -e PG_USER=nytdacm_oa \
     -e PG_PASSWORD=$db_password \
     -e PG_DATABASE=nytdacm_oa_production \
-    -v /home/root/.m2:/mvn \
+    -v /home/oa/.m2:/mvn \
     $container_name:$version
 
 title '全部执行完毕'
