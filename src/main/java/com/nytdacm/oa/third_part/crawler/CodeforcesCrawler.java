@@ -79,6 +79,7 @@ public class CodeforcesCrawler {
                     user.getSocialAccount().setCodeforcesRank(result.result().get(0).rank());
                     user.getSocialAccount().setCodeforcesMaxRating(result.result().get(0).maxRating());
                     user.getSocialAccount().setCodeforcesRating(result.result().get(0).rating());
+                    userDao.save(user);
                 }
             } catch (Exception e) {
                 user.getSocialAccount().setCodeforces(null);
@@ -132,8 +133,8 @@ public class CodeforcesCrawler {
                     if (submissions.size() > 0) {
                         user.getSubmissions().addAll(submissions);
                         user.getUserInternal().setLastCodeforcesSubmissionId(result.result().get(0).id());
+                        userDao.save(user);
                     }
-                    userDao.save(user);
                 }
             } catch (Exception e) {
                 LOGGER.error(String.format("爬取 %s 用户的 Codeforces 账号（%s）时出错", user.getUsername(), account), e);
