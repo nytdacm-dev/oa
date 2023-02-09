@@ -1,5 +1,3 @@
-import com.github.gradle.node.pnpm.task.PnpmTask
-
 plugins {
     id 'java'
     id 'groovy'
@@ -11,7 +9,6 @@ plugins {
 
     id 'checkstyle'
     id 'jacoco'
-    id 'com.github.node-gradle.node' version '3.5.1'
 }
 
 group = 'com.nytdacm'
@@ -92,36 +89,6 @@ hibernate {
         dirtyTracking true
         associationManagement true
     }
-}
-
-node {
-    download = false
-    nodeProjectDir = nodeProjectDir.dir("$projectDir/web").get()
-    if (System.getenv("CI") == null) {
-        distBaseUrl = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
-    }
-}
-
-
-def cleanupOldWebBuild = tasks.register('cleanupOldWebBuild', Delete) {
-    doLast {
-        println '清空旧的构建'
-        delete "$projectDir/src/main/resources/static"
-    }
-}
-
-def buildWeb = tasks.register('buildWeb', PnpmTask) {
-    dependsOn cleanupOldWebBuild
-    dependsOn 'pnpmInstall'
-    args = ['run', 'build']
-}
-
-tasks.named('build').configure {
-    dependsOn buildWeb
-}
-
-tasks.named('bootJar').configure {
-    dependsOn buildWeb
 }
 
 tasks.named('check').configure {
