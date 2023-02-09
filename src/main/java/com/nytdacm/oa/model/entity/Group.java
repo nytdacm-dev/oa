@@ -31,6 +31,9 @@ public class Group extends BaseEntity {
     @Column(name = "show_in_home_page")
     private Boolean showInHomepage = false;
 
+    @Column(name = "homepage_order")
+    private Integer homepageOrder;
+
     @ManyToMany(
         mappedBy = "groups",
         fetch = FetchType.EAGER,
@@ -44,6 +47,14 @@ public class Group extends BaseEntity {
 
     public String getName() {
         return name;
+    }
+
+    public Integer getHomepageOrder() {
+        return homepageOrder;
+    }
+
+    public void setHomepageOrder(Integer homepageOrder) {
+        this.homepageOrder = homepageOrder;
     }
 
     public Boolean getShowInHomepage() {
@@ -80,11 +91,11 @@ public class Group extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Group group = (Group) o;
-        return Objects.equals(groupId, group.groupId) && Objects.equals(name, group.name) && Objects.equals(displayName, group.displayName) && Objects.equals(showInHomepage, group.showInHomepage) && Objects.equals(users, group.users);
+        return Objects.equals(groupId, group.groupId) && Objects.equals(name, group.name) && Objects.equals(displayName, group.displayName) && Objects.equals(showInHomepage, group.showInHomepage) && Objects.equals(homepageOrder, group.homepageOrder) && Objects.equals(users, group.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), groupId, name, displayName, showInHomepage);
+        return Objects.hash(super.hashCode(), groupId, name, displayName, showInHomepage, homepageOrder);
     }
 }

@@ -12,6 +12,7 @@ public record GroupDto(
     String displayName,
     List<UserDto> users,
     Boolean showInHomepage,
+    Integer homepageOrder,
     Instant createdAt
 ) {
     public static GroupDto fromEntity(Group group) {
@@ -21,6 +22,7 @@ public record GroupDto(
             group.getDisplayName(),
             group.getUsers().stream().map(UserDto::fromEntity).toList(),
             group.getShowInHomepage(),
+            group.getHomepageOrder(),
             group.getCreatedAt()
         );
     }

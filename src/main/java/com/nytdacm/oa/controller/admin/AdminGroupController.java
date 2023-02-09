@@ -78,6 +78,9 @@ public class AdminGroupController {
         if (groupUpdateRequest.showInHomepage() != null) {
             group.setShowInHomepage(groupUpdateRequest.showInHomepage());
         }
+        if (groupUpdateRequest.homepageOrder() != null) {
+            group.setHomepageOrder(groupUpdateRequest.homepageOrder());
+        }
         groupService.newGroup(group);
         return HttpResponse.success(200, "更新成功", null);
     }
@@ -99,6 +102,7 @@ record NewGroupRequest(
 record GroupUpdateRequest(
     String name,
     String displayName,
-    Boolean showInHomepage
+    Boolean showInHomepage,
+    Integer homepageOrder
 ) {
 }
