@@ -1,5 +1,8 @@
 package com.nytdacm.oa.controller.admin;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaMode;
 import com.nytdacm.oa.model.entity.Submission;
 import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
@@ -16,6 +19,8 @@ import java.time.Instant;
 
 @RestController
 @RequestMapping("/admin/submission")
+@SaCheckLogin
+@SaCheckRole(value = {"admin", "super-admin"}, mode = SaMode.OR)
 public class AdminSubmissionController {
     private final SubmissionService submissionService;
 
