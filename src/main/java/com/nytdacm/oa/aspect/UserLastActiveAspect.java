@@ -23,7 +23,7 @@ public class UserLastActiveAspect {
 
     @Before("execution(* com.nytdacm.oa.controller..*.*(..))")
     public void updateLastActive() {
-        if (StpUtil.getLoginId() != null) {
+        if (StpUtil.isLogin() && StpUtil.getLoginId() != null) {
             var id = StpUtil.getLoginIdAsLong();
             var user = userService.getUserById(id);
             user.setLastActive(Instant.now());
