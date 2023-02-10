@@ -21,7 +21,7 @@ public class UserLastActiveAspect {
         this.userService = userService;
     }
 
-    @Before("execution(* com.nytdacm.oa.controller..*.*(..))")
+    @Before("execution(* com.nytdacm.oa.controller.AuthController.current())")
     public void updateLastActive() {
         if (StpUtil.isLogin() && StpUtil.getLoginId() != null) {
             var id = StpUtil.getLoginIdAsLong();
