@@ -11,6 +11,8 @@ import com.nytdacm.oa.service.GroupService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +50,7 @@ public class AdminGroupController {
     }
 
     @GetMapping("/{id}")
+    @Cacheable(value = "group", key = "#id")
     public ResponseEntity<HttpResponse<GroupDto>> group(@PathVariable Long id) {
         var group = groupService.getGroupById(id);
         return HttpResponse.success(200, "获取成功", GroupDto.fromEntity(group));
@@ -64,6 +67,7 @@ public class AdminGroupController {
     }
 
     @PatchMapping("/{id}")
+    @CacheEvict(value = "group", key = "#id")
     public ResponseEntity<HttpResponse<Void>> updateGroup(
         @RequestBody @Valid GroupUpdateRequest groupUpdateRequest,
         @PathVariable Long id

@@ -13,6 +13,10 @@ spring:
     username: ${PG_USER:nytdacm_oa}
     password: ${PG_PASSWORD:123456}
     driver-class-name: org.postgresql.Driver
+  cache:
+    type: caffeine
+    caffeine:
+      spec: initialCapacity=10,maximumSize=200,expireAfterWrite=3s
   jpa:
     hibernate:
       ddl-auto: update

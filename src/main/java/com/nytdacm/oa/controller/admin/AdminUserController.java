@@ -16,6 +16,8 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +65,7 @@ public class AdminUserController {
     }
 
     @GetMapping("/{id}")
+    @Cacheable(value = "user", key = "#id")
     public ResponseEntity<HttpResponse<AdminUserDto>> getUser(@PathVariable Long id) {
         var user = userService.getUserById(id);
         return HttpResponse.success(200, "获取成功", AdminUserDto.fromEntity(user));
@@ -87,6 +90,7 @@ public class AdminUserController {
     }
 
     @PatchMapping("/{id}")
+    @CacheEvict(value = "user", key = "#id")
     public ResponseEntity<HttpResponse<AdminUserDto>> updateUser(
         @PathVariable Long id, @RequestBody @Valid AdminUserUpdateRequest adminUserUpdateRequest) {
         var user = userService.getUserById(id);

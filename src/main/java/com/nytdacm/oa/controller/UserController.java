@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
+    @Cacheable(value = "user", key = "#username")
     public ResponseEntity<HttpResponse<UserDto>> getUser(@PathVariable("username") String username) {
         var user = userService.getUserByUsername(username);
         return HttpResponse.success(200, "获取成功", UserDto.fromEntity(user));
