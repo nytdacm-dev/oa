@@ -134,7 +134,8 @@ record AdminUserDto(
     Boolean active,
     SocialAccount socialAccount,
     List<GroupDto> groups,
-    Instant registerTime
+    Instant registerTime,
+    Instant lastActive
 ) {
     public static AdminUserDto fromEntity(User user) {
         return new AdminUserDto(
@@ -146,7 +147,8 @@ record AdminUserDto(
             user.getActive(),
             user.getSocialAccount(),
             user.getGroups().stream().map(GroupDto::fromEntity).toList(),
-            user.getCreatedAt()
+            user.getCreatedAt(),
+            user.getLastActive()
         );
     }
 

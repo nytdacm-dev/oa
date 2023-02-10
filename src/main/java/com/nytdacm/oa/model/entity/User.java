@@ -18,6 +18,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -66,6 +67,16 @@ public class User extends BaseEntity {
             @JoinColumn(name = "group_id", referencedColumnName = "group_id")
         })
     private Set<Group> groups = new HashSet<>();
+
+    private Instant lastActive;
+
+    public Instant getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(Instant lastActive) {
+        this.lastActive = lastActive;
+    }
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Submission> submissions = new HashSet<>();
@@ -172,12 +183,12 @@ public class User extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount) && Objects.equals(groups, user.groups) && Objects.equals(submissions, user.submissions);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount) && Objects.equals(groups, user.groups) && Objects.equals(submissions, user.submissions) && Objects.equals(lastActive, user.lastActive);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups, submissions);
+        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups, submissions, lastActive);
     }
 
     @Getter
