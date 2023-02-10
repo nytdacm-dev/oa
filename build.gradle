@@ -9,6 +9,8 @@ plugins {
 
     id 'checkstyle'
     id 'jacoco'
+
+    id 'idea'
 }
 
 group = 'com.nytdacm'
@@ -88,6 +90,14 @@ hibernate {
         lazyInitialization true
         dirtyTracking true
         associationManagement true
+    }
+}
+
+idea {
+    module {
+        // 忽略前端构建文件
+        excludeDirs += files("$projectDir/src/main/resources/static")
+        excludeDirs += files("$projectDir/web/dist")
     }
 }
 
