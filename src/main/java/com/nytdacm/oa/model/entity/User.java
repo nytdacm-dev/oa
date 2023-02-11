@@ -198,5 +198,7 @@ public class User extends BaseEntity {
         private Long lastNowcoderSubmissionId = 0L;
         private Long lastAtCoderSubmissionId = 0L;
         private Boolean atcoderCrawlerEnabled = false;
+        private Boolean pojCrawlerEnabled = false;
+        private Long lastPojSubmissionId = 0L;
     }
 }

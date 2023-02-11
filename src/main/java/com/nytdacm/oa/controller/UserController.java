@@ -62,6 +62,10 @@ public class UserController {
             user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
             user.getUserInternal().setAtcoderCrawlerEnabled(false);
         }
+        if (userUpdateRequest.poj() != null) {
+            user.getSocialAccount().setPoj(userUpdateRequest.poj());
+            user.getUserInternal().setPojCrawlerEnabled(false);
+        }
         if (userUpdateRequest.luogu() != null) {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
             user.getSocialAccount().setLuoguCrawlerEnabled(false);
@@ -83,6 +87,7 @@ record UserUpdateRequest(
     String website,
     String atCoder,
     String luogu,
-    String nowcoder
+    String nowcoder,
+    String poj
 ) {
 }
