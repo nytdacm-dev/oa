@@ -10,4 +10,4 @@ WORKDIR /app
 COPY ./oa*.jar /app/oa.jar
 COPY ./logback.xml /config/logback.xml
 
-CMD ["java", "-Dlogback.configurationFile=/config/logback.xml", "-Dthin.root=/mvn", "-jar", "oa.jar"]
+CMD ["java", "-Dlogging.config=/config/logback.xml", "-Dthin.root=/mvn", "-jar", "oa.jar"]
