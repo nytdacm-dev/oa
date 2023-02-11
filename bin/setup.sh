@@ -1,3 +1,4 @@
+#!/bin/bash -e
 root=/home/$user/deploys/$version
 container_name=oa-prod
 #nginx_container_name=oa-nginx

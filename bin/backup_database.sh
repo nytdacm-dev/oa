@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 db_container_name=db-for-oa
 user=oa
