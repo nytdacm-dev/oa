@@ -55,8 +55,10 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(HttpMessageConversionException.class)
-    public ResponseEntity<HttpResponse<Void>> handleOaException(HttpMessageConversionException ignored) {
-        return HttpResponse.fail(400, "请求数据错误", null);
+    public ResponseEntity<HttpResponse<Void>> handleOaException(HttpMessageConversionException e) {
+        var uuid = UUID.randomUUID().toString();
+        LOGGER.error(String.format("[%s] %s", uuid, e.getMessage()), e);
+        return HttpResponse.fail(400, "请求数据错误", uuid);
     }
 
     @ExceptionHandler(Exception.class)
