@@ -1,6 +1,7 @@
 #!/bin/bash -e
 user=$DEPLOY_USER
 host=$DEPLOY_HOST
+JWT_KEY=$JWT_SECRET_KEY
 
 time=$(date +%Y%m%d-%H%M%S)
 current_dir=$(dirname $0)
@@ -28,4 +29,4 @@ scp $logback_config_path $user@$host:$deploy_dir/logback.xml
 title '上传远程脚本'
 scp $current_dir/setup.sh $user@$host:$deploy_dir
 title '执行远程脚本'
-ssh $user@$host "export user=$DEPLOY_USER; export version=$time; /bin/bash $deploy_dir/setup.sh $jar_file_name"
+ssh $user@$host "export JWT_SECRET_KEY=$JWT_KEY; user=$DEPLOY_USER; export version=$time; /bin/bash $deploy_dir/setup.sh $jar_file_name"
