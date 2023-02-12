@@ -59,7 +59,7 @@ public class AdminUserController {
         @RequestParam(required = false, defaultValue = "2147483647") Integer size
     ) {
         var users = userService.getAllUsers(username, name, active, admin, superAdmin, page, size)
-            .stream().map(AdminUserDto::fromEntity).toList();
+            .parallelStream().map(AdminUserDto::fromEntity).toList();
         var count = userService.count(username, name, active, admin, superAdmin);
         return HttpResponse.success(200, "获取成功", new ListWrapper<>(count, users));
     }
@@ -73,7 +73,7 @@ public class AdminUserController {
 
     @GetMapping("/{id}/groups")
     public ResponseEntity<HttpResponse<List<Long>>> getUserGroups(@PathVariable Long id) {
-        var groups = userService.getUserById(id).getGroups().stream().map(Group::getGroupId).toList();
+        var groups = userService.getUserById(id).getGroups().parallelStream().map(Group::getGroupId).toList();
         return HttpResponse.success(200, "获取成功", groups);
     }
 
@@ -83,7 +83,7 @@ public class AdminUserController {
         @RequestBody UserGroupRequest userGroupRequest
     ) {
         var user = userService.getUserById(id);
-        var groups = userGroupRequest.groups().stream().map(groupService::getGroupById).collect(Collectors.toSet());
+        var groups = userGroupRequest.groups().parallelStream().map(groupService::getGroupById).collect(Collectors.toSet());
         user.setGroups(groups);
         userService.updateUser(user);
         return HttpResponse.success(200, "修改成功", null);
@@ -150,7 +150,7 @@ record AdminUserDto(
             user.getAdmin(),
             user.getActive(),
             user.getSocialAccount(),
-            user.getGroups().stream().map(GroupDto::fromEntity).toList(),
+            user.getGroups().parallelStream().map(GroupDto::fromEntity).toList(),
             user.getCreatedAt(),
             user.getLastActive()
         );

@@ -43,8 +43,8 @@ public class PojCrawler implements OJCrawler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        var elements = document.select("body > table.a > tbody > tr").stream().filter(element -> !"in".equals(element.className())).toList();
-        return elements.stream().map(element -> {
+        var elements = document.select("body > table.a > tbody > tr").parallelStream().filter(element -> !"in".equals(element.className())).toList();
+        return elements.parallelStream().map(element -> {
             var submission = new Submission();
             submission.setOj(Submission.OJ_POJ);
             submission.setUser(user);

@@ -43,7 +43,7 @@ public class AdminGroupController {
         @RequestParam(required = false, defaultValue = "0") Integer page,
         @RequestParam(required = false, defaultValue = "2147483647") Integer size
     ) {
-        var groups = groupService.getAllGroups(name, showInHomePage, page, size).stream()
+        var groups = groupService.getAllGroups(name, showInHomePage, page, size).parallelStream()
             .map(GroupDto::fromEntity).toList();
         return HttpResponse.success(200, "获取成功",
             new ListWrapper<>(groupService.count(name, showInHomePage), groups));

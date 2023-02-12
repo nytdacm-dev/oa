@@ -43,7 +43,7 @@ public class AtCoderCrawler implements OJCrawler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return list.stream()
+        return list.parallelStream()
             .map(o -> mapper.convertValue(o, AtCoderData.class))
             .sorted(Comparator.comparingLong(AtCoderData::id).reversed())
             .map(atCoderData -> {

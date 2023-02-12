@@ -20,7 +20,7 @@ public record GroupDto(
             group.getGroupId(),
             group.getName(),
             group.getDisplayName(),
-            group.getUsers().stream().map(UserDto::fromEntity).toList(),
+            group.getUsers().parallelStream().map(UserDto::fromEntity).toList(),
             group.getShowInHomepage(),
             group.getHomepageOrder(),
             group.getCreatedAt()

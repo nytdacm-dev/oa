@@ -36,7 +36,7 @@ public class NowCoderCrawler {
     @Scheduled(fixedDelay = 1000 * 60 * 60, zone = "Asia/Shanghai") // 1h
     public void nowcoderAccountCheckerCrawler() {
         LOGGER.info("开始验证用户牛客账号正确性并更新值");
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getNowcoder()) &&
                 !Boolean.TRUE.equals(user.getSocialAccount().getNowcoderCrawlerEnabled()))
             .peek(user -> {
@@ -74,7 +74,7 @@ public class NowCoderCrawler {
     @Scheduled(cron = "0 0 3/12 * * *", zone = "Asia/Shanghai")
     public void nowcoderSubmissionCrawler() {
         LOGGER.info("开始爬取牛客提交记录");
-        userDao.findAll().stream()
+        userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getNowcoder()) && Boolean.TRUE.equals(user.getSocialAccount().getNowcoderCrawlerEnabled()))
             .forEach(user -> {
                 var account = user.getSocialAccount().getNowcoder();
@@ -82,12 +82,12 @@ public class NowCoderCrawler {
                 try {
                     var document = Jsoup.connect(url).header("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36").get();
                     var submissions = document.select("body > div.nk-container.acm-container > div.nk-container > div.nk-main.with-profile-menu.clearfix > section > table > tbody > tr");
-                    var list = submissions.stream().map(submission -> {
-                        var submissionId = submission.select("td:nth-child(1) > a").stream().filter(element -> element.attr("href").contains("acm/contest/view-submission")).findFirst().get().text();
-                        var problem = submission.select("td:nth-child(2) > a").stream().filter(element -> element.attr("href").contains("acm/problem")).findFirst().get();
+                    var list = submissions.parallelStream().map(submission -> {
+                        var submissionId = submission.select("td:nth-child(1) > a").parallelStream().filter(element -> element.attr("href").contains("acm/contest/view-submission")).findFirst().get().text();
+                        var problem = submission.select("td:nth-child(2) > a").parallelStream().filter(element -> element.attr("href").contains("acm/problem")).findFirst().get();
                         var problemName = problem.text();
                         var problemId = problem.attr("href").replace("/acm/problem/", "");
-                        var result = submission.select("td:nth-child(3) > a").stream().filter(element -> element.attr("href").contains("acm/contest/view-submission")).findFirst().get().text();
+                        var result = submission.select("td:nth-child(3) > a").parallelStream().filter(element -> element.attr("href").contains("acm/contest/view-submission")).findFirst().get().text();
                         result = switch (result) {
                             case "答案正确" -> Submission.STATUS_SUCCESS;
                             case "答案错误" -> Submission.STATUS_WRONG_ANSWER;

@@ -24,7 +24,7 @@ public class Crawler {
 
     @Scheduled(fixedDelay = 1800000) // 30分钟
     public void checkAtCoderAccount() {
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getAtCoder() != null &&
                 !Boolean.TRUE.equals(user.getUserInternal().getAtcoderCrawlerEnabled()))
             .peek(user -> {
@@ -41,7 +41,7 @@ public class Crawler {
 
     @Scheduled(cron = "0 0 3/6 * * *", zone = "Asia/Shanghai")
     public void crawlAtCoderSubmissions() {
-        userDao.findAll().stream()
+        userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getAtCoder() != null &&
                 Boolean.TRUE.equals(user.getUserInternal().getAtcoderCrawlerEnabled()))
             .forEach(user -> {
@@ -56,7 +56,7 @@ public class Crawler {
 
     @Scheduled(fixedDelay = 1800000) // 30分钟
     public void checkPojAccount() {
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getPoj() != null &&
                 !Boolean.TRUE.equals(user.getUserInternal().getPojCrawlerEnabled()))
             .peek(user -> {
@@ -74,7 +74,7 @@ public class Crawler {
 
     @Scheduled(cron = "0 30 2/24 * * *", zone = "Asia/Shanghai")
     public void crawlPojSubmissions() {
-        userDao.findAll().stream()
+        userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getPoj() != null &&
                 Boolean.TRUE.equals(user.getUserInternal().getPojCrawlerEnabled()))
             .forEach(user -> {

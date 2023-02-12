@@ -32,7 +32,7 @@ public class LuoguCrawler {
     @Scheduled(fixedDelay = 1000 * 60 * 60 * 2, zone = "Asia/Shanghai") // 2h
     public void luoguAccountCheckerCrawler() {
         LOGGER.info("开始验证用户洛谷账号正确性并更新值");
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getLuogu()) &&
                 !Boolean.TRUE.equals(user.getSocialAccount().getLuoguCrawlerEnabled()))
             .peek(user -> {

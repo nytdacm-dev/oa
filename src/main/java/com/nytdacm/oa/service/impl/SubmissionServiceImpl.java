@@ -53,7 +53,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 oj = "";
             }
             return submissionDao
-                .findAllByUserInAndOjContaining(users.stream().toList(), oj, PageRequest.of(page, size, sort)).getContent();
+                .findAllByUserInAndOjContaining(users.parallelStream().toList(), oj, PageRequest.of(page, size, sort)).getContent();
         } else {
             var example = paramsToExample(user, oj);
             return submissionDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
@@ -68,7 +68,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             if (oj == null) {
                 oj = "";
             }
-            return submissionDao.countByUserInAndOjContaining(users.stream().toList(), oj);
+            return submissionDao.countByUserInAndOjContaining(users.parallelStream().toList(), oj);
         } else {
             var example = paramsToExample(user, oj);
             return submissionDao.count(example);

@@ -37,11 +37,11 @@ public class CodeforcesCrawler {
     @Scheduled(cron = "0 0 5/12 * * *", zone = "Asia/Shanghai")
     public void run() throws IOException {
         LOGGER.info("开始爬取 Codeforces 数据");
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
                 Boolean.TRUE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
             .toList();
-        var accounts = users.stream().map(user -> user.getSocialAccount().getCodeforces()).collect(Collectors.joining(";"));
+        var accounts = users.parallelStream().map(user -> user.getSocialAccount().getCodeforces()).collect(Collectors.joining(";"));
         var mapper = new ObjectMapper();
         var result = mapper.readValue(
                 new URL("https://codeforces.com/api/user.info?handles=" + accounts), CodeforcesUserInfoResult.class)
@@ -63,7 +63,7 @@ public class CodeforcesCrawler {
     public void checkCodeforcesAccount() {
         // TODO: 改用 HTTP 请求库
         LOGGER.info("开始验证用户 Codeforces 账号正确性并更新值");
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
                 Boolean.FALSE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
             .toList();
@@ -94,7 +94,7 @@ public class CodeforcesCrawler {
     public void getCodeforcesSubmissions() {
         // TODO: 重写逻辑
         LOGGER.info("开始爬取 Codeforces 提交记录");
-        var users = userDao.findAll().stream()
+        var users = userDao.findAll().parallelStream()
             .filter(user -> StringUtils.isNotBlank(user.getSocialAccount().getCodeforces()) &&
                 Boolean.TRUE.equals(user.getSocialAccount().getCodeforcesCrawlerEnabled()))
             .toList();
@@ -109,7 +109,7 @@ public class CodeforcesCrawler {
                     if (user.getUserInternal() == null) {
                         user.setUserInternal(new User.UserInternal());
                     }
-                    var submissions = result.result().stream()
+                    var submissions = result.result().parallelStream()
                         .filter(submission -> submission.id() > user.getUserInternal().getLastCodeforcesSubmissionId())
                         .map(submission -> {
                             var s = new Submission();

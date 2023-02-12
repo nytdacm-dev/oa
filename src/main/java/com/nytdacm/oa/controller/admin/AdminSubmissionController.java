@@ -38,7 +38,7 @@ public class AdminSubmissionController {
         @RequestParam(required = false, defaultValue = "2147483647") Integer size
     ) {
         var submissions = submissionService.getAllSubmissions(user, group, oj, page, size)
-            .stream().map(SubmissionDto::fromEntity).toList();
+            .parallelStream().map(SubmissionDto::fromEntity).toList();
         var count = submissionService.count(user, group, oj);
         return HttpResponse.success(200, "获取成功",
             new ListWrapper<>(count, submissions));

@@ -25,7 +25,7 @@ public class GroupController {
     @GetMapping("/homepage")
     @Cacheable(value = "homepageGroups", key = "#root.methodName")
     public ResponseEntity<HttpResponse<List<GroupDto>>> homepageGroups() {
-        var groups = groupService.getAllGroups(true).stream().map(GroupDto::fromEntity).toList();
+        var groups = groupService.getAllGroups(true).parallelStream().map(GroupDto::fromEntity).toList();
         return HttpResponse.success(200, "获取成功", groups);
     }
 }
