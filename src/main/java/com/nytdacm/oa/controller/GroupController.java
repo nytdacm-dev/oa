@@ -3,7 +3,6 @@ package com.nytdacm.oa.controller;
 import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.group.GroupDto;
 import com.nytdacm.oa.service.GroupService;
-import jakarta.inject.Inject;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import java.util.List;
 public class GroupController {
     private final GroupService groupService;
 
-    @Inject
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
     }

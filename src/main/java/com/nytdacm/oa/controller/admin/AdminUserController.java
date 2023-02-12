@@ -12,7 +12,6 @@ import com.nytdacm.oa.model.response.ListWrapper;
 import com.nytdacm.oa.service.GroupService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
@@ -42,7 +41,6 @@ public class AdminUserController {
     private final UserService userService;
     private final GroupService groupService;
 
-    @Inject
     public AdminUserController(UserService userService, GroupService groupService) {
         this.userService = userService;
         this.groupService = groupService;

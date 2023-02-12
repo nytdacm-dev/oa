@@ -8,7 +8,6 @@ import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ public class AuthServiceImpl implements AuthService {
     private final SecurityConfig securityConfig;
     private final UserService userService;
 
-    @Inject
     public AuthServiceImpl(SecurityConfig securityConfig, UserService userService) {
         this.securityConfig = securityConfig;
         this.userService = userService;

@@ -6,7 +6,6 @@ import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.user.UserDto;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @Inject
     public UserController(UserService userService) {
         this.userService = userService;
     }

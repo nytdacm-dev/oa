@@ -8,7 +8,6 @@ import com.nytdacm.oa.model.response.user.UserDto;
 import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.util.PasswordUtil;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +26,6 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
-    @Inject
     public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
         this.userService = userService;

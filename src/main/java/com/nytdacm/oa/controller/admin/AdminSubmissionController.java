@@ -8,7 +8,6 @@ import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
 import com.nytdacm.oa.model.response.user.UserDto;
 import com.nytdacm.oa.service.SubmissionService;
-import jakarta.inject.Inject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import java.time.Instant;
 public class AdminSubmissionController {
     private final SubmissionService submissionService;
 
-    @Inject
     public AdminSubmissionController(SubmissionService submissionService) {
         this.submissionService = submissionService;
     }

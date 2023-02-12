@@ -6,7 +6,6 @@ import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.Submission;
 import com.nytdacm.oa.service.SubmissionService;
-import jakarta.inject.Inject;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +20,6 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final UserDao userDao;
     private final GroupDao groupDao;
 
-    @Inject
     public SubmissionServiceImpl(SubmissionDao submissionDao, UserDao userDao, GroupDao groupDao) {
         this.submissionDao = submissionDao;
         this.userDao = userDao;

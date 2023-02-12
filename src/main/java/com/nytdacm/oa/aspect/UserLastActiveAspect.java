@@ -2,7 +2,6 @@ package com.nytdacm.oa.aspect;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.nytdacm.oa.service.UserService;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -16,7 +15,6 @@ import java.time.Instant;
 public class UserLastActiveAspect {
     private final UserService userService;
 
-    @Inject
     public UserLastActiveAspect(UserService userService) {
         this.userService = userService;
     }

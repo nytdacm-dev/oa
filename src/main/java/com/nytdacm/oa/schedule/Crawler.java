@@ -3,7 +3,6 @@ package com.nytdacm.oa.schedule;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.third_part.crawler.AtCoderCrawler;
 import com.nytdacm.oa.third_part.crawler.PojCrawler;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ public class Crawler {
     private final AtCoderCrawler atCoderCrawler;
     private final PojCrawler pojCrawler;
 
-    @Inject
     public Crawler(UserDao userDao, AtCoderCrawler atCoderCrawler, PojCrawler pojCrawler) {
         this.userDao = userDao;
         this.atCoderCrawler = atCoderCrawler;

@@ -8,7 +8,6 @@ import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
 import com.nytdacm.oa.model.response.group.GroupDto;
 import com.nytdacm.oa.service.GroupService;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminGroupController {
     private final GroupService groupService;
 
-    @Inject
     public AdminGroupController(GroupService groupService) {
         this.groupService = groupService;
     }

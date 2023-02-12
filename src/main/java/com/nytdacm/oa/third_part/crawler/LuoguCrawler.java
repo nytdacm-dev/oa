@@ -2,9 +2,7 @@ package com.nytdacm.oa.third_part.crawler;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -21,12 +19,9 @@ import java.util.List;
 public class LuoguCrawler {
     private static final Logger LOGGER = LoggerFactory.getLogger(LuoguCrawler.class);
     private final UserDao userDao;
-    private final SubmissionDao submissionDao;
 
-    @Inject
-    public LuoguCrawler(UserDao userDao, SubmissionDao submissionDao) {
+    public LuoguCrawler(UserDao userDao) {
         this.userDao = userDao;
-        this.submissionDao = submissionDao;
     }
 
     @Scheduled(fixedDelay = 1000 * 60 * 60 * 2, zone = "Asia/Shanghai") // 2h

@@ -2,7 +2,6 @@ package com.nytdacm.oa.config;
 
 import cn.dev33.satoken.stp.StpInterface;
 import com.nytdacm.oa.service.UserService;
-import jakarta.inject.Inject;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.List;
 public class StpInterfaceImpl implements StpInterface {
     private final UserService userService;
 
-    @Inject
     public StpInterfaceImpl(UserService userService) {
         this.userService = userService;
     }

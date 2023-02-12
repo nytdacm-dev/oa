@@ -55,7 +55,6 @@ def groovyVersion = '4.0.8'
 
 dependencies {
     implementation "org.apache.groovy:groovy"
-    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
     implementation "cn.dev33:sa-token-spring-boot3-starter:$satokenVersion"
     implementation("cn.dev33:sa-token-jwt:$satokenVersion") {
         exclude module: 'hutool-core'

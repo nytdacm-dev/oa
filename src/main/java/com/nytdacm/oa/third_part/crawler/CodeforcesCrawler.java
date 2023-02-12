@@ -2,11 +2,9 @@ package com.nytdacm.oa.third_part.crawler;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.model.entity.Submission;
 import com.nytdacm.oa.model.entity.User;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -26,12 +24,9 @@ public class CodeforcesCrawler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CodeforcesCrawler.class);
 
     private final UserDao userDao;
-    private final SubmissionDao submissionDao;
 
-    @Inject
-    public CodeforcesCrawler(UserDao userDao, SubmissionDao submissionDao) {
+    public CodeforcesCrawler(UserDao userDao) {
         this.userDao = userDao;
-        this.submissionDao = submissionDao;
     }
 
     @Scheduled(cron = "0 0 5/12 * * *", zone = "Asia/Shanghai")

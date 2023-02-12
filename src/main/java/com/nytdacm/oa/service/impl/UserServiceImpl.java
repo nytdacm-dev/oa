@@ -6,7 +6,6 @@ import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.UserService;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -23,7 +22,6 @@ public class UserServiceImpl implements UserService {
     private final GroupDao groupDao;
     private final SubmissionDao submissionDao;
 
-    @Inject
     public UserServiceImpl(UserDao userDao, GroupDao groupDao, SubmissionDao submissionDao) {
         this.userDao = userDao;
         this.groupDao = groupDao;
