@@ -1,6 +1,8 @@
 FROM amazoncorretto:17-alpine3.17
 
 ENV ENVIRONMENT=production
+ENV TZ=Asia/Shanghai
+ENV LANG=zh_CN.UTF-8
 
 RUN mkdir /app
 RUN mkdir /config

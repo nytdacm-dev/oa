@@ -18,15 +18,19 @@ title '创建数据库'
 if [ "$(docker ps -aq -f name=^${db_container_name}$)" ]; then
   echo '已存在数据库'
 else
-  docker run -d --name $db_container_name \
-            --restart=always \
-            --network=$network \
-            -e POSTGRES_USER=nytdacm_oa \
-            -e POSTGRES_DB=nytdacm_oa_production \
-            -e POSTGRES_PASSWORD=$db_password \
-            -e PGDATA=/var/lib/postgresql/data/pgdata \
-            -v nytdacm_oa-data:/var/lib/postgresql/data \
-            postgres:14
+  docker run -d \
+    --name $db_container_name \
+    --restart=always \
+    --network=$network \
+    -e POSTGRES_USER=nytdacm_oa \
+    -e POSTGRES_DB=nytdacm_oa_production \
+    -e POSTGRES_PASSWORD=$db_password \
+    -e PGDATA=/var/lib/postgresql/data/pgdata \
+    -e TZ=Asia/Shanghai \
+    -e PGTZ=Asia/Shanghai \
+    -e LANG=en_US.UTF-8 \
+    -v nytdacm_oa-data:/var/lib/postgresql/data \
+    postgres:14
   echo '数据库创建成功'
 fi
 
