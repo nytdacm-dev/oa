@@ -50,7 +50,7 @@ jacocoTestReport {
 }
 
 def satokenVersion = '1.34.0'
-def hutoolVersion = '5.8.11'
+def hutoolVersion = '5.8.12'
 def groovyVersion = '4.0.8'
 
 dependencies {
