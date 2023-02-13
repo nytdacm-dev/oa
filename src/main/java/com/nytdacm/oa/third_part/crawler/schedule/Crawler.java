@@ -1,4 +1,4 @@
-package com.nytdacm.oa.schedule;
+package com.nytdacm.oa.third_part.crawler.schedule;
 
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.third_part.crawler.AtCoderCrawler;
@@ -23,7 +23,7 @@ public class Crawler {
         this.vjudgeCrawler = vjudgeCrawler;
     }
 
-    @Scheduled(fixedDelay = 1800000) // 30分钟
+    @Scheduled(fixedDelay = 1853000) // 30分钟左右
     public void checkAtCoderAccount() {
         var users = userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getAtCoder() != null &&
@@ -40,7 +40,7 @@ public class Crawler {
         userDao.saveAll(users);
     }
 
-    @Scheduled(cron = "0 0 3/6 * * *", zone = "Asia/Shanghai")
+    @Scheduled(cron = "23 45 6/6 * * *", zone = "Asia/Shanghai")
     public void crawlAtCoderSubmissions() {
         userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getAtCoder() != null &&
@@ -104,7 +104,7 @@ public class Crawler {
         userDao.saveAll(users);
     }
 
-    @Scheduled(cron = "35 30 1/24 * * *", zone = "Asia/Shanghai")
+    @Scheduled(cron = "1 23 4/24 * * *", zone = "Asia/Shanghai")
     public void crawlVjudgeSubmissions() {
         userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getVjudge() != null &&
