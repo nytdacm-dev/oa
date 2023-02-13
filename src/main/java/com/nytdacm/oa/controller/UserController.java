@@ -72,6 +72,10 @@ public class UserController {
             user.getSocialAccount().setNowcoder(userUpdateRequest.nowcoder());
             user.getSocialAccount().setNowcoderCrawlerEnabled(false);
         }
+        if (userUpdateRequest.vjudge() != null) {
+            user.getSocialAccount().setVjudge(userUpdateRequest.vjudge());
+            user.getUserInternal().setVjudgeCrawlerEnabled(false);
+        }
         var newUser = userService.updateUser(user);
         return HttpResponse.success(200, "更新成功", UserDto.fromEntity(newUser));
     }
@@ -86,6 +90,7 @@ record UserUpdateRequest(
     String atCoder,
     String luogu,
     String nowcoder,
-    String poj
+    String poj,
+    String vjudge
 ) {
 }

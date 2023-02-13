@@ -26,4 +26,5 @@ public class SocialAccount implements Serializable {
     private String nowcoder;
     private Boolean nowcoderCrawlerEnabled;
     private String poj;
+    private String vjudge;
 }

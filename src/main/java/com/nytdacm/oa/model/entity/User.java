@@ -200,5 +200,7 @@ public class User extends BaseEntity {
         private Boolean atcoderCrawlerEnabled = false;
         private Boolean pojCrawlerEnabled = false;
         private Long lastPojSubmissionId = 0L;
+        private Boolean vjudgeCrawlerEnabled = false;
+        private Long lastVjudgeSubmissionId = 0L;
     }
 }
