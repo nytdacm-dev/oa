@@ -104,8 +104,7 @@ public class Crawler {
         userDao.saveAll(users);
     }
 
-    //    @Scheduled(cron = "0 30 2/24 * * *", zone = "Asia/Shanghai")
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "35 30 1/24 * * *", zone = "Asia/Shanghai")
     public void crawlVjudgeSubmissions() {
         userDao.findAll().parallelStream()
             .filter(user -> user.getSocialAccount().getVjudge() != null &&
