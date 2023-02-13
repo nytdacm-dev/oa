@@ -46,8 +46,10 @@ public class LuoguCrawler {
                             } else {
                                 user.getSocialAccount().setLuoguCrawlerEnabled(false);
                                 user.getSocialAccount().setLuogu(null);
-                                LOGGER.error(String.format("爬取 %s 用户的洛谷账号（%s）时出错", user.getUsername(), account));
                             }
+                        } else {
+                            user.getSocialAccount().setLuoguCrawlerEnabled(false);
+                            user.getSocialAccount().setLuogu(null);
                         }
                         return null;
                     });

@@ -50,8 +50,10 @@ public class NowCoderCrawler {
                             } else {
                                 user.getSocialAccount().setNowcoderCrawlerEnabled(false);
                                 user.getSocialAccount().setNowcoder(null);
-                                LOGGER.error(String.format("爬取 %s 用户的牛客账号（%s）时出错", user.getUsername(), account));
                             }
+                        } else {
+                            user.getSocialAccount().setNowcoderCrawlerEnabled(false);
+                            user.getSocialAccount().setNowcoder(null);
                         }
                         return null;
                     });
