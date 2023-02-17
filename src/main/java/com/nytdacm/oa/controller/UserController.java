@@ -48,7 +48,7 @@ public class UserController {
         }
         if (userUpdateRequest.codeforces() != null) {
             user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
-            user.getSocialAccount().setCodeforcesCrawlerEnabled(false);
+            user.getUserInternal().setCodeforcesCrawlerEnabled(false);
         }
         if (userUpdateRequest.github() != null) {
             user.getSocialAccount().setGithub(userUpdateRequest.github());
@@ -60,17 +60,13 @@ public class UserController {
             user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
             user.getUserInternal().setAtcoderCrawlerEnabled(false);
         }
-        if (userUpdateRequest.poj() != null) {
-            user.getSocialAccount().setPoj(userUpdateRequest.poj());
-            user.getUserInternal().setPojCrawlerEnabled(false);
-        }
         if (userUpdateRequest.luogu() != null) {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
             user.getSocialAccount().setLuoguCrawlerEnabled(false);
         }
         if (userUpdateRequest.nowcoder() != null) {
             user.getSocialAccount().setNowcoder(userUpdateRequest.nowcoder());
-            user.getSocialAccount().setNowcoderCrawlerEnabled(false);
+            user.getUserInternal().setNowcoderCrawlerEnabled(false);
         }
         if (userUpdateRequest.vjudge() != null) {
             user.getSocialAccount().setVjudge(userUpdateRequest.vjudge());
@@ -90,7 +86,6 @@ record UserUpdateRequest(
     String atCoder,
     String luogu,
     String nowcoder,
-    String poj,
     String vjudge
 ) {
 }

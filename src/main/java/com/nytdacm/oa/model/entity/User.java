@@ -1,5 +1,6 @@
 package com.nytdacm.oa.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -193,13 +194,14 @@ public class User extends BaseEntity {
 
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class UserInternal implements Serializable {
+        private Boolean codeforcesCrawlerEnabled = false;
         private Long lastCodeforcesSubmissionId = 0L;
+        private Boolean nowcoderCrawlerEnabled = false;
         private Long lastNowcoderSubmissionId = 0L;
         private Long lastAtCoderSubmissionId = 0L;
         private Boolean atcoderCrawlerEnabled = false;
-        private Boolean pojCrawlerEnabled = false;
-        private Long lastPojSubmissionId = 0L;
         private Boolean vjudgeCrawlerEnabled = false;
         private Long lastVjudgeSubmissionId = 0L;
     }

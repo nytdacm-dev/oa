@@ -1,5 +1,6 @@
 package com.nytdacm.oa.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +8,9 @@ import java.io.Serializable;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SocialAccount implements Serializable {
     private String codeforces;
-    private Boolean codeforcesCrawlerEnabled;
     private Integer codeforcesRating;
     private Integer codeforcesMaxRating;
     private String codeforcesRank;
@@ -24,7 +25,5 @@ public class SocialAccount implements Serializable {
     private Boolean luoguCrawlerEnabled;
 
     private String nowcoder;
-    private Boolean nowcoderCrawlerEnabled;
-    private String poj;
     private String vjudge;
 }
