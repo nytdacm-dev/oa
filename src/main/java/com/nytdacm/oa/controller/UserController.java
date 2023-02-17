@@ -50,12 +50,6 @@ public class UserController {
             user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
             user.getUserInternal().setCodeforcesCrawlerEnabled(false);
         }
-        if (userUpdateRequest.github() != null) {
-            user.getSocialAccount().setGithub(userUpdateRequest.github());
-        }
-        if (userUpdateRequest.website() != null) {
-            user.getSocialAccount().setWebsite(userUpdateRequest.website());
-        }
         if (userUpdateRequest.atCoder() != null) {
             user.getSocialAccount().setAtCoder(userUpdateRequest.atCoder());
             user.getUserInternal().setAtcoderCrawlerEnabled(false);
@@ -81,8 +75,6 @@ record UserUpdateRequest(
     @Size(min = 6, message = "密码长度至少为6位") String password,
     @Size(max = 6, message = "姓名长度不能超过6位") String name,
     String codeforces,
-    String github,
-    String website,
     String atCoder,
     String luogu,
     String nowcoder,

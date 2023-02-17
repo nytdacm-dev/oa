@@ -15,10 +15,6 @@ public class SocialAccount implements Serializable {
     private Integer codeforcesMaxRating;
     private String codeforcesRank;
 
-    private String github;
-
-    private String website;
-
     private String atCoder;
 
     private String luogu;
