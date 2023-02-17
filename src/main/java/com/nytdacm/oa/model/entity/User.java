@@ -57,8 +57,8 @@ public class User extends BaseEntity {
     private SocialAccount socialAccount = new SocialAccount();
 
     @ManyToMany(
-        fetch = FetchType.EAGER,
-        cascade = {CascadeType.MERGE})
+        fetch = FetchType.EAGER
+    )
     @JoinTable(
         name = "user_group",
         joinColumns = {

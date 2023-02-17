@@ -1,6 +1,5 @@
 package com.nytdacm.oa.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,8 +35,7 @@ public class Group extends BaseEntity {
 
     @ManyToMany(
         mappedBy = "groups",
-        fetch = FetchType.EAGER,
-        cascade = {CascadeType.MERGE}
+        fetch = FetchType.EAGER
     )
     private Set<User> users = new HashSet<>();
 
