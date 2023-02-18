@@ -4,10 +4,12 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import com.nytdacm.oa.model.entity.Group;
+import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.model.response.HttpResponse;
 import com.nytdacm.oa.model.response.ListWrapper;
 import com.nytdacm.oa.model.response.group.GroupDto;
 import com.nytdacm.oa.service.GroupService;
+import com.nytdacm.oa.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,15 +25,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/admin/group")
 @SaCheckLogin
 @SaCheckRole(value = {"admin", "super-admin"}, mode = SaMode.OR)
 public class AdminGroupController {
     private final GroupService groupService;
+    private final UserService userService;
 
-    public AdminGroupController(GroupService groupService) {
+    public AdminGroupController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -52,6 +59,31 @@ public class AdminGroupController {
     public ResponseEntity<HttpResponse<GroupDto>> group(@PathVariable Long id) {
         var group = groupService.getGroupById(id);
         return HttpResponse.success(200, "获取成功", GroupDto.fromEntity(group));
+    }
+
+    @GetMapping("/{id}/members")
+    public ResponseEntity<HttpResponse<List<Long>>> getGroupMembers(@PathVariable Long id) {
+        var members = groupService.getGroupById(id).getUsers().stream()
+            .map(User::getUserId)
+            .toList();
+        return HttpResponse.success(200, "获取成功", members);
+    }
+
+    @PostMapping("/{id}/members")
+    public ResponseEntity<HttpResponse<Void>> setUserGroups(
+        @PathVariable Long id,
+        @RequestBody GroupMemberRequest groupMemberRequest
+    ) {
+        var group = groupService.getGroupById(id);
+        var members = groupMemberRequest.members().parallelStream().map(userService::getUserById).collect(Collectors.toSet());
+        group.setUsers(members);
+        groupService.updateGroup(group);
+        return HttpResponse.success(200, "修改成功", null);
+    }
+
+    private record GroupMemberRequest(
+        List<Long> members
+    ) {
     }
 
     @PostMapping

@@ -15,5 +15,7 @@ public interface GroupService {
 
     Group newGroup(Group group);
 
+    void updateGroup(Group group);
+
     void delete(Long id);
 }

@@ -66,6 +66,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public void updateGroup(Group group) {
+        groupDao.save(group);
+    }
+
+    @Override
     public void delete(Long id) {
         var group = groupDao.findById(id).orElseThrow(() -> new OaBaseException("群组不存在", 404));
         var users = group.getUsers();
