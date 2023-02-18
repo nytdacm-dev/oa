@@ -1,5 +1,5 @@
 plugins {
-    id "com.gradle.enterprise" version "3.12.2"
+    id("com.gradle.enterprise") version "3.12.2"
 }
 
 gradleEnterprise {
@@ -12,4 +12,4 @@ gradleEnterprise {
     }
 }
 
-rootProject.name = 'oa'
+rootProject.name = "oa"
