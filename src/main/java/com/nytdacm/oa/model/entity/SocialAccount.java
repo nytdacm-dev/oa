@@ -18,7 +18,6 @@ public class SocialAccount implements Serializable {
     private String atCoder;
 
     private String luogu;
-    private Boolean luoguCrawlerEnabled;
 
     private String nowcoder;
     private String vjudge;

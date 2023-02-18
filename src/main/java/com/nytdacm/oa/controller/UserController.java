@@ -56,7 +56,6 @@ public class UserController {
         }
         if (userUpdateRequest.luogu() != null) {
             user.getSocialAccount().setLuogu(userUpdateRequest.luogu());
-            user.getSocialAccount().setLuoguCrawlerEnabled(false);
         }
         if (userUpdateRequest.nowcoder() != null) {
             user.getSocialAccount().setNowcoder(userUpdateRequest.nowcoder());
