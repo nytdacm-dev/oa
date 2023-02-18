@@ -5,9 +5,8 @@ import com.nytdacm.oa.dao.SubmissionDao;
 import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.model.entity.Submission;
+import com.nytdacm.oa.model.entity.User;
 import com.nytdacm.oa.service.SubmissionService;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -26,50 +25,44 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.groupDao = groupDao;
     }
 
-    private Example<Submission> paramsToExample(Long user, String oj) {
-        var probe = new Submission();
-        if (user != null) {
-            var userEntity = userDao.findById(user).orElseThrow(() -> new OaBaseException("用户不存在", 404));
-            probe.setUser(userEntity);
+    private List<User> paramsToUsers(String user, Long group) {
+        List<User> users;
+        if (group != null) {
+            var g = groupDao.findById(group).orElseThrow(() -> new OaBaseException("群组不存在", 404));
+            users = g.getUsers().stream()
+                .filter(u ->
+                    u.getUsername().toLowerCase().contains(user.toLowerCase()) ||
+                        u.getName().toLowerCase().contains(user.toLowerCase()))
+                .toList();
+        } else {
+            users = userDao.findAllByUsernameContainingIgnoreCaseOrNameContainingIgnoreCase(user, user);
         }
-        probe.setOj(oj);
-
-        ExampleMatcher matcher = ExampleMatcher.matching()
-            .withIgnoreNullValues()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
-            .withIgnoreCase();
-        return Example.of(probe, matcher);
+        return users;
     }
 
     @Override
-    public List<Submission> getAllSubmissions(Long user, Long group, String oj, Integer page, Integer size) {
+    public List<Submission> getAllSubmissions(String user, Long group, String oj, Integer page, Integer size) {
         var sort = Sort.by(Sort.Direction.DESC, "submitTime");
-        if (group != null) {
-            var g = groupDao.findById(group).orElseThrow(() -> new OaBaseException("群组不存在", 404));
-            var users = g.getUsers();
-            if (oj == null) {
-                oj = "";
-            }
-            return submissionDao
-                .findAllByUserInAndOjContaining(users.parallelStream().toList(), oj, PageRequest.of(page, size, sort)).getContent();
-        } else {
-            var example = paramsToExample(user, oj);
-            return submissionDao.findAll(example, PageRequest.of(page, size, sort)).getContent();
+        if (user == null) {
+            user = "";
         }
+        if (oj == null) {
+            oj = "";
+        }
+        var users = paramsToUsers(user, group);
+        return submissionDao
+            .findAllByUserInAndOjContaining(users, oj, PageRequest.of(page, size, sort)).getContent();
     }
 
     @Override
-    public long count(Long user, Long group, String oj) {
-        if (group != null) {
-            var g = groupDao.findById(group).orElseThrow(() -> new OaBaseException("群组不存在", 404));
-            var users = g.getUsers();
-            if (oj == null) {
-                oj = "";
-            }
-            return submissionDao.countByUserInAndOjContaining(users.parallelStream().toList(), oj);
-        } else {
-            var example = paramsToExample(user, oj);
-            return submissionDao.count(example);
+    public long count(String user, Long group, String oj) {
+        if (user == null) {
+            user = "";
         }
+        if (oj == null) {
+            oj = "";
+        }
+        var users = paramsToUsers(user, group);
+        return submissionDao.countByUserInAndOjContaining(users, oj);
     }
 }

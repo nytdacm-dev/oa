@@ -29,7 +29,7 @@ public class AdminSubmissionController {
 
     @GetMapping
     public ResponseEntity<HttpResponse<ListWrapper<SubmissionDto>>> getAllSubmissions(
-        @RequestParam(required = false) Long user,
+        @RequestParam(required = false) String user,
         @RequestParam(required = false) Long group,
         @RequestParam(required = false) String oj,
         @RequestParam(required = false, defaultValue = "0") Integer page,
