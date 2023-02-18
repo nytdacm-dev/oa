@@ -33,7 +33,7 @@ public class Submission extends BaseEntity {
     @Column(name = "submission_id", nullable = false, updatable = false)
     private Long submissionId;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @Column(name = "oj", nullable = false)
