@@ -57,8 +57,8 @@ dependencies {
     implementation("cn.dev33:sa-token-spring-boot3-starter:$satokenVersion")
     implementation("cn.dev33:sa-token-jwt:$satokenVersion") {
         // kotlin gradle exclude
-        exclude(group = "cn.hutool", module = "hutool-core")
-        exclude(group = "cn.hutool", module = "hutool-json")
+        exclude("cn.hutool", "hutool-core")
+        exclude("cn.hutool", "hutool-json")
     }
     implementation("cn.hutool:hutool-core:$hutoolVersion")
     implementation("cn.hutool:hutool-json:$hutoolVersion")
