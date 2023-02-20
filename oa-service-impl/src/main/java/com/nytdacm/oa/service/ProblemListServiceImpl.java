@@ -1,7 +1,6 @@
 package com.nytdacm.oa.service;
 
 import com.nytdacm.oa.dao.ProblemListDao;
-import com.nytdacm.oa.service.ProblemListService;
 import org.springframework.stereotype.Service;
 
 @Service

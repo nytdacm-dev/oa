@@ -39,6 +39,7 @@ subprojects {
 allprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
+    apply(plugin = "checkstyle")
 
     group = "com.nytdacm"
     version = "0.0.1-SNAPSHOT"
