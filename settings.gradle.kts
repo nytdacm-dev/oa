@@ -20,5 +20,7 @@ include("oa-config")
 include("oa-dao")
 include("oa-service")
 include("oa-service-impl")
-include("oa-third-part")
 include("oa-utils")
+if (settingsDir.resolve("oa-third-part/build.gradle.kts").isFile) {
+    include("oa-third-part")
+}

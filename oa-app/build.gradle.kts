@@ -9,7 +9,9 @@ dependencies {
     implementation(project(":oa-service-impl"))
     implementation(project(":oa-utils"))
     implementation(project(":oa-config"))
-    implementation(project(":oa-third-part"))
+    if (rootDir.resolve("oa-third-part/build.gradle.kts").isFile) {
+        implementation(project(":oa-third-part"))
+    }
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")

@@ -8,10 +8,6 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
 }
 
-group = "com.nytdacm"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
@@ -70,7 +66,11 @@ tasks.jacocoTestReport {
 idea {
     module {
         // 忽略前端构建文件
-        excludeDirs = setOf(file("$projectDir/src/main/resources/static"), file("$projectDir/web/dist"))
+        excludeDirs = setOf(
+            file("$projectDir/oa-app/src/main/resources/static"),
+            file("build"),
+            file("$projectDir/web/dist"),
+        )
     }
 }
 
