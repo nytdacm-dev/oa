@@ -1,6 +1,6 @@
 [submodule "web"]
 	path = web
 	url = git@github.com:nytdacm-dev/oa-web.git
-[submodule "oa-third_part_service"]
-	path = src/main/java/com/nytdacm/oa/third_part
-	url = git@github.com:nytdacm-dev/oa-third_part_service.git
+[submodule "oa-third-part"]
+	path = oa-third-part
+	url = git@github.com:nytdacm-dev/oa-third-part.git

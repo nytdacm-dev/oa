@@ -13,3 +13,12 @@ gradleEnterprise {
 }
 
 rootProject.name = "oa"
+
+include("oa-common")
+include("oa-app")
+include("oa-config")
+include("oa-dao")
+include("oa-service")
+include("oa-service-impl")
+include("oa-third-part")
+include("oa-utils")
