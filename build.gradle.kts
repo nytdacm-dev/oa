@@ -47,12 +47,12 @@ allprojects {
     repositories {
         if (System.getenv("CI") == null) {
             // 本地开发时使用阿里云仓库
-            maven(url = "https://maven.aliyun.com/repository/public/")
-            maven(url = "https://maven.aliyun.com/repository/spring/")
+            maven("https://maven.aliyun.com/repository/public/")
+            maven("https://maven.aliyun.com/repository/spring/")
         }
         mavenCentral()
-        maven(url = "https://repo.spring.io/snapshot")
-        maven(url = "https://repo.spring.io/milestone")
+        maven("https://repo.spring.io/snapshot")
+        maven("https://repo.spring.io/milestone")
     }
 }
 
