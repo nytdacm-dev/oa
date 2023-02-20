@@ -4,7 +4,7 @@ host=$DEPLOY_HOST
 
 time=$(date +%Y%m%d-%H%M%S)
 current_dir=$(dirname $0)
-jar_file_path=$current_dir/../build/libs/oa-*.jar
+jar_file_path=$current_dir/../oa-app/build/libs/oa-*.jar
 logback_config_path=$current_dir/../config/logback.xml
 deploy_dir=/home/$user/deploys/$time
 jar_file_name=$(basename $jar_file_path)

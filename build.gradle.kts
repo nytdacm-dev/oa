@@ -1,14 +1,11 @@
 plugins {
     java
-//    `maven-publish`
-//    checkstyle
-//    jacoco
+    checkstyle
+    jacoco
     idea
 
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
-//    id("org.springframework.boot.experimental.thin-launcher") version "1.0.29.RELEASE"
-//    id("org.hibernate.orm") version "6.1.6.Final"
 }
 
 group = "com.nytdacm"
@@ -63,28 +60,12 @@ allprojects {
     }
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("maven") {
-//            from(components["java"])
-//        }
-//    }
-//}
-//
-//tasks.jacocoTestReport {
-//    reports {
-//        xml.required.set(true)
-//        html.required.set(true)
-//    }
-//}
-
-//hibernate {
-//    enhancement {
-//        enableLazyInitialization(true)
-//        enableDirtyTracking(true)
-//        enableAssociationManagement(true)
-//    }
-//}
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
 
 idea {
     module {
@@ -93,6 +74,6 @@ idea {
     }
 }
 
-//tasks.named("check").configure {
-//    dependsOn("jacocoTestReport")
-//}
+tasks.named("check").configure {
+    dependsOn("jacocoTestReport")
+}
