@@ -9,7 +9,7 @@ dependencies {
     implementation(project(":oa-service-impl"))
     implementation(project(":oa-utils"))
     implementation(project(":oa-config"))
-    if (rootDir.resolve("oa-third-part/build.gradle.kts").isFile && System.getenv("OA_THIRD_PART") != null) {
+    if (rootDir.resolve("oa-third-part/build.gradle.kts").isFile) {
         implementation(project(":oa-third-part"))
     }
 
