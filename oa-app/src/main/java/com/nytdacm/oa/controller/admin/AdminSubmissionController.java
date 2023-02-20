@@ -8,6 +8,11 @@ import com.nytdacm.oa.response.HttpResponse;
 import com.nytdacm.oa.response.ListWrapper;
 import com.nytdacm.oa.response.user.UserDto;
 import com.nytdacm.oa.service.SubmissionService;
+import com.nytdacm.oa.utils.ExcelUtil;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/admin/submission")
@@ -40,6 +48,36 @@ public class AdminSubmissionController {
         var count = submissionService.count(user, group, oj);
         return HttpResponse.success(200, "获取成功",
             new ListWrapper<>(count, submissions));
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<Resource> download(
+        @RequestParam(required = false) String user,
+        @RequestParam(required = false) Long group,
+        @RequestParam(required = false) String oj,
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "2147483647") Integer size
+    ) {
+        String[] headers = {"提交人", "用户名", "题目名称", "OJ", "OJ 题目编号", "OJ 提交ID", "状态", "编程语言", "提交时间"};
+        var submissions = submissionService.getAllSubmissions(user, group, oj, page, size).parallelStream()
+            .map(submission -> new String[]{
+                submission.getUser().getName(),
+                submission.getUser().getUsername(),
+                submission.getName(),
+                submission.getOj(),
+                submission.getRemoteProblemId(),
+                submission.getRemoteSubmissionId(),
+                submission.getStatus(),
+                submission.getLanguage(),
+                LocalDateTime
+                    .ofInstant(submission.getSubmitTime(), ZoneId.of("Asia/Shanghai"))
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+            }).toList();
+        var file = new InputStreamResource(ExcelUtil.createExcel("提交记录", headers, submissions));
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + Instant.now() + ".xlsx")
+            .contentType(MediaType.parseMediaType(ExcelUtil.TYPE)).body(file);
     }
 }
 
