@@ -30,7 +30,7 @@ else
     -e PGTZ=Asia/Shanghai \
     -e LANG=en_US.UTF-8 \
     -v nytdacm_oa-data:/var/lib/postgresql/data \
-    postgres:14
+    postgres:15
   echo '数据库创建成功'
 fi
 

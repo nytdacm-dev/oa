@@ -11,5 +11,5 @@ docker run -d \
    -e PGTZ=Asia/Shanghai \
    -e LANG=en_US.UTF-8 \
    -p 5432:5432 \
-   postgres:14
+   postgres:15
 ```
