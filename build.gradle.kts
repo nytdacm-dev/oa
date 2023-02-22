@@ -1,11 +1,19 @@
 plugins {
     java
     checkstyle
-    jacoco
     idea
 
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
+}
+
+tasks.register<TestReport>("testReport") {
+    destinationDirectory.set(file("$buildDir/reports/tests"))
+    testResults.from(subprojects.flatMap { it.tasks.withType<Test>().matching { it.name == "test" } })
+}
+
+tasks.named("test").configure {
+    dependsOn("testReport")
 }
 
 subprojects {
@@ -14,6 +22,7 @@ subprojects {
     apply(plugin = "groovy")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
+    apply(plugin = "jacoco")
 
     val groovyVersion = "4.0.8"
     val spockVersion = "2.3-groovy-4.0"
@@ -36,6 +45,8 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+        reports.html.required.set(false)
+        reports.junitXml.required.set(false)
     }
 }
 
@@ -43,7 +54,6 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "checkstyle")
-    apply(plugin = "jacoco")
 
     group = "com.nytdacm"
     version = "0.0.1-SNAPSHOT"
@@ -58,17 +68,6 @@ allprojects {
         mavenCentral()
         maven("https://repo.spring.io/snapshot")
         maven("https://repo.spring.io/milestone")
-    }
-
-    tasks.jacocoTestReport {
-        reports {
-            xml.required.set(true)
-            html.required.set(true)
-        }
-    }
-
-    tasks.named("check").configure {
-        dependsOn("jacocoTestReport")
     }
 }
 
