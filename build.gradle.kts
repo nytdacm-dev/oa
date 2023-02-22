@@ -43,6 +43,7 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "checkstyle")
+    apply(plugin = "jacoco")
 
     group = "com.nytdacm"
     version = "0.0.1-SNAPSHOT"
@@ -58,12 +59,16 @@ allprojects {
         maven("https://repo.spring.io/snapshot")
         maven("https://repo.spring.io/milestone")
     }
-}
 
-tasks.jacocoTestReport {
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
+    tasks.jacocoTestReport {
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+    }
+
+    tasks.named("check").configure {
+        dependsOn("jacocoTestReport")
     }
 }
 
@@ -76,8 +81,4 @@ idea {
             file("$projectDir/web/dist"),
         )
     }
-}
-
-tasks.named("check").configure {
-    dependsOn("jacocoTestReport")
 }
