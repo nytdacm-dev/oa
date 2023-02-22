@@ -94,6 +94,10 @@ public class User extends BaseEntity {
         this.userInternal = userInternal;
     }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getUserId() {
         return userId;
     }
