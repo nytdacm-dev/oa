@@ -8,12 +8,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_submissions")
+@Getter
+@Setter
 public final class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
     public static final String OJ_CODEFORCES_GYM = "codeforces_gym";
@@ -61,90 +65,6 @@ public final class Submission extends BaseEntity {
 
     @Column(name = "relative_time")
     private Long relativeTime;
-
-    public Long getSubmissionId() {
-        return submissionId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getOj() {
-        return oj;
-    }
-
-    public void setOj(String oj) {
-        this.oj = oj;
-    }
-
-    public String getRemoteProblemId() {
-        return remoteProblemId;
-    }
-
-    public void setRemoteProblemId(String remoteProblemId) {
-        this.remoteProblemId = remoteProblemId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRemoteSubmissionId() {
-        return remoteSubmissionId;
-    }
-
-    public void setRemoteSubmissionId(String remoteSubmissionId) {
-        this.remoteSubmissionId = remoteSubmissionId;
-    }
-
-    public String getContestId() {
-        return contestId;
-    }
-
-    public void setContestId(String contestId) {
-        this.contestId = contestId;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Instant getSubmitTime() {
-        return submitTime;
-    }
-
-    public void setSubmitTime(Instant submitTime) {
-        this.submitTime = submitTime;
-    }
-
-    public Long getRelativeTime() {
-        return relativeTime;
-    }
-
-    public void setRelativeTime(Long relativeTime) {
-        this.relativeTime = relativeTime;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,6 +18,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_groups")
+@Getter
+@Setter
 public final class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,50 +44,6 @@ public final class Group extends BaseEntity {
         cascade = {CascadeType.MERGE}
     )
     private Set<User> users = new HashSet<>();
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getHomepageOrder() {
-        return homepageOrder;
-    }
-
-    public void setHomepageOrder(Integer homepageOrder) {
-        this.homepageOrder = homepageOrder;
-    }
-
-    public Boolean getShowInHomepage() {
-        return showInHomepage;
-    }
-
-    public void setShowInHomepage(Boolean showInHomepage) {
-        this.showInHomepage = showInHomepage;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
     @Override
     public boolean equals(Object o) {

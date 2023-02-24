@@ -4,11 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.Objects;
 
 @MappedSuperclass
+@Getter
+@Setter
 public sealed abstract class BaseEntity permits Group, ProblemList, Submission, User {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -23,10 +27,6 @@ public sealed abstract class BaseEntity permits Group, ProblemList, Submission, 
     @PreUpdate
     private void onUpdate() {
         updatedAt = Instant.now();
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
     }
 
     @Override

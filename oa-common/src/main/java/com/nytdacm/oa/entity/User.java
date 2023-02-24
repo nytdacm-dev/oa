@@ -26,6 +26,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_users")
+@Getter
+@Setter
 public final class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,117 +73,12 @@ public final class User extends BaseEntity {
 
     private Instant lastActive;
 
-    public Instant getLastActive() {
-        return lastActive;
-    }
-
-    public void setLastActive(Instant lastActive) {
-        this.lastActive = lastActive;
-    }
-
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Submission> submissions = new HashSet<>();
 
     @Column(name = "user_internal")
     @JdbcTypeCode(SqlTypes.JSON)
     private UserInternal userInternal = new UserInternal();
-
-    public UserInternal getUserInternal() {
-        return userInternal;
-    }
-
-    public void setUserInternal(UserInternal userInternal) {
-        this.userInternal = userInternal;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPasswordSalt() {
-        return passwordSalt;
-    }
-
-    public void setPasswordSalt(String passwordSalt) {
-        this.passwordSalt = passwordSalt;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getSuperAdmin() {
-        return superAdmin;
-    }
-
-    public void setSuperAdmin(Boolean superAdmin) {
-        this.superAdmin = superAdmin;
-    }
-
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public SocialAccount getSocialAccount() {
-        return socialAccount;
-    }
-
-    public void setSocialAccount(SocialAccount socialAccount) {
-        this.socialAccount = socialAccount;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
-    }
-
-    public Set<Submission> getSubmissions() {
-        return submissions;
-    }
-
-    public void setSubmissions(Set<Submission> submissions) {
-        this.submissions = submissions;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
