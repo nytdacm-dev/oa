@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_users")
-public class User extends BaseEntity {
+public final class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, updatable = false)

@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_groups")
-public class Group extends BaseEntity {
+public final class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id", nullable = false, updatable = false)

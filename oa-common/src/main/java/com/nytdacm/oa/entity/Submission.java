@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_submissions")
-public class Submission extends BaseEntity {
+public final class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
     public static final String OJ_CODEFORCES_GYM = "codeforces_gym";
     public static final String OJ_NOWCODER = "nowcoder";

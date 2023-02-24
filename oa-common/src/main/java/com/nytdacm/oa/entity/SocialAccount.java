@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SocialAccount implements Serializable {
+public final class SocialAccount implements Serializable {
     private String codeforces;
     private Integer codeforcesRating;
     private Integer codeforcesMaxRating;
