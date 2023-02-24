@@ -1,10 +1,12 @@
+import com.nytdacm.oa.buildsupport.isCI
+
 plugins {
     java
     checkstyle
     idea
 
-    id("org.springframework.boot") version "3.0.2"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.0.2" apply false
+    id("io.spring.dependency-management") version "1.1.0" apply false
 }
 
 tasks.register<TestReport>("testReport") {
@@ -60,7 +62,7 @@ allprojects {
     java.sourceCompatibility = JavaVersion.VERSION_17
 
     repositories {
-        if (System.getenv("CI") == null) {
+        if (!isCI()) {
             // 本地开发时使用阿里云仓库
             maven("https://maven.aliyun.com/repository/public/")
             maven("https://maven.aliyun.com/repository/spring/")
