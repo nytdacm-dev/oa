@@ -1,3 +1,9 @@
+pluginManagement {
+    plugins {
+        id("org.jetbrains.kotlin.jvm") version "1.8.10"
+    }
+}
+
 plugins {
     id("com.gradle.enterprise") version "3.12.2"
 }
