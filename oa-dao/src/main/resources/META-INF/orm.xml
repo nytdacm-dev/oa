@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+                 https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+  <mapped-superclass class="com.nytdacm.oa.entity.BaseEntity">
+    <attributes>
+      <basic name="createdAt">
+        <column name="created_at" nullable="false" updatable="false"/>
+      </basic>
+      <basic name="createdAt">
+        <column name="created_at" nullable="false"/>
+      </basic>
+    </attributes>
+    <pre-persist method-name="onCreate"/>
+    <pre-update method-name="onUpdate"/>
+  </mapped-superclass>
+  <!--
+  <entity class="com.nytdacm.oa.entity.Group">
+    <table name="t_groups"/>
+    <attributes>
+      <id name="groupId">
+        <generated-value strategy="IDENTITY"/>
+        <column name="group_id" nullable="false" updatable="false"/>
+      </id>
+      <basic name="name">
+        <column name="name"/>
+      </basic>
+      <basic name="displayName">
+        <column name="display_name"/>
+      </basic>
+      <basic name="showInHomepage">
+        <column name="show_in_home_page"/>
+      </basic>
+      <basic name="homepageOrder">
+        <column name="homepage_order"/>
+      </basic>
+      <many-to-many
+        target-entity="com.nytdacm.oa.entity.User"
+        name="users"
+        mapped-by="groups"
+        fetch="EAGER"
+      >
+        <cascade>
+          <cascade-merge/>
+        </cascade>
+      </many-to-many>
+    </attributes>
+  </entity>
+  -->
+  <entity class="com.nytdacm.oa.entity.ProblemList">
+    <table name="t_problem_list"/>
+    <attributes>
+      <id name="problemListId">
+        <generated-value strategy="IDENTITY"/>
+        <column name="problem_list_id" nullable="false" updatable="false"/>
+      </id>
+    </attributes>
+  </entity>
+  <entity class="com.nytdacm.oa.entity.Submission">
+    <table name="t_submissions"/>
+    <attributes>
+      <id name="submissionId">
+        <generated-value strategy="IDENTITY"/>
+        <column name="submission_id" nullable="false" updatable="false"/>
+      </id>
+      <many-to-one
+        name="user"
+        target-entity="com.nytdacm.oa.entity.User"
+        fetch="EAGER"
+      />
+      <basic name="oj">
+        <column name="oj" nullable="false"/>
+      </basic>
+      <basic name="remoteProblemId">
+        <column name="remote_problem_id"/>
+      </basic>
+      <basic name="name">
+        <column name="name"/>
+      </basic>
+      <basic name="remoteSubmissionId">
+        <column name="remote_submission_id"/>
+      </basic>
+      <basic name="contestId">
+        <column name="contest_id"/>
+      </basic>
+      <basic name="language">
+        <column name="language"/>
+      </basic>
+      <basic name="status">
+        <column name="status"/>
+      </basic>
+      <basic name="submitTime">
+        <column name="submit_time"/>
+      </basic>
+      <basic name="relativeTime">
+        <column name="relative_time"/>
+      </basic>
+    </attributes>
+  </entity>
+  <!--
+  <entity class="com.nytdacm.oa.entity.User">
+    <table name="t_users"/>
+    <attributes>
+      <id name="userId">
+        <generated-value strategy="IDENTITY"/>
+        <column name="user_id" nullable="false" updatable="false"/>
+      </id>
+      <basic name="username">
+        <column name="username" nullable="false" unique="true" updatable="false"/>
+      </basic>
+      <basic name="password">
+        <column name="password" nullable="false"/>
+      </basic>
+      <basic name="passwordSalt">
+        <column name="password_salt" nullable="false"/>
+      </basic>
+      <basic name="name">
+        <column name="name"/>
+      </basic>
+      <basic name="superAdmin">
+        <column name="super_admin"/>
+      </basic>
+      <basic name="admin">
+        <column name="admin"/>
+      </basic>
+      <basic name="active">
+        <column name="active"/>
+      </basic>
+      <basic name="socialAccount">
+        <column name="social_account" column-definition="jsonb"/>
+      </basic>
+      <many-to-many name="groups" fetch="EAGER">
+        <join-table name="user_group">
+          <join-column name="user_id" referenced-column-name="user_id"/>
+          <inverse-join-column name="group_id" referenced-column-name="group_id"/>
+        </join-table>
+      </many-to-many>
+      <one-to-many
+        name="submissions"
+        target-entity="com.nytdacm.oa.entity.Submission"
+        mapped-by="user" fetch="EAGER"
+      >
+        <cascade>
+          <cascade-merge/>
+        </cascade>
+      </one-to-many>
+      <basic name="userInternal">
+        <column name="user_internal" column-definition="jsonb"/>
+      </basic>
+    </attributes>
+  </entity>
+  -->
+</entity-mappings>
