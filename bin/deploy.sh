@@ -22,7 +22,7 @@ ssh $user@$host "mkdir -p $deploy_dir"
 title '上传jar包'
 scp $jar_file_path $user@$host:$deploy_dir
 title '上传Dockerfile'
-scp $current_dir/host.Dockerfile $user@$host:$deploy_dir/Dockerfile
+scp $current_dir/../config/host.Dockerfile $user@$host:$deploy_dir/Dockerfile
 title '上传日志文件'
 scp $logback_config_path $user@$host:$deploy_dir/logback.xml
 title '上传远程脚本'
