@@ -2,7 +2,6 @@ import com.nytdacm.oa.buildsupport.isCI
 
 plugins {
     java
-    checkstyle
     idea
 
     id("org.springframework.boot") version "3.0.2" apply false
@@ -25,6 +24,7 @@ subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "jacoco")
+    apply(plugin = "checkstyle")
 
     val groovyVersion = "4.0.8"
     val spockVersion = "2.3-groovy-4.0"
@@ -53,13 +53,8 @@ subprojects {
 }
 
 allprojects {
-    apply(plugin = "java")
-    apply(plugin = "java-library")
-    apply(plugin = "checkstyle")
-
     group = "com.nytdacm"
     version = "0.0.1-SNAPSHOT"
-    java.sourceCompatibility = JavaVersion.VERSION_17
 
     repositories {
         if (!isCI()) {

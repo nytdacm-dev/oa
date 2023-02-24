@@ -14,6 +14,10 @@ gradleEnterprise {
 
 rootProject.name = "oa"
 
+require(JavaVersion.current() >= JavaVersion.VERSION_17) {
+    "You must use at least Java 17 to build the project, you're currently using ${System.getProperty("java.version")}"
+}
+
 include("oa-common")
 include("oa-app")
 include("oa-config")
