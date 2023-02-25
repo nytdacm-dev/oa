@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -76,7 +77,8 @@ public class AdminSubmissionController {
         var file = new InputStreamResource(ExcelUtil.createExcel("提交记录", headers, submissions));
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=" + Instant.now() + ".xlsx")
+                "attachment; filename=" +
+                    ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + ".xlsx")
             .contentType(MediaType.parseMediaType(ExcelUtil.TYPE)).body(file);
     }
 }
