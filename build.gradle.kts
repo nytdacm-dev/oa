@@ -20,23 +20,15 @@ tasks.named("test").configure {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
-    apply(plugin = "groovy")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "jacoco")
     apply(plugin = "checkstyle")
 
-    val groovyVersion = "4.0.8"
-    val spockVersion = "2.3-groovy-4.0"
-
     dependencies {
         implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
         annotationProcessor("org.projectlombok:lombok")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
-        testImplementation("org.apache.groovy:groovy-test:$groovyVersion")
-        testImplementation("org.apache.groovy:groovy-test-junit5:$groovyVersion")
-        testImplementation("org.spockframework:spock-core:$spockVersion")
-        testImplementation("org.spockframework:spock-spring:$spockVersion")
     }
 
     configurations {

@@ -1,6 +1,7 @@
 plugins{
     id("configure-kotlin")
     id("configure-ktlint")
+    id("configure-groovy")
 }
 
 dependencies {

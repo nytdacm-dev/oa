@@ -1,3 +1,8 @@
+plugins {
+    id("configure-groovy")
+    id("configure-spock")
+}
+
 val satokenVersion = "1.34.0"
 val hutoolVersion = "5.8.12"
 
