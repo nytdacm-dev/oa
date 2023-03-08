@@ -68,7 +68,15 @@ public class AdminSubmissionController {
                 submission.getOj(),
                 submission.getRemoteProblemId(),
                 submission.getRemoteSubmissionId(),
-                submission.getStatus(),
+                switch (submission.getStatus()) {
+                    case Submission.STATUS_SUCCESS -> "答案正确";
+                    case Submission.STATUS_WRONG_ANSWER -> "答案错误";
+                    case Submission.STATUS_TIME_LIMIT_EXCEEDED -> "时间超限";
+                    case Submission.STATUS_MEMORY_LIMIT_EXCEEDED -> "内存超限";
+                    case Submission.STATUS_COMPILATION_ERROR -> "编译错误";
+                    case Submission.STATUS_RUNTIME_ERROR -> "运行时错误";
+                    default -> submission.getStatus();
+                },
                 submission.getLanguage(),
                 LocalDateTime
                     .ofInstant(submission.getSubmitTime(), ZoneId.of("Asia/Shanghai"))
