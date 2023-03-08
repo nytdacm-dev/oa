@@ -6,10 +6,16 @@ import com.nytdacm.oa.dao.UserDao;
 import com.nytdacm.oa.entity.Submission;
 import com.nytdacm.oa.entity.User;
 import com.nytdacm.oa.exception.OaBaseException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +40,13 @@ public class SubmissionServiceImpl implements SubmissionService {
                         u.getName().toLowerCase().contains(user.toLowerCase()))
                 .toList();
         } else {
-            users = userDao.findAllByUsernameContainingIgnoreCaseOrNameContainingIgnoreCase(user, user);
+            users = userDao.findAll((Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+                List<Predicate> predicates = new ArrayList<>();
+                String u = user.toLowerCase();
+                predicates.add(criteriaBuilder.like(root.get("username"), "%" + u + "%"));
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + u + "%"));
+                return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+            });
         }
         return users;
     }
@@ -45,12 +57,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (user == null) {
             user = "";
         }
-        if (oj == null) {
-            oj = "";
-        }
         var users = paramsToUsers(user, group);
-        return submissionDao
-            .findAllByUserInAndOjContaining(users, oj, PageRequest.of(page, size, sort)).getContent();
+        return submissionDao.findAll(buildSpecification(users, oj), PageRequest.of(page, size, sort)).getContent();
     }
 
     @Override
@@ -58,10 +66,18 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (user == null) {
             user = "";
         }
-        if (oj == null) {
-            oj = "";
-        }
         var users = paramsToUsers(user, group);
-        return submissionDao.countByUserInAndOjContaining(users, oj);
+        return submissionDao.count(buildSpecification(users, oj));
+    }
+
+    private Specification<Submission> buildSpecification(List<User> users, String oj) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            predicateList.add(criteriaBuilder.in(root.get("user")).value(users));
+            if (oj != null) {
+                predicateList.add(criteriaBuilder.like(root.get("oj"), "%" + oj + "%"));
+            }
+            return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
+        };
     }
 }
