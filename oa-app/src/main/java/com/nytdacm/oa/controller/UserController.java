@@ -43,9 +43,6 @@ public class UserController {
             user.setPasswordSalt(salt);
             user.setPassword(PasswordUtil.hashPassword(userUpdateRequest.password(), salt));
         }
-        if (StringUtils.isNotEmpty(userUpdateRequest.name())) {
-            user.setName(userUpdateRequest.name());
-        }
         if (userUpdateRequest.codeforces() != null) {
             user.getSocialAccount().setCodeforces(userUpdateRequest.codeforces());
             user.getUserInternal().setCodeforcesCrawlerEnabled(false);
@@ -72,7 +69,6 @@ public class UserController {
 
 record UserUpdateRequest(
     @Size(min = 6, message = "密码长度至少为6位") String password,
-    @Size(max = 6, message = "姓名长度不能超过6位") String name,
     String codeforces,
     String atCoder,
     String luogu,
