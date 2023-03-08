@@ -13,7 +13,7 @@ import java.util.Objects;
 @MappedSuperclass
 @Getter
 @Setter
-public sealed abstract class BaseEntity permits Group, ProblemList, Submission, User {
+public sealed abstract class BaseEntity permits Group, Submission, User {
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Instant createdAt;
