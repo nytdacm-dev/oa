@@ -44,7 +44,7 @@ fi
 
 title '运行容器'
 docker run -d \
-    -p 80:8080 \
+    -p 8080:8080 \
     --name $container_name \
     --restart=on-failure:5 \
     --network $network \
