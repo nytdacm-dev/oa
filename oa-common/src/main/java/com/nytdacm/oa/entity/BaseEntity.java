@@ -14,10 +14,10 @@ import java.util.Objects;
 @Getter
 @Setter
 public sealed abstract class BaseEntity permits Group, Submission, User {
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at")
     @CreationTimestamp
     private Instant createdAt;
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private Instant updatedAt;
 
