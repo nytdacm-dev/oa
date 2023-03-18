@@ -14,5 +14,8 @@ class Article(
     var title: String,
     @Column(columnDefinition = "text") var content: String,
     @ManyToOne var author: User,
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "article_id") var articleId: Long? = null
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "article_id")
+    var articleId: Long? = null,
 ) : BaseEntity()
