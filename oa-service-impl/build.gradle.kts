@@ -1,6 +1,8 @@
 plugins {
     id("configure-groovy")
     id("configure-spock")
+    id("configure-kotlin")
+    id("configure-ktlint")
 }
 
 val satokenVersion = "1.34.0"

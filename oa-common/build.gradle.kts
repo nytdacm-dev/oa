@@ -1,8 +1,8 @@
 plugins {
     id("configure-kotlin")
     id("configure-ktlint")
-    kotlin("plugin.allopen") version "1.8.0"
-    kotlin("plugin.jpa") version "1.8.0"
+    kotlin("plugin.allopen") version "1.8.10"
+    kotlin("plugin.jpa") version "1.8.10"
     id("org.hibernate.orm") version "6.1.7.Final"
 }
 
