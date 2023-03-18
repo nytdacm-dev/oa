@@ -1,5 +1,9 @@
 plugins {
-    id("org.hibernate.orm") version "6.1.6.Final"
+    id("configure-kotlin")
+    id("configure-ktlint")
+    kotlin("plugin.allopen") version "1.8.0"
+    kotlin("plugin.jpa") version "1.8.0"
+    id("org.hibernate.orm") version "6.1.7.Final"
 }
 
 dependencies {
@@ -13,4 +17,10 @@ hibernate {
         enableDirtyTracking(true)
         enableAssociationManagement(true)
     }
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.MappedSuperclass")
 }

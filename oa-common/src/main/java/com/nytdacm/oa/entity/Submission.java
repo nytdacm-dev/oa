@@ -18,7 +18,7 @@ import java.util.Objects;
 @Table(name = "t_submissions")
 @Getter
 @Setter
-public final class Submission extends BaseEntity {
+public class Submission extends BaseEntity {
     public static final String OJ_CODEFORCES = "codeforces";
     public static final String OJ_CODEFORCES_GYM = "codeforces_gym";
     public static final String OJ_NOWCODER = "nowcoder";

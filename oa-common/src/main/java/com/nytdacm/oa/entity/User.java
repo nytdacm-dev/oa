@@ -28,7 +28,7 @@ import java.util.Set;
 @Table(name = "t_users")
 @Getter
 @Setter
-public final class User extends BaseEntity {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, updatable = false)
@@ -79,6 +79,7 @@ public final class User extends BaseEntity {
     @Column(name = "user_internal")
     @JdbcTypeCode(SqlTypes.JSON)
     private UserInternal userInternal = new UserInternal();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

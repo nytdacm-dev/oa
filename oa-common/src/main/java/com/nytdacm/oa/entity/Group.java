@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name = "t_groups")
 @Getter
 @Setter
-public final class Group extends BaseEntity {
+public class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id", nullable = false, updatable = false)
