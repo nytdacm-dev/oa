@@ -2,10 +2,10 @@ package com.nytdacm.oa.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -15,11 +15,19 @@ import java.util.Objects;
 @Setter
 public sealed abstract class BaseEntity permits Group, Submission, User {
     @Column(name = "created_at")
-    @CreationTimestamp
     private Instant createdAt;
     @Column(name = "updated_at")
-    @UpdateTimestamp
     private Instant updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
     @Override
     public boolean equals(Object o) {
