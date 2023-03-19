@@ -5,7 +5,7 @@ plugins {
 }
 
 val satokenVersion = "1.34.0"
-val hutoolVersion = "5.8.14"
+val hutoolVersion = "5.8.12"
 
 dependencies {
     implementation(project(":oa-common"))
@@ -21,7 +21,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-cache")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.5")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.2")
     implementation ("cn.dev33:sa-token-spring-boot3-starter:$satokenVersion")
     implementation("cn.dev33:sa-token-jwt:$satokenVersion") {
         // kotlin gradle exclude
