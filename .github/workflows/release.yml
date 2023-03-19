@@ -35,7 +35,7 @@ jobs:
         run: |
           cd web
           pnpm install
-          pnpm run build
+          pnpm run build-only
       - name: Copy frontend
         run: |
           mkdir -p oa-app/src/main/resources/static
