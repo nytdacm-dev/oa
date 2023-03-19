@@ -11,13 +11,13 @@ dependencies {
     api("commons-lang:commons-lang:2.6")
 }
 
-hibernate {
-    enhancement {
-        enableLazyInitialization(true)
-        enableDirtyTracking(true)
-        enableAssociationManagement(true)
-    }
-}
+//hibernate {
+//    enhancement {
+//        enableLazyInitialization(true)
+//        enableDirtyTracking(true)
+//        enableAssociationManagement(true)
+//    }
+//}
 
 allOpen {
     annotation("jakarta.persistence.Entity")
