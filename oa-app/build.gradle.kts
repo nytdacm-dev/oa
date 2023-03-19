@@ -4,6 +4,9 @@ plugins {
     id("configure-groovy")
 }
 
+val satokenVersion = "1.34.0"
+val hutoolVersion = "5.8.12"
+
 dependencies {
     implementation(project(":oa-common"))
     implementation(project(":oa-service"))
@@ -19,6 +22,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.2")
+    implementation ("cn.dev33:sa-token-spring-boot3-starter:$satokenVersion")
+    implementation("cn.dev33:sa-token-jwt:$satokenVersion") {
+        // kotlin gradle exclude
+        exclude("cn.hutool", "hutool-core")
+        exclude("cn.hutool", "hutool-json")
+    }
+    implementation("cn.hutool:hutool-core:$hutoolVersion")
+    implementation("cn.hutool:hutool-json:$hutoolVersion")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
 }

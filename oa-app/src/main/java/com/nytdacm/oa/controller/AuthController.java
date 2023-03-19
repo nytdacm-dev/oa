@@ -1,11 +1,13 @@
 package com.nytdacm.oa.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
+import com.nytdacm.oa.config.SecurityConfig;
 import com.nytdacm.oa.entity.User;
+import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.response.HttpResponse;
 import com.nytdacm.oa.response.user.UserDto;
-import com.nytdacm.oa.service.AuthService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.utils.PasswordUtil;
 import jakarta.validation.Valid;
@@ -23,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final AuthService authService;
     private final UserService userService;
+    private final SecurityConfig securityConfig;
 
-    public AuthController(AuthService authService, UserService userService) {
-        this.authService = authService;
+    public AuthController(UserService userService, SecurityConfig securityConfig) {
         this.userService = userService;
+        this.securityConfig = securityConfig;
     }
 
     @PostMapping("/signup")
@@ -48,8 +50,30 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<HttpResponse<String>> login(@RequestParam String username, @RequestParam String password) {
-        return HttpResponse.success(200, "登录成功", authService.login(username, password));
+    public ResponseEntity<HttpResponse<String>> userLogin(@RequestParam String username, @RequestParam String password) {
+        return HttpResponse.success(200, "登录成功", login(username, password));
+    }
+
+    private String login(String username, String password) {
+        User user;
+        try {
+            user = userService.getUserByUsername(username);
+        } catch (OaBaseException e) {
+            throw new OaBaseException("用户不存在", 400);
+        }
+        if (!user.getActive()) {
+            throw new OaBaseException("用户未激活，请耐心等待管理员激活", 400);
+        }
+        if (!PasswordUtil.checkPassword(password, user.getPasswordSalt(), user.getPassword())) {
+            throw new OaBaseException("密码错误", 400);
+        }
+
+        StpUtil.login(
+            user.getUserId(),
+            SaLoginConfig
+                .setTimeout(securityConfig.getTokenExpireTime())
+        );
+        return StpUtil.getTokenInfo().getTokenValue();
     }
 
     @GetMapping("/current")
