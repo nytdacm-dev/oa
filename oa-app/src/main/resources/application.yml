@@ -20,6 +20,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 sa-token:
   token-name: Authorization
@@ -32,3 +39,6 @@ sa-token:
   # 关闭 Cookie 功能
   is-read-cookie: false
   is-write-header: false
+
+file:
+  upload-dir: ${UPLOAD_DIR:/tmp/oa/}
