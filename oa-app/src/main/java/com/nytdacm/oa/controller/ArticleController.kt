@@ -47,13 +47,15 @@ class ArticleController(
     @PostMapping
     @SaCheckLogin
     fun writeArticle(
-        @RequestBody(required = true) newArticleRequest: NewArticleRequest
+        @RequestBody(required = true) newArticleRequest: NewArticleRequest,
     ): ResponseEntity<HttpResponse<ArticleDto>> {
         val id = StpUtil.getLoginIdAsLong()
         val user: User = userService.getUserById(id)
         val article = Article(newArticleRequest.title, newArticleRequest.content, user)
-        return HttpResponse.success(200, "发表成功",
-            articleService.newArticle(article).let { ArticleDto.toDto(it) }
+        return HttpResponse.success(
+            200,
+            "发表成功",
+            articleService.newArticle(article).let { ArticleDto.toDto(it) },
         )
     }
 }

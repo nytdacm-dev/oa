@@ -14,6 +14,7 @@ class Article(
     var title: String,
     @Column(columnDefinition = "text") var content: String,
     @ManyToOne var author: User,
+    var published: Boolean = false,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
