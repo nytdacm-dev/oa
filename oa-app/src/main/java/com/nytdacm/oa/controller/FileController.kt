@@ -18,7 +18,7 @@ class FileController(
     private val fileConfig: FileConfig,
 ) {
     @PostMapping
-    fun uploadFile(@RequestPart file: MultipartFile): ResponseEntity<HttpResponse<FileUploadResponse>> {
+    fun uploadFile(@RequestParam("file") file: MultipartFile): ResponseEntity<HttpResponse<FileUploadResponse>> {
         val filename =
             "${Instant.now().toEpochMilli()}-${randomString()}.${FileNameUtil.extName(file.originalFilename)}"
         // 判断目录是否存在
