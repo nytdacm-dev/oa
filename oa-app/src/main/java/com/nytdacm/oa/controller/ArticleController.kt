@@ -30,10 +30,10 @@ class ArticleController(
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "2147483647") size: Int,
     ): ResponseEntity<HttpResponse<ListWrapper<ArticleDto>>>? {
-        val list = articleService.getAllArticles(title ?: "", page, size).map {
+        val list = articleService.getAllArticles(title ?: "", true, page, size).map {
             ArticleDto(it.articleId, it.title, it.content, UserDto.fromEntity(it.author))
         }
-        val cnt = articleService.count(title ?: "")
+        val cnt = articleService.count(title ?: "", true)
         return HttpResponse.success(200, "获取成功", ListWrapper(cnt, list))
     }
 
