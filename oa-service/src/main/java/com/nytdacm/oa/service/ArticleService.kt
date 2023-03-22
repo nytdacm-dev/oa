@@ -8,4 +8,6 @@ interface ArticleService {
     fun getArticle(id: Long): Article
     fun getAllArticles(title: String, published: Boolean?, page: Int, size: Int): List<Article>
     fun count(title: String, published: Boolean?): Long
+
+    fun delete(id:Long)
 }

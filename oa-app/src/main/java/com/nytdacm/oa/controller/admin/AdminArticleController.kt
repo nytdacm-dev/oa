@@ -8,7 +8,9 @@ import com.nytdacm.oa.response.HttpResponse
 import com.nytdacm.oa.response.ListWrapper
 import com.nytdacm.oa.service.ArticleService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -31,5 +33,11 @@ class AdminArticleController(
             .map { ArticleDto.toDto(it) }
         val count = articleService.count(title, published)
         return HttpResponse.success(200, "获取成功", ListWrapper(count, articles))
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteArticle(@PathVariable id: Long): ResponseEntity<HttpResponse<Void>> {
+        articleService.delete(id)
+        return HttpResponse.success(200, "删除成功", null)
     }
 }

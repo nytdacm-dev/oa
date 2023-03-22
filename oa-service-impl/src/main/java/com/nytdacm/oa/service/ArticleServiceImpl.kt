@@ -32,6 +32,10 @@ class ArticleServiceImpl(
         return articleDao.count(buildSpecification(title, published))
     }
 
+    override fun delete(id: Long) {
+        articleDao.deleteById(id)
+    }
+
     private fun buildSpecification(title: String, published: Boolean?): Specification<Article> {
         return Specification { root, query, criteriaBuilder ->
             val predicateList = mutableListOf<Predicate>()

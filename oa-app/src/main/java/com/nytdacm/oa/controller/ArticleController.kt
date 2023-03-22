@@ -31,7 +31,7 @@ class ArticleController(
         @RequestParam(required = false, defaultValue = "2147483647") size: Int,
     ): ResponseEntity<HttpResponse<ListWrapper<ArticleDto>>>? {
         val list = articleService.getAllArticles(title ?: "", true, page, size).map {
-            ArticleDto(it.articleId, it.title, it.content, UserDto.fromEntity(it.author))
+            ArticleDto.toDto(it)
         }
         val cnt = articleService.count(title ?: "", true)
         return HttpResponse.success(200, "获取成功", ListWrapper(cnt, list))
@@ -65,10 +65,11 @@ data class ArticleDto(
     val title: String,
     val content: String,
     val author: UserDto,
+    val published: Boolean,
 ) {
     companion object {
         fun toDto(article: Article) =
-            ArticleDto(article.articleId, article.title, article.content, UserDto.fromEntity(article.author))
+            ArticleDto(article.articleId, article.title, article.content, UserDto.fromEntity(article.author), article.published)
     }
 }
 
