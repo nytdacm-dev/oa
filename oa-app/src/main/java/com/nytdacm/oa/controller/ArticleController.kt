@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.Instant
 
 @RestController
 @RequestMapping("/article")
@@ -66,10 +67,20 @@ data class ArticleDto(
     val content: String,
     val author: UserDto,
     val published: Boolean,
+    val createdAt: Instant,
+    val updatedAt: Instant?,
 ) {
     companion object {
         fun toDto(article: Article) =
-            ArticleDto(article.articleId, article.title, article.content, UserDto.fromEntity(article.author), article.published)
+            ArticleDto(
+                article.articleId,
+                article.title,
+                article.content,
+                UserDto.fromEntity(article.author),
+                article.published,
+                article.createdAt,
+                article.updatedAt,
+            )
     }
 }
 
