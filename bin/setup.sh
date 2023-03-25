@@ -5,6 +5,7 @@ container_name=oa-prod
 db_container_name=db-for-oa
 db_password=123456
 network=network_oa
+UPLOAD_DIR=/data/files/
 
 function title {
   echo
@@ -55,6 +56,7 @@ docker run -d \
     -e ENV=prod \
     -e JWT_SECRET_KEY=$JWT_SECRET_KEY \
     -e UPLOAD_DIR=$UPLOAD_DIR \
+    -v oa-data:/data \
     $container_name:$version
 
 title '全部执行完毕'
