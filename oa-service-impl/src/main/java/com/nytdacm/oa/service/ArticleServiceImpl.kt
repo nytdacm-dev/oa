@@ -16,7 +16,7 @@ class ArticleServiceImpl(
     override fun newArticle(article: Article): Article = articleDao.save(article)
     override fun getArticle(id: Long): Article {
         return articleDao.findById(id).orElseThrow {
-            OaBaseException("群组不存在", 404)
+            OaBaseException("文章不存在", 404)
         }
     }
 
