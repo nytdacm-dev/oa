@@ -1,5 +1,6 @@
 HELP.md
 .gradle
+.hooks/
 build/
 bin/
 !bin/backup_database.sh

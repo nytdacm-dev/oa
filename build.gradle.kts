@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") apply false
     id("org.springframework.boot") version "3.0.2" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
+    id("com.github.jakemarsden.git-hooks") version "0.0.2"
 }
 
 tasks.register<TestReport>("testReport") {
@@ -64,9 +65,15 @@ idea {
     module {
         // 忽略前端构建文件
         excludeDirs = setOf(
+            file(".hooks"),
             file("$projectDir/oa-app/src/main/resources/static"),
             file("build"),
             file("$projectDir/web/dist"),
         )
     }
+}
+
+gitHooks {
+    setHooks(mapOf("pre-commit" to "ktlintFormat"))
+    setHooksDirectory(layout.projectDirectory.dir(".hooks"))
 }
