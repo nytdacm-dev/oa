@@ -5,7 +5,10 @@ import com.nytdacm.oa.config.FileConfig
 import com.nytdacm.oa.response.HttpResponse
 import com.nytdacm.oa.utils.randomString
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -29,10 +32,12 @@ class FileController(
         val filepath = path.resolve(filename)
         Files.copy(file.inputStream, filepath)
         return HttpResponse.success(
-            200, "上传成功", FileUploadResponse(
+            200,
+            "上传成功",
+            FileUploadResponse(
                 filename,
                 "/file/$filename",
-            )
+            ),
         )
     }
 }

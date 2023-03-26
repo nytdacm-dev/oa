@@ -9,5 +9,5 @@ interface ArticleService {
     fun getAllArticles(title: String, published: Boolean?, page: Int, size: Int): List<Article>
     fun count(title: String, published: Boolean?): Long
 
-    fun delete(id:Long)
+    fun delete(id: Long)
 }
