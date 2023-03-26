@@ -75,5 +75,4 @@ idea {
 
 gitHooks {
     setHooks(mapOf("pre-commit" to "ktlintFormat"))
-    setHooksDirectory(layout.projectDirectory.dir(".hooks"))
 }
