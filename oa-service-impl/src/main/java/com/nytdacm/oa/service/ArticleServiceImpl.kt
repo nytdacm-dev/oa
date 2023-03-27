@@ -36,6 +36,8 @@ class ArticleServiceImpl(
         articleDao.deleteById(id)
     }
 
+    override fun update(article: Article): Article = articleDao.save(article)
+
     private fun buildSpecification(title: String, published: Boolean?): Specification<Article> {
         return Specification { root, query, criteriaBuilder ->
             val predicateList = mutableListOf<Predicate>()

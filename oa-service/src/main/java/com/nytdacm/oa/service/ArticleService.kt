@@ -10,4 +10,5 @@ interface ArticleService {
     fun count(title: String, published: Boolean?): Long
 
     fun delete(id: Long)
+    fun update(article: Article): Article
 }

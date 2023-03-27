@@ -9,6 +9,7 @@ import com.nytdacm.oa.response.ListWrapper
 import com.nytdacm.oa.response.user.UserDto
 import com.nytdacm.oa.service.ArticleService
 import com.nytdacm.oa.service.UserService
+import jakarta.validation.constraints.NotEmpty
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -85,6 +86,6 @@ data class ArticleDto(
 }
 
 data class NewArticleRequest(
-    val title: String,
-    val content: String,
+    @NotEmpty(message = "标题不能为空") val title: String,
+    @NotEmpty(message = "内容不能为空") val content: String,
 )
