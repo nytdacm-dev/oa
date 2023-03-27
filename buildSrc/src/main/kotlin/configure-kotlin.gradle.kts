@@ -1,4 +1,5 @@
 // TODO: https://spring.io/guides/tutorials/spring-boot-kotlin/
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -17,4 +18,11 @@ dependencies {
     add("implementation", "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
     add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        freeCompilerArgs += "-Xemit-jvm-type-annotations"
+    }
 }
