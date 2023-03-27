@@ -48,7 +48,8 @@ class AdminArticleController(
     @PatchMapping("/{id}")
     fun updateArticle(
         @PathVariable id: Long,
-        @RequestBody @Valid request: AdminArticleUpdateRequest,
+        @RequestBody @Valid
+        request: AdminArticleUpdateRequest,
     ): ResponseEntity<HttpResponse<ArticleDto>> {
         val article = articleService.getArticle(id)
         if (request.title != null) {
