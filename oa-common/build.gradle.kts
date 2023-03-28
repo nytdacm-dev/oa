@@ -8,7 +8,7 @@ plugins {
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
-    api("commons-lang:commons-lang:2.6")
+    api("org.apache.commons:commons-lang3:3.12.0")
 }
 
 //hibernate {

@@ -5,7 +5,7 @@ plugins {
 }
 
 val satokenVersion = "1.34.0"
-val hutoolVersion = "5.8.15"
+val hutoolVersion = "5.8.16"
 
 dependencies {
     implementation(project(":oa-common"))
