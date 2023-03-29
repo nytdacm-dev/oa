@@ -8,7 +8,7 @@ import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.utils.PasswordUtil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
