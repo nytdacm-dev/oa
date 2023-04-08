@@ -12,6 +12,7 @@ import com.nytdacm.oa.service.UserService
 import jakarta.validation.constraints.NotEmpty
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -59,6 +60,18 @@ class ArticleController(
             "发表成功",
             articleService.newArticle(article).let { ArticleDto.toDto(it) },
         )
+    }
+
+    @PatchMapping("/{id}")
+    @SaCheckLogin
+    fun updateArticle(
+        @PathVariable id: Long,
+        @RequestBody(required = true) articleRequest: NewArticleRequest,
+    ): ResponseEntity<HttpResponse<ArticleDto>> {
+        val article = articleService.getArticle(id)
+        article.title = articleRequest.title
+        article.content = articleRequest.content
+        return HttpResponse.success(200, "修改成功", ArticleDto.toDto(articleService.update(article)))
     }
 }
 
