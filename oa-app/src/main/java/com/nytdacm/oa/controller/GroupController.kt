@@ -1,5 +1,6 @@
 package com.nytdacm.oa.controller
 
+import cn.dev33.satoken.annotation.SaCheckLogin
 import com.nytdacm.oa.response.HttpResponse
 import com.nytdacm.oa.response.group.GroupDto
 import com.nytdacm.oa.service.GroupService
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/group")
+@SaCheckLogin
 open class GroupController(
     private val groupService: GroupService,
 ) {

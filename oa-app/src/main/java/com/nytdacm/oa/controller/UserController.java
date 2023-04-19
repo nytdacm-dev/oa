@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@SaCheckLogin
 public class UserController {
     private final UserService userService;
 
@@ -35,7 +36,6 @@ public class UserController {
     }
 
     @PatchMapping
-    @SaCheckLogin
     public ResponseEntity<HttpResponse<UserDto>> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest) {
         var user = userService.getUserById(StpUtil.getLoginIdAsLong());
         if (StringUtils.isNotEmpty(userUpdateRequest.password())) {

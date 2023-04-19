@@ -23,6 +23,7 @@ import java.time.Instant
 
 @RestController
 @RequestMapping("/article")
+@SaCheckLogin
 class ArticleController(
     private val articleService: ArticleService,
     private val userService: UserService,
@@ -48,7 +49,6 @@ class ArticleController(
     }
 
     @PostMapping
-    @SaCheckLogin
     fun writeArticle(
         @RequestBody(required = true) newArticleRequest: NewArticleRequest,
     ): ResponseEntity<HttpResponse<ArticleDto>> {
@@ -63,7 +63,6 @@ class ArticleController(
     }
 
     @PatchMapping("/{id}")
-    @SaCheckLogin
     fun updateArticle(
         @PathVariable id: Long,
         @RequestBody(required = true) articleRequest: NewArticleRequest,
