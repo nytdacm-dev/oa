@@ -41,7 +41,7 @@ jobs:
           mkdir -p oa-app/src/main/resources/static
           cp -r web/dist/* oa-app/src/main/resources/static
       - name: Build backend
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.4.2
         with:
           arguments: oa-app:bootJar
       - name: Install SSH key

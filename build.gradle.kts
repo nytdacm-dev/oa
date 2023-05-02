@@ -74,5 +74,5 @@ idea {
 }
 
 gitHooks {
-    setHooks(mapOf("pre-commit" to "ktlintFormat oa-app:build"))
+    setHooks(mapOf("pre-commit" to "ktlintFormat"))
 }
