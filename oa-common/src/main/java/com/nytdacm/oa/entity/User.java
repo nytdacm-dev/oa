@@ -21,7 +21,6 @@ import org.hibernate.type.SqlTypes;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -79,20 +78,6 @@ public class User extends BaseEntity {
     @Column(name = "user_internal")
     @JdbcTypeCode(SqlTypes.JSON)
     private UserInternal userInternal = new UserInternal();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordSalt, user.passwordSalt) && Objects.equals(name, user.name) && Objects.equals(superAdmin, user.superAdmin) && Objects.equals(admin, user.admin) && Objects.equals(active, user.active) && Objects.equals(socialAccount, user.socialAccount) && Objects.equals(groups, user.groups) && Objects.equals(submissions, user.submissions) && Objects.equals(lastActive, user.lastActive);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, password, passwordSalt, name, superAdmin, admin, active, socialAccount, groups, submissions, lastActive);
-    }
 
     @Getter
     @Setter

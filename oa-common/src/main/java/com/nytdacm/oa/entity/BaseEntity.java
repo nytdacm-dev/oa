@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @MappedSuperclass
 @Getter
@@ -27,18 +26,5 @@ public abstract class BaseEntity {
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = Instant.now();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity that = (BaseEntity) o;
-        return Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(createdAt, updatedAt);
     }
 }

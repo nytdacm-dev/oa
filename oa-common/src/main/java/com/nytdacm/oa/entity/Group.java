@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -44,18 +43,4 @@ public class Group extends BaseEntity {
         cascade = {CascadeType.MERGE}
     )
     private Set<User> users = new HashSet<>();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Group group = (Group) o;
-        return Objects.equals(groupId, group.groupId) && Objects.equals(name, group.name) && Objects.equals(displayName, group.displayName) && Objects.equals(showInHomepage, group.showInHomepage) && Objects.equals(homepageOrder, group.homepageOrder) && Objects.equals(users, group.users);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), groupId, name, displayName, showInHomepage, homepageOrder);
-    }
 }

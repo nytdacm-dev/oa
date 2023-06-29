@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @Entity
 @Table(name = "t_submissions")
@@ -65,17 +64,4 @@ public class Submission extends BaseEntity {
 
     @Column(name = "relative_time")
     private Long relativeTime;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Submission that = (Submission) o;
-        return Objects.equals(oj, that.oj) && Objects.equals(remoteSubmissionId, that.remoteSubmissionId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(oj, remoteSubmissionId);
-    }
 }
