@@ -54,7 +54,7 @@ class ArticleController(
     ): ResponseEntity<HttpResponse<ArticleDto>> {
         val id = StpUtil.getLoginIdAsLong()
         val user: User = userService.getUserById(id)
-        val article = Article(newArticleRequest.title, newArticleRequest.content, user)
+        val article = Article(null, newArticleRequest.title, newArticleRequest.content, user, false)
         return HttpResponse.success(
             200,
             "发表成功",
