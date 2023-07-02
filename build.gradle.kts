@@ -1,10 +1,8 @@
-import com.nytdacm.oa.buildsupport.isCI
-
 plugins {
     java
     idea
     kotlin("jvm") apply false
-    id("org.springframework.boot") version "3.0.5" apply false
+    id("org.springframework.boot") version "3.1.1" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("com.github.jakemarsden.git-hooks") version "0.0.2"
 }
@@ -27,7 +25,7 @@ subprojects {
     apply(plugin = "checkstyle")
 
     dependencies {
-        implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
         annotationProcessor("org.projectlombok:lombok")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
@@ -50,13 +48,7 @@ allprojects {
     version = "1.0.0-SNAPSHOT"
 
     repositories {
-        if (!isCI()) {
-            // 本地开发时使用阿里云仓库
-            maven("https://maven.aliyun.com/repository/public/")
-            maven("https://maven.aliyun.com/repository/spring/")
-        }
         mavenCentral()
-        maven("https://repo.spring.io/snapshot")
         maven("https://repo.spring.io/milestone")
     }
 }

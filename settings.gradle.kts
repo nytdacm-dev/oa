@@ -1,18 +1,15 @@
 pluginManagement {
     plugins {
-        id("org.jetbrains.kotlin.jvm") version "1.8.10"
+        id("org.jetbrains.kotlin.jvm") version "1.8.20"
     }
 
     repositories {
-        if (System.getenv("CI") == null) {
-            maven("https://maven.aliyun.com/repository/gradle-plugin")
-        }
         gradlePluginPortal()
     }
 }
 
 plugins {
-    id("com.gradle.enterprise") version "3.12.2"
+    id("com.gradle.enterprise") version "3.13.4"
 }
 
 gradleEnterprise {

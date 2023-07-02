@@ -1,9 +1,9 @@
 plugins {
     id("configure-kotlin")
     id("configure-ktlint")
-    kotlin("plugin.allopen") version "1.8.10"
-    kotlin("plugin.jpa") version "1.8.10"
-    id("org.hibernate.orm") version "6.1.7.Final"
+    kotlin("plugin.allopen") version "1.8.20"
+    kotlin("plugin.jpa") version "1.8.20"
+    id("org.hibernate.orm") version "6.2.6.Final"
 }
 
 dependencies {
@@ -13,9 +13,9 @@ dependencies {
 
 hibernate {
     enhancement {
-        enableLazyInitialization(true)
-        enableDirtyTracking(true)
-        enableAssociationManagement(true)
+        enableLazyInitialization.set(true)
+        enableDirtyTracking.set(true)
+        enableAssociationManagement.set(true)
     }
 }
 
