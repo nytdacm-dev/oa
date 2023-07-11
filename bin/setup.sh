@@ -55,6 +55,7 @@ docker run -d \
     -e PG_DATABASE=nytdacm_oa_production \
     -e ENV=prod \
     -e JWT_SECRET_KEY=$JWT_SECRET_KEY \
+    -e RECAPTCHA_SECRET=$RECAPTCHA_SECRET \
     -e UPLOAD_DIR=$UPLOAD_DIR \
     -v oa-data:/data \
     $container_name:$version
