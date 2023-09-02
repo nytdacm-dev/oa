@@ -55,4 +55,3 @@ jobs:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
