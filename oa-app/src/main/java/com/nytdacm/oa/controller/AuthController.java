@@ -8,7 +8,6 @@ import com.nytdacm.oa.entity.User;
 import com.nytdacm.oa.exception.OaBaseException;
 import com.nytdacm.oa.response.HttpResponse;
 import com.nytdacm.oa.response.user.UserDto;
-import com.nytdacm.oa.service.ReCaptchaService;
 import com.nytdacm.oa.service.UserService;
 import com.nytdacm.oa.utils.PasswordUtil;
 import jakarta.validation.Valid;
@@ -28,12 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final UserService userService;
     private final SecurityConfig securityConfig;
-    private final ReCaptchaService reCaptchaService;
 
-    public AuthController(UserService userService, SecurityConfig securityConfig, ReCaptchaService reCaptchaService) {
+    public AuthController(UserService userService, SecurityConfig securityConfig) {
         this.userService = userService;
         this.securityConfig = securityConfig;
-        this.reCaptchaService = reCaptchaService;
     }
 
     @PostMapping("/signup")
@@ -53,12 +50,8 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<HttpResponse<String>> userLogin(@RequestParam String username, @RequestParam String password, @RequestParam String code) {
-        var secret = System.getenv("RECAPTCHA_SECRET");
-        if (reCaptchaService.verify(secret, code, null)) {
-            return HttpResponse.success(200, "登录成功", login(username, password));
-        }
-        throw new OaBaseException("验证码错误", 400);
+    public ResponseEntity<HttpResponse<String>> userLogin(@RequestParam String username, @RequestParam String password) {
+        return HttpResponse.success(200, "登录成功", login(username, password));
     }
 
     private String login(String username, String password) {
