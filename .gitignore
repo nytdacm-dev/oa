@@ -3,6 +3,7 @@ HELP.md
 .hooks/
 build/
 bin/
+!bin/backup_files.sh
 !bin/backup_database.sh
 !bin/deploy.sh
 !bin/setup.sh
